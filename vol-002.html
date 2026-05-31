@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.2</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 260px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.2｜食中毒と脱水予防の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. リスクの全体像</a>
+        <a href="#page-2">2. 原因と体の反応</a>
+        <a href="#page-3">3. 観察と相談目安</a>
+        <a href="#page-4">4. 家庭での予防策</a>
+        <a href="#page-5">5. 記録と関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.2</div>
+      <h1 id="page-1">食中毒と脱水予防の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            気温と湿度が上がる時期は、食品中の細菌が増えやすくなります。高齢期では、下痢や嘔吐が軽く見えても、脱水、ふらつき、腎機能への負担につながることがあります。
+          </p>
+          <p>
+            食中毒は「悪いものを食べた直後に必ず強い腹痛が出る」という単純なものではありません。原因となる細菌やウイルスの種類、食べた量、本人の体力、持病、薬の影響によって、症状の出方や重さが変わります。数時間で発症するものもあれば、翌日以降に症状が目立つものもあります。
+          </p>
+          <p>
+            高齢者では、発熱や腹痛がはっきり出にくい一方で、食事量が落ちる、元気がない、立つとふらつく、尿が少ないといった形で体調変化が現れることがあります。見るべき中心は、便や吐き気だけでなく「水分が保てているか」「意識がいつも通りか」「持病が悪化していないか」です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="食中毒から脱水につながる流れのイラスト">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-chain-title">
+            <title id="fig-chain-title">食品、腸、脱水、ふらつきの流れ</title>
+            <rect x="18" y="22" width="484" height="316" rx="22" fill="#eef7f6"/>
+            <rect x="42" y="80" width="112" height="76" rx="14" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <circle cx="82" cy="111" r="18" fill="#c7853e"/>
+            <circle cx="120" cy="122" r="14" fill="#2f6f73"/>
+            <path d="M164 118h58" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M209 101l22 17-22 17" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M258 88c40 10 58 45 38 78-18 30-64 25-74-7-8-26 5-55 36-71z" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <circle cx="268" cy="124" r="6" fill="#8a3f33"/>
+            <circle cx="291" cy="143" r="6" fill="#8a3f33"/>
+            <path d="M325 118h58" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M370 101l22 17-22 17" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M424 86c28 45 42 74 42 99 0 26-19 45-42 45s-42-19-42-45c0-25 14-54 42-99z" fill="#d8edf6" stroke="#406f9f" stroke-width="6"/>
+            <text x="48" y="205" font-size="20" fill="#22302d">食品</text>
+            <text x="236" y="205" font-size="20" fill="#22302d">腸の炎症</text>
+            <text x="393" y="265" font-size="20" fill="#22302d">脱水</text>
+            <text x="56" y="306" font-size="22" fill="#2d6048" font-weight="700">食中毒は「胃腸」だけでなく全身状態を見る</text>
+          </svg>
+          <figcaption class="caption">下痢や嘔吐が続くと、水分と塩分が失われ、ふらつきや腎臓への負担につながることがあります。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>つけない</strong>
+          手、調理器具、生肉・魚の汁から食品へ原因物質を移さない。
+        </div>
+        <div class="mini-card">
+          <strong>増やさない</strong>
+          室温放置を避け、冷蔵・冷凍と早めの消費で細菌の増殖を抑える。
+        </div>
+        <div class="mini-card">
+          <strong>やっつける</strong>
+          加熱が必要な食品は中心部まで十分に火を通す。
+        </div>
+      </div>
+      <div class="footer">この資料は一般的な健康情報です。強い症状や持病がある場合は、医療機関や身近な専門職へ相談してください。</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">2. 原因は「細菌」と「ウイルス」で考え方が少し違います</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            食中毒の原因には、細菌、ウイルス、自然毒、化学物質などがあります。家庭で特に意識したいのは、食品中で増えやすい細菌と、人から人へも広がりやすいウイルスです。
+          </p>
+          <p>
+            細菌性食中毒では、食品中で細菌が増えたり、細菌が作る毒素が体に入ったりして症状が出ます。気温が高い時期や、調理後に時間が経った食品では注意が必要です。一方、ノロウイルスなどは少量でも感染しやすく、手指、便、吐物、汚染された食品や器具を介して広がることがあります。
+          </p>
+          <div class="clinical">
+            <strong>腸で起きること</strong>
+            <p>
+              腸の粘膜が刺激されると、水分の吸収がうまくいかなくなったり、腸管内へ水分が出たりします。その結果、下痢、腹痛、吐き気が起こります。嘔吐や下痢が続くと、水分だけでなくナトリウムなどの電解質も失われ、だるさ、ふらつき、意識の変化につながることがあります。
+            </p>
+          </div>
+        </div>
+        <figure class="figure-card" aria-label="細菌とウイルスの違いのイラスト">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-microbe-title">
+            <title id="fig-microbe-title">細菌とウイルスの違い</title>
+            <rect x="22" y="28" width="218" height="300" rx="18" fill="#fbfff8" stroke="#5b8d70" stroke-width="5"/>
+            <rect x="280" y="28" width="218" height="300" rx="18" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <text x="72" y="65" font-size="24" fill="#2d6048" font-weight="700">細菌</text>
+            <text x="334" y="65" font-size="24" fill="#8a3f33" font-weight="700">ウイルス</text>
+            <circle cx="130" cy="142" r="40" fill="#eef7f6" stroke="#2f6f73" stroke-width="6"/>
+            <circle cx="104" cy="204" r="25" fill="#eef7f6" stroke="#2f6f73" stroke-width="5"/>
+            <circle cx="164" cy="214" r="28" fill="#eef7f6" stroke="#2f6f73" stroke-width="5"/>
+            <path d="M102 142h56M130 114v56" stroke="#2f6f73" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="390" cy="160" r="44" fill="#fffdf7" stroke="#8a3f33" stroke-width="6"/>
+            <path d="M390 103v20M390 197v20M333 160h20M427 160h20M349 119l14 14M417 187l14 14M431 119l-14 14M363 187l-14 14" stroke="#8a3f33" stroke-width="6" stroke-linecap="round"/>
+            <text x="56" y="278" font-size="18" fill="#22302d">食品中で増えることがある</text>
+            <text x="314" y="278" font-size="18" fill="#22302d">少量でも広がりやすい</text>
+          </svg>
+          <figcaption class="caption">細菌は「増やさない」、ウイルスは「持ち込まない・広げない」視点が特に重要です。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>時間</strong>
+          調理後に時間が経つほど、保存状態によってはリスクが上がります。
+        </div>
+        <div class="mini-card">
+          <strong>温度</strong>
+          冷蔵庫は万能ではありません。詰め込みすぎや扉の開閉にも注意します。
+        </div>
+        <div class="mini-card">
+          <strong>体力</strong>
+          高齢者、持病がある方、免疫が低下している方は重症化に注意が必要です。
+        </div>
+      </div>
+      <div class="footer">ポイント：原因によって対策の重点は変わりますが、手洗い、温度管理、十分な加熱は共通の土台です。</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">3. 観察は「便・嘔吐・水分・意識」を分けて見ます</h2>
+      <p>
+        食中毒が疑われる時は、腹痛や下痢の有無だけでなく、全身状態を確認します。高齢者では、症状を強く訴えないまま脱水が進むことがあります。特に、一人暮らしや認知機能の低下がある場合は、周囲が変化に気づく仕組みが重要です。
+      </p>
+      <div class="flow" aria-label="相談目安の3段階">
+        <div class="flow-item">
+          <strong>自宅で観察</strong>
+          軽い腹部不快感、少量の下痢、食事は少し取れる。水分を少量ずつ取り、体調変化を記録する。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          下痢や嘔吐が続く、尿が少ない、発熱がある、食事や水分が半日以上かなり少ない。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで対応</strong>
+          血便、強い腹痛、意識がぼんやり、自力で飲めない、ふらつきが強い、呼吸苦や胸痛がある。
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="box">
+          <strong>毎日確認したい項目</strong>
+          <ul>
+            <li><span class="term">便：</span>回数、水様便か、血液が混じるか、腹痛の強さ。</li>
+            <li><span class="term">嘔吐：</span>回数、飲んでも吐くか、吐き気で水分が取れないか。</li>
+            <li><span class="term">水分：</span>口の乾き、尿の回数、尿の色、立ち上がった時のふらつき。</li>
+            <li><span class="term">意識：</span>会話が普段通りか、反応が遅くないか、ぼんやりしていないか。</li>
+          </ul>
+        </div>
+        <figure class="figure-card" aria-label="脱水サインのイラスト">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-dehydration-title">
+            <title id="fig-dehydration-title">脱水サインを見る図</title>
+            <rect x="24" y="28" width="472" height="304" rx="22" fill="#eef7f6"/>
+            <circle cx="148" cy="116" r="48" fill="#f6f0df" stroke="#2d6048" stroke-width="6"/>
+            <path d="M148 164v70M108 204h80M125 282l23-48 23 48" stroke="#2d6048" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M198 82c28 8 42 28 42 54" stroke="#c7853e" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M320 78c34 51 51 84 51 113 0 31-23 54-51 54s-51-23-51-54c0-29 17-62 51-113z" fill="#d8edf6" stroke="#406f9f" stroke-width="6"/>
+            <path d="M418 114h50M418 154h50M418 194h36" stroke="#8a3f33" stroke-width="8" stroke-linecap="round"/>
+            <text x="74" y="318" font-size="20" fill="#22302d">ふらつき</text>
+            <text x="278" y="318" font-size="20" fill="#22302d">尿が少ない</text>
+            <text x="405" y="318" font-size="20" fill="#22302d">口の乾き</text>
+          </svg>
+          <figcaption class="caption">脱水は「のどが渇く」だけで判断できません。尿、ふらつき、意識を合わせて見ます。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>自己判断で下痢止めを使う前に</strong>
+        <p>
+          下痢は体が原因物質を外へ出そうとする反応でもあります。血便、高熱、強い腹痛、食中毒が疑われる集団発生、持病がある場合は、市販薬で抑え込む前に医師や薬剤師へ相談してください。薬の使い方は原因や全身状態によって変わります。
+        </p>
+      </div>
+      <div class="footer">ポイント：便の回数だけでなく、水分が取れているか、尿が出ているか、意識が普段通りかを確認します。</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">4. 家庭での予防は「購入から片付けまで」の流れで考えます</h2>
+      <p>
+        食中毒予防は、調理中だけの問題ではありません。買い物、持ち帰り、保存、下準備、加熱、食事、残り物の扱い、片付けまでが一つの流れです。どこか一か所で食品が汚染されたり、温度管理が崩れたりすると、あとから加熱や冷蔵だけで取り戻せない場合があります。
+      </p>
+      <div class="three-col">
+        <div class="clinical">
+          <strong>購入・保存</strong>
+          <ul>
+            <li>肉や魚の汁が他の食品につかないよう袋を分ける。</li>
+            <li>冷蔵・冷凍品は寄り道を少なくして早くしまう。</li>
+            <li>冷蔵庫は詰め込みすぎず、期限と開封日を確認する。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <strong>下準備・調理</strong>
+          <ul>
+            <li>調理前、トイレ後、肉や魚を触った後は手を洗う。</li>
+            <li>生肉・魚用と、加熱後や生で食べる食品の器具を分ける。</li>
+            <li>加熱が必要な食品は中心部まで十分に火を通す。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <strong>食事・残り物</strong>
+          <ul>
+            <li>調理後は長く室温に置かない。</li>
+            <li>残り物は清潔な容器で早く冷まし、早めに食べる。</li>
+            <li>迷う食品は「もったいない」より安全を優先する。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <p>
+            高齢者の家庭では、食べる量が少ないため残り物が出やすく、同じ食品を数日に分けて食べることがあります。ここで重要なのは「冷蔵庫に入れたから安全」と考えすぎないことです。冷蔵は細菌の増殖を遅らせますが、完全に止めるわけではありません。
+          </p>
+          <p>
+            また、手洗いは感染性胃腸炎の予防にも関係します。石けんと流水で、指先、爪の間、親指、手首まで洗います。アルコール消毒は便利ですが、汚れが残っている手では効果が落ちることがあります。まず物理的に洗い流すことが基本です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="食中毒予防の流れのイラスト">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-prevention-title">
+            <title id="fig-prevention-title">購入、保存、加熱、食事の流れ</title>
+            <rect x="24" y="36" width="472" height="288" rx="22" fill="#fbfff8" stroke="#d6e0d8" stroke-width="4"/>
+            <g fill="#eef7f6" stroke="#5b8d70" stroke-width="5">
+              <rect x="50" y="96" width="86" height="80" rx="14"/>
+              <rect x="164" y="96" width="86" height="80" rx="14"/>
+              <rect x="278" y="96" width="86" height="80" rx="14"/>
+              <rect x="392" y="96" width="86" height="80" rx="14"/>
+            </g>
+            <path d="M140 136h20M254 136h20M368 136h20" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M154 122l15 14-15 14M268 122l15 14-15 14M382 122l15 14-15 14" fill="none" stroke="#5a6964" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="66" y="145" font-size="20" fill="#2d6048" font-weight="700">購入</text>
+            <text x="180" y="145" font-size="20" fill="#2d6048" font-weight="700">保存</text>
+            <text x="294" y="145" font-size="20" fill="#2d6048" font-weight="700">加熱</text>
+            <text x="408" y="145" font-size="20" fill="#2d6048" font-weight="700">食事</text>
+            <text x="58" y="235" font-size="20" fill="#22302d">一つの流れで予防する</text>
+            <text x="58" y="270" font-size="18" fill="#5a6964">途中で汚染や温度管理の崩れがあるとリスクが上がります</text>
+          </svg>
+          <figcaption class="caption">食中毒予防は、調理の瞬間だけでなく、食品が家に来てから食べ終わるまでの管理です。</figcaption>
+        </figure>
+      </div>
+      <div class="footer">ポイント：「つけない・増やさない・やっつける」を、買い物から片付けまでの流れに当てはめます。</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">5. 今週は「冷蔵庫と手洗い」を見直しましょう</h2>
+      <p>
+        予防策を全部一度に変える必要はありません。まずは、食品が長く室温に置かれていないか、冷蔵庫に古い残り物がないか、手洗いのタイミングが抜けていないかを確認します。
+      </p>
+      <div class="two-col">
+        <div class="check">
+          <strong>今週の確認項目</strong>
+          <ul>
+            <li>冷蔵庫内に、いつ作ったかわからない残り物がない。</li>
+            <li>肉や魚の汁が、野菜や調理済み食品につかないようにしている。</li>
+            <li>調理前、トイレ後、肉や魚を触った後に手洗いをしている。</li>
+            <li>下痢や嘔吐がある時は、無理に調理担当を続けない。</li>
+            <li>水分が取れない時の相談先を家族や支援者と確認している。</li>
+          </ul>
+        </div>
+        <div class="box">
+          <strong>受診・相談時に伝える情報</strong>
+          <p>
+            いつから症状があるか、食べたもの、同じものを食べた人の症状、便の回数、嘔吐の回数、体温、尿の回数、水分摂取量、持病、飲んでいる薬をメモしておくと、判断材料になります。
+          </p>
+        </div>
+      </div>
+      <p class="lead">
+        最後にひとこと：食中毒予防は、特別なことより「手を洗う」「冷やす」「早めに食べる」「しっかり加熱する」の積み重ねです。迷った食品は、安全を優先しましょう。
+      </p>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-001.html">Vol.1 梅雨時の体調管理の巻</a>
+          <a href="./index.html#topic-season">季節の体調管理</a>
+          <a href="./index.html#topic-nutrition">水分・栄養</a>
+          <a href="./index.html#topic-infection">感染症・食中毒予防</a>
+          <a href="./index.html#topic-emergency">早めに相談したいサイン</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/shokuhin/syokuchu/01_00008.html">厚生労働省：家庭でできる食中毒予防の6つのポイント</a></li>
+          <li><a href="https://www.mhlw.go.jp/topics/syokuchu/index.html">厚生労働省：食中毒</a></li>
+          <li><a href="https://www.maff.go.jp/j/syouan/seisaku/foodpoisoning/">農林水産省：食中毒を防ぐためには</a></li>
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000122533.html">厚生労働省：ノロウイルスに関するQ&A</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.2「食中毒と脱水予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>

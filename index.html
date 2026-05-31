@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 目次</title>
+  <style>
+    :root {
+      --ink: #24302f;
+      --muted: #5d6b66;
+      --green: #2f6047;
+      --leaf: #5f8f72;
+      --soft: #eef6ea;
+      --cream: #fffdf7;
+      --sand: #f7f2df;
+      --line: #d8e0d8;
+      --accent: #d39b4a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.75;
+      font-size: 19px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    header,
+    .panel {
+      border-radius: 8px;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+
+    header {
+      padding: clamp(28px, 6vw, 56px);
+      border-top: 12px solid var(--leaf);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #6d6d45;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--green);
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 52px);
+      line-height: 1.25;
+    }
+
+    h2 {
+      margin: 34px 0 14px;
+      font-size: 27px;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .notice {
+      margin: 22px 0 0;
+      padding: 16px 18px;
+      border-left: 8px solid var(--accent);
+      border-radius: 8px;
+      background: var(--sand);
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+
+    .jump-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .jump-nav a:hover,
+    .jump-nav a:focus,
+    .issue-card a:hover,
+    .issue-card a:focus,
+    .topic-card a:hover,
+    .topic-card a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+
+    .panel {
+      padding: 22px;
+      margin-top: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .issue-list,
+    .topic-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .issue-card,
+    .topic-card {
+      min-height: 160px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--cream);
+      box-shadow: 0 10px 28px rgba(44, 62, 54, 0.08);
+    }
+
+    .issue-card a,
+    .topic-card a {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 20px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .vol {
+      color: #6d6d45;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .title {
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .desc {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .catalog li {
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .available {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .available a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .available a:hover,
+    .available a:focus {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        font-size: 18px;
+      }
+
+      .wrap {
+        padding: 16px 12px 32px;
+      }
+
+      header,
+      .panel {
+        padding: 20px 16px;
+      }
+
+      .lead {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">地域の健康づくり資料</p>
+      <h1>いきいき通信案 目次</h1>
+      <p class="lead">
+        Web版はVol.1から開始します。各号を個別ページで読めるようにし、号数やテーマから移動できる形にします。
+      </p>
+      <nav class="jump-nav" aria-label="号数範囲とテーマへ移動">
+        <a href="#latest">最新号</a>
+        <a href="#range-001-010">Vol.1-10</a>
+        <a href="#topic-links">テーマ別</a>
+      </nav>
+      <p class="notice">
+        医学的な内容は、公的機関や学会などの参考リンクを各号に付けます。個人情報や内部連絡事項は掲載しません。
+      </p>
+    </header>
+
+    <main>
+      <section id="latest" aria-labelledby="latest-title">
+        <h2 id="latest-title">最新号</h2>
+        <ul class="issue-list">
+          <li class="issue-card">
+            <a href="./vol-002.html">
+              <span class="vol">Vol.2</span>
+              <span class="title">食中毒と脱水予防の巻</span>
+              <span class="desc">細菌・ウイルス、胃腸炎、脱水、受診目安、家庭での食品衛生を医学的な視点で説明します。</span>
+            </a>
+          </li>
+          <li class="issue-card">
+            <a href="./vol-001.html">
+              <span class="vol">Vol.1</span>
+              <span class="title">梅雨時の体調管理の巻</span>
+              <span class="desc">高湿度、体温調節、脱水、熱中症、フレイル予防を医学的な視点で段階的に説明します。</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section id="range-001-010" class="panel" aria-labelledby="range-001-010-title">
+        <h2 id="range-001-010-title">Vol.1-10</h2>
+        <ul class="catalog">
+          <li class="available"><a href="./vol-001.html">Vol.1：梅雨時の体調管理の巻</a></li>
+          <li class="available"><a href="./vol-002.html">Vol.2：食中毒と脱水予防の巻</a></li>
+        </ul>
+      </section>
+
+      <section id="topic-links" aria-labelledby="topic-links-title">
+        <h2 id="topic-links-title">テーマ別に探す</h2>
+        <ul class="topic-list">
+          <li id="topic-season" class="topic-card">
+            <a href="./vol-001.html">
+              <span class="title">季節の体調管理</span>
+              <span class="desc">気温差、湿度、暑さ指数、熱中症など、季節に関係する体調変化を扱います。</span>
+            </a>
+          </li>
+          <li id="topic-frailty" class="topic-card">
+            <a href="./vol-001.html#page-4">
+              <span class="title">フレイル・筋力低下</span>
+              <span class="desc">活動量低下、筋力低下、食欲低下、社会交流の減少をつなげて考えます。</span>
+            </a>
+          </li>
+          <li id="topic-nutrition" class="topic-card">
+            <a href="./vol-002.html#page-3">
+              <span class="title">水分・栄養</span>
+              <span class="desc">脱水、食事量低下、尿の変化、嘔吐や下痢がある時の観察ポイントを整理します。</span>
+            </a>
+          </li>
+          <li id="topic-infection" class="topic-card">
+            <a href="./vol-002.html">
+              <span class="title">感染症・食中毒予防</span>
+              <span class="desc">手洗い、食品管理、細菌・ウイルス、胃腸炎時の対応を確認します。</span>
+            </a>
+          </li>
+          <li id="topic-emergency" class="topic-card">
+            <a href="./vol-002.html#page-3">
+              <span class="title">早めに相談したいサイン</span>
+              <span class="desc">ふらつき、意識の変化、食事や水分が取れない時、血便や強い腹痛がある時の相談目安を確認します。</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      いきいき通信案｜目次ページ
+    </footer>
+  </div>
+</body>
+</html>
