@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.3</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --violet: #67517a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .note-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .note-box { border-left: 8px solid var(--violet); background: #f4eff8; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.3｜薬の整理とポリファーマシーの巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 薬の効き目とリスク</a>
+        <a href="#page-2">2. 体内で起こる変化</a>
+        <a href="#page-3">3. 観察と相談目安</a>
+        <a href="#page-4">4. 薬を安全に使う工夫</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.3</div>
+      <h1 id="page-1">薬の整理とポリファーマシーの巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            薬は病気を落ち着かせ、生活を支える大切な道具です。一方で、高齢期には薬の数が増えやすく、眠気、ふらつき、食欲低下、便秘、転倒などが「年のせい」に見えてしまうことがあります。
+          </p>
+          <p>
+            <span class="term">ポリファーマシー</span>とは、単に薬の数が多いことだけを指す言葉ではありません。薬が多いことで、副作用、飲み間違い、同じ成分の重複、薬どうしの影響、生活への負担が起こり、本人に不利益が出ている状態を含みます。何剤以上なら必ず悪い、という単純な線引きではなく、病気の状態、腎臓や肝臓の働き、生活環境、本人の希望を合わせて考えます。
+          </p>
+          <p>
+            大切なのは「薬を減らすこと」そのものではなく、「必要な薬を必要な量で続け、困っている症状が薬と関係していないか点検すること」です。自己判断で急に中止すると、血圧、血糖、心臓、けいれん、痛み、不眠などが悪化する場合があります。気になることがあれば、主治医や薬剤師に相談しながら見直します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="薬の利益とリスクを天秤で示す図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-balance-title">
+            <title id="fig-balance-title">薬の利益とリスクのバランス</title>
+            <rect x="20" y="20" width="480" height="320" rx="24" fill="#eef7f6"/>
+            <line x1="260" y1="94" x2="260" y2="254" stroke="#2d6048" stroke-width="10" stroke-linecap="round"/>
+            <line x1="145" y1="132" x2="375" y2="132" stroke="#2d6048" stroke-width="10" stroke-linecap="round"/>
+            <line x1="160" y1="132" x2="114" y2="215" stroke="#5a6964" stroke-width="5"/>
+            <line x1="160" y1="132" x2="206" y2="215" stroke="#5a6964" stroke-width="5"/>
+            <line x1="360" y1="132" x2="314" y2="215" stroke="#5a6964" stroke-width="5"/>
+            <line x1="360" y1="132" x2="406" y2="215" stroke="#5a6964" stroke-width="5"/>
+            <path d="M100 218h120c-8 37-26 55-60 55s-52-18-60-55z" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <path d="M300 218h120c-8 37-26 55-60 55s-52-18-60-55z" fill="#fff0ed" stroke="#8a3f33" stroke-width="5"/>
+            <rect x="125" y="180" width="22" height="42" rx="9" fill="#406f9f"/>
+            <rect x="158" y="170" width="22" height="52" rx="9" fill="#c7853e"/>
+            <rect x="342" y="168" width="22" height="54" rx="9" fill="#8a3f33"/>
+            <circle cx="386" cy="196" r="20" fill="#f6f0df" stroke="#8a3f33" stroke-width="4"/>
+            <text x="111" y="304" font-size="21" fill="#2d6048" font-weight="700">治療効果</text>
+            <text x="319" y="304" font-size="21" fill="#8a3f33" font-weight="700">副作用・負担</text>
+            <text x="74" y="70" font-size="22" fill="#22302d">薬は「効き目」と「困りごと」をセットで見る</text>
+          </svg>
+          <figcaption class="caption">薬の見直しは、必要な治療を保ちながら、ふらつきや飲み間違いなどの不利益を減らすために行います。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>数だけで判断しない</strong>
+          5剤、6剤などの数は目安になりますが、必要性や副作用の有無と合わせて考えます。
+        </div>
+        <div class="mini-card">
+          <strong>生活の変化を見る</strong>
+          転びやすい、日中眠い、食欲が落ちた、便秘が増えたなどは薬の影響も候補になります。
+        </div>
+        <div class="mini-card">
+          <strong>勝手に止めない</strong>
+          中止や減量は病状を見ながら行います。必ず医師・薬剤師に相談します。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜薬の効き目とリスクの全体像</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体内で起こる変化：なぜ高齢期は薬の影響が出やすいのか</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            薬は、口から入ったあと胃腸で吸収され、血液に乗って全身へ運ばれます。その後、主に肝臓で分解され、腎臓から尿へ排泄されます。この一連の流れを<span class="term">薬物動態</span>と呼びます。高齢期には、体の水分量、筋肉量、腎機能、肝機能、血圧調節、自律神経の反応が若いころと変わり、同じ量でも効き方が強く出たり、体に残りやすくなったりすることがあります。
+          </p>
+          <p>
+            もう一つ大切なのが<span class="term">薬力学</span>です。これは「体が薬にどれくらい反応するか」という視点です。たとえば睡眠薬、抗不安薬、痛み止め、血圧を下げる薬、血糖を下げる薬、排尿に関係する薬、抗コリン作用をもつ薬などは、本人の状態によって眠気、ふらつき、低血圧、低血糖、便秘、尿が出にくい、口の渇き、せん妄のような症状につながることがあります。
+          </p>
+          <p>
+            病気が増えると、それぞれの診療科で薬が追加されることがあります。薬Aの副作用で出た症状を新しい病気と考え、薬Bが追加される流れを<span class="term">処方カスケード</span>と呼ぶことがあります。もちろん薬の追加が必要な場面もありますが、「いつから症状が出たか」「薬が変わった時期と合うか」を確認すると、見直しの手がかりになります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="薬が体をめぐる経路の図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-path-title">
+            <title id="fig-path-title">薬の吸収、分布、代謝、排泄</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <circle cx="102" cy="95" r="43" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <rect x="84" y="72" width="18" height="45" rx="9" fill="#406f9f"/>
+            <rect x="108" y="72" width="18" height="45" rx="9" fill="#2f6f73"/>
+            <text x="58" y="166" font-size="19" fill="#22302d">口から入る</text>
+            <path d="M150 96h58" stroke="#5a6964" stroke-width="7" stroke-linecap="round"/>
+            <path d="M195 80l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M230 68c46 0 70 36 57 76-11 35-64 42-91 15-27-27-14-91 34-91z" fill="#edf6ef" stroke="#5b8d70" stroke-width="5"/>
+            <path d="M224 105c26-18 50-18 72 0" fill="none" stroke="#2f6f73" stroke-width="5" stroke-linecap="round"/>
+            <text x="211" y="166" font-size="19" fill="#22302d">胃腸で吸収</text>
+            <path d="M300 96h58" stroke="#5a6964" stroke-width="7" stroke-linecap="round"/>
+            <path d="M345 80l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M392 72c41 8 62 36 53 72-9 37-55 54-88 30-28-20-22-91 35-102z" fill="#f4eff8" stroke="#67517a" stroke-width="5"/>
+            <text x="380" y="166" font-size="19" fill="#22302d">肝臓で代謝</text>
+            <path d="M168 235c38-26 79-26 117 0 38 26 79 26 117 0" fill="none" stroke="#406f9f" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="161" cy="236" r="12" fill="#406f9f"/>
+            <circle cx="408" cy="236" r="12" fill="#406f9f"/>
+            <text x="170" y="272" font-size="19" fill="#22302d">血液で全身へ</text>
+            <path d="M225 301c13-30 54-30 67 0 13-30 54-30 67 0-16 31-40 45-67 45s-51-14-67-45z" fill="#d8edf6" stroke="#406f9f" stroke-width="5"/>
+            <text x="213" y="352" font-size="19" fill="#22302d">腎臓から排泄</text>
+          </svg>
+          <figcaption class="caption">腎臓や肝臓の働きが変わると、薬が体に残りやすくなる場合があります。検査値や症状を見ながら調整します。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="薬の影響が出やすい変化と観察ポイント">
+        <thead>
+          <tr>
+            <th>体の変化</th>
+            <th>起こりやすい困りごと</th>
+            <th>見るポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>腎機能の低下</td>
+            <td>薬が体に残りやすい、眠気やふらつきが強い</td>
+            <td>薬の変更後のだるさ、尿量、むくみ、検査値</td>
+          </tr>
+          <tr>
+            <td>血圧調節の変化</td>
+            <td>立ち上がり時のめまい、転倒</td>
+            <td>起床時、トイレ後、入浴後のふらつき</td>
+          </tr>
+          <tr>
+            <td>脳の感受性の変化</td>
+            <td>眠気、せん妄、記憶力低下のように見える変化</td>
+            <td>開始・増量・追加から数日以内の様子</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          「年齢が高いから薬は少ない方がよい」と一律に考えるのではなく、薬ごとの目的、効果、副作用、腎機能、生活での飲みやすさを合わせて判断します。薬の見直しは、本人の病気を悪化させないためにも段階的に行うことが大切です。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜薬物動態・薬力学・処方カスケード</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        薬の影響は、検査値だけでなく日常の変化として現れることがあります。特に「新しい薬が始まった」「量が変わった」「市販薬やサプリメントを追加した」「食事量や水分量が落ちた」「下痢や発熱があった」あとに症状が出た場合は、薬との関係も含めて相談します。
+      </p>
+      <div class="flow" aria-label="相談目安の三段階">
+        <div class="flow-item">
+          <strong>記録して相談</strong>
+          眠気、便秘、口の渇き、食欲低下、軽いふらつきなどが続く。次回受診や薬局で、お薬手帳と一緒に伝える。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          転びそうになる、飲み間違いが増える、急にぼんやりする、動悸や息切れが出る、むくみや体重増加が目立つ。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          意識がはっきりしない、ろれつが回らない、強い息苦しさ、胸痛、黒い便や血が混じる便、けいれん、全身の強い発疹。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>観察のコツ</h3>
+          <p>
+            症状だけを伝えるより、「いつから」「どの薬が変わったあとか」「どの時間帯に強いか」「食事や水分は取れているか」を一緒に伝えると、医師や薬剤師が判断しやすくなります。たとえば「朝の薬を飲んで1時間くらいで眠気が強い」「夜間トイレ後にふらつく」「便秘薬を使っても3日出ない」など、生活の場面で記録します。
+          </p>
+          <p>
+            家族や支援者は、本人が困っていないと言っていても、歩き方、会話の反応、食事量、薬の残り方、ゴミ箱の薬袋、サプリメントの追加などを見ると手がかりになります。本人を責めるのではなく、「一緒に確認して、相談しやすくする」姿勢が大切です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="症状と薬の変更時期を結びつける図">
+          <svg viewBox="0 0 520 340" role="img" aria-labelledby="fig-timeline-title">
+            <title id="fig-timeline-title">薬の変更と症状の時間関係</title>
+            <rect x="18" y="18" width="484" height="304" rx="22" fill="#fffdf7"/>
+            <line x1="72" y1="210" x2="448" y2="210" stroke="#5a6964" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="120" cy="210" r="16" fill="#5b8d70"/>
+            <circle cx="240" cy="210" r="16" fill="#c7853e"/>
+            <circle cx="360" cy="210" r="16" fill="#8a3f33"/>
+            <path d="M120 196v-62" stroke="#5b8d70" stroke-width="5"/>
+            <rect x="66" y="70" width="108" height="64" rx="12" fill="#edf6ef" stroke="#5b8d70" stroke-width="4"/>
+            <text x="83" y="98" font-size="18" fill="#22302d">薬が追加</text>
+            <text x="77" y="122" font-size="15" fill="#5a6964">または増量</text>
+            <path d="M240 196v-84" stroke="#c7853e" stroke-width="5"/>
+            <rect x="185" y="48" width="110" height="64" rx="12" fill="#fff7e8" stroke="#c7853e" stroke-width="4"/>
+            <text x="202" y="78" font-size="18" fill="#22302d">眠気・便秘</text>
+            <text x="206" y="101" font-size="15" fill="#5a6964">日常の変化</text>
+            <path d="M360 196v-64" stroke="#8a3f33" stroke-width="5"/>
+            <rect x="306" y="68" width="108" height="64" rx="12" fill="#fff0ed" stroke="#8a3f33" stroke-width="4"/>
+            <text x="322" y="98" font-size="18" fill="#22302d">転倒・混乱</text>
+            <text x="328" y="121" font-size="15" fill="#5a6964">早めに相談</text>
+            <text x="80" y="258" font-size="21" fill="#2d6048" font-weight="700">「症状」と「薬が変わった時期」を並べて見る</text>
+          </svg>
+          <figcaption class="caption">薬の副作用と決めつけず、時間関係を整理して専門職に相談します。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>受診時・薬局で必ず伝えたいこと</strong>
+        <ul>
+          <li>処方薬、市販薬、漢方薬、サプリメント、貼り薬、目薬、湿布を含めた一覧</li>
+          <li>薬を飲めなかった日、飲み間違えた日、余っている薬の有無</li>
+          <li>食事量、水分量、下痢・嘔吐・発熱、体重変化、転倒の有無</li>
+          <li>「生活で何に困っているか」：眠い、歩けない、夜間トイレが怖い、薬の袋が開けにくいなど</li>
+        </ul>
+      </div>
+      <div class="footer">3ページ目｜症状の観察と相談のタイミング</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる実践：薬を安全に使う仕組みを作る</h2>
+      <p>
+        薬の安全は、本人の記憶力だけに頼ると続きにくくなります。仕組みとして整えることが大切です。薬の種類が多い場合、飲む時間、食前・食後、粉薬・錠剤、半錠、貼り薬、点眼などが混ざり、真面目に飲もうとしても間違いが起こります。間違いを責めるより、間違いにくい形に変えることを考えます。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>お薬手帳は1冊に</strong>
+          複数の医療機関を受診していても、手帳を1冊にまとめると重複や相互作用を確認しやすくなります。
+        </div>
+        <div class="mini-card">
+          <strong>薬を持って相談</strong>
+          袋ごと薬局や受診先へ持参する「薬の棚卸し」は、残薬や飲みづらさを見つける助けになります。
+        </div>
+        <div class="mini-card">
+          <strong>市販薬も伝える</strong>
+          かぜ薬、痛み止め、胃薬、睡眠改善薬、健康食品も処方薬に影響することがあります。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>家庭での整え方</h3>
+          <p>
+            飲むタイミングが多い場合は、薬剤師に一包化や服薬カレンダーが使えるか相談します。手の力が弱い、目が見えにくい、袋の文字が読みにくい、薬を押し出しにくいといった困りごとも、薬局で相談できる内容です。飲みにくいからといって錠剤を割る、カプセルを開ける、粉砕することは、薬の効き方が変わる場合があるため、必ず確認します。
+          </p>
+          <p>
+            薬を見直す時は、「この薬は何のためか」「いつまで必要か」「飲み忘れた時はどうするか」「副作用として何を見ればよいか」を確認します。質問をメモしておくと、診察室で聞き忘れにくくなります。本人、家族、ケアマネジャー、訪問看護師、薬剤師が同じ情報を見られると、生活の中で支えやすくなります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="薬の安全確認サイクルの図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-cycle-title">
+            <title id="fig-cycle-title">薬の安全確認サイクル</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#eef7f6"/>
+            <circle cx="260" cy="190" r="92" fill="#fffdf7" stroke="#5b8d70" stroke-width="7"/>
+            <path d="M260 70a120 120 0 0 1 112 77" fill="none" stroke="#406f9f" stroke-width="10" stroke-linecap="round"/>
+            <path d="M375 122l4 39-34-20" fill="#406f9f"/>
+            <path d="M392 205a120 120 0 0 1-91 105" fill="none" stroke="#c7853e" stroke-width="10" stroke-linecap="round"/>
+            <path d="M322 303l-36 16 5-39" fill="#c7853e"/>
+            <path d="M229 310a120 120 0 0 1-96-99" fill="none" stroke="#67517a" stroke-width="10" stroke-linecap="round"/>
+            <path d="M124 235l-12-38 39 10" fill="#67517a"/>
+            <path d="M133 165a120 120 0 0 1 92-92" fill="none" stroke="#2f6f73" stroke-width="10" stroke-linecap="round"/>
+            <path d="M198 66l39-3-21 33" fill="#2f6f73"/>
+            <text x="219" y="176" font-size="23" fill="#2d6048" font-weight="700">確認</text>
+            <text x="201" y="208" font-size="18" fill="#5a6964">飲めているか</text>
+            <text x="345" y="82" font-size="18" fill="#22302d">目的</text>
+            <text x="372" y="262" font-size="18" fill="#22302d">症状</text>
+            <text x="143" y="306" font-size="18" fill="#22302d">相談</text>
+            <text x="78" y="118" font-size="18" fill="#22302d">記録</text>
+          </svg>
+          <figcaption class="caption">薬の安全確認は一度で終わりではなく、生活の変化に合わせて繰り返します。</figcaption>
+        </figure>
+      </div>
+      <div class="note-box">
+        <strong>自己判断で中止しないための言い換え</strong>
+        <p>
+          「薬をやめたい」ではなく、「この薬で眠気やふらつきが出ていないか一緒に確認したい」「飲む回数を減らせる方法があるか相談したい」と伝えると、治療を保ちながら見直す話がしやすくなります。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜お薬手帳・残薬確認・相談の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：薬は「一覧」と「生活の困りごと」で見る</h2>
+      <p>
+        薬の整理で目指すのは、必要な治療を守りながら、日常生活の負担や危険を減らすことです。薬の数が多くても、目的が明確で安全に飲めていれば必要な治療であることがあります。反対に、少ない薬でも、本人に強い眠気やふらつきが出ていれば相談が必要です。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>お薬手帳、薬袋、残っている薬、市販薬、サプリメントを一か所に集める。</li>
+          <li>「何のための薬か」「いつ飲むか」「困っている症状があるか」をメモする。</li>
+          <li>新しい症状が出た時は、薬が始まった時期、増えた時期、食事・水分の変化を一緒に記録する。</li>
+          <li>次の受診や薬局で、自己判断で止める前に相談する。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          薬は、病気だけでなく暮らしの中で効いています。飲みにくさや不安は、わがままではなく大切な医療情報です。気になる変化を小さなうちに言葉にして、主治医や薬剤師と一緒に整えていきましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-001.html">Vol.1 梅雨時の体調管理の巻</a>
+          <a href="./vol-002.html">Vol.2 食中毒と脱水予防の巻</a>
+          <a href="./index.html#topic-medication">薬の整理・副作用</a>
+          <a href="./index.html#topic-emergency">早めに相談したいサイン</a>
+          <a href="./index.html#topic-frailty">フレイル・筋力低下</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.mhlw.go.jp/stf/shingi2/0000208848.html">厚生労働省：「高齢者の医薬品適正使用の指針（総論編）について」の通知発出について</a></li>
+          <li><a href="https://www.mhlw.go.jp/content/11121000/kourei-tekisei_web.pdf">厚生労働省：高齢者の医薬品適正使用の指針 総論編（PDF）</a></li>
+          <li><a href="https://www.pmda.go.jp/okusuri_search/">PMDA：PMDAおくすりサーチ</a></li>
+          <li><a href="https://www.pmda.go.jp/safety/info-services/drugs/adr-info/0001.html">PMDA：副作用等情報</a></li>
+          <li><a href="https://www.jpn-geriat-soc.or.jp/publications/other/pharmacotherapy_guideline_2015.html">日本老年医学会：高齢者の安全な薬物療法ガイドライン2015</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.3「薬の整理とポリファーマシーの巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
