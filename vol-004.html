@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.4</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --night: #3c5271;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .night-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .night-box { border-left: 8px solid var(--night); background: #eef3f8; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.4｜夜間頻尿と転倒予防の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 夜トイレの全体像</a>
+        <a href="#page-2">2. 尿と睡眠の仕組み</a>
+        <a href="#page-3">3. 観察と相談目安</a>
+        <a href="#page-4">4. 夜間の安全対策</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.4</div>
+      <h1 id="page-1">夜間頻尿と転倒予防の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            夜中に何度もトイレで起きることは、単なる「年のせい」だけではありません。睡眠が細切れになること、暗い中で歩くこと、薬や病気の影響が重なることにより、転倒や日中の疲れにつながる場合があります。
+          </p>
+          <p>
+            <span class="term">夜間頻尿</span>は、夜間に排尿のため1回以上起き、それが生活上の困りごとになる状態を指します。回数だけでなく、本人が眠れない、家族も起きてしまう、急いで歩いて転びそうになる、日中眠くて活動量が落ちるといった影響も大切です。
+          </p>
+          <p>
+            原因は一つではありません。夜に作られる尿が多い場合、膀胱に尿をためにくい場合、眠りが浅く尿意に気づきやすい場合、心不全・腎機能低下・糖尿病・睡眠時無呼吸症候群・便秘・前立腺肥大・過活動膀胱・利尿薬などが関係する場合があります。したがって、対策も「寝る前に水を飲まない」だけでは不十分で、脱水や薬の自己調整を招くことがあります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="夜間頻尿と転倒リスクの流れ">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-night-title">
+            <title id="fig-night-title">夜間頻尿から転倒リスクへつながる流れ</title>
+            <rect x="18" y="20" width="484" height="320" rx="22" fill="#eef3f8"/>
+            <circle cx="104" cy="92" r="42" fill="#3c5271"/>
+            <circle cx="122" cy="77" r="34" fill="#eef3f8"/>
+            <text x="68" y="170" font-size="19" fill="#22302d">睡眠が中断</text>
+            <path d="M156 108h58" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M201 92l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M248 70c32 0 58 22 58 55 0 38-27 68-58 68s-58-30-58-68c0-33 26-55 58-55z" fill="#fffdf7" stroke="#406f9f" stroke-width="5"/>
+            <path d="M230 108c12 8 24 8 36 0" fill="none" stroke="#406f9f" stroke-width="5" stroke-linecap="round"/>
+            <text x="214" y="223" font-size="19" fill="#22302d">尿意で起きる</text>
+            <path d="M314 108h58" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M359 92l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="396" y="67" width="70" height="112" rx="12" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <rect x="407" y="82" width="48" height="30" rx="8" fill="#fffdf7" stroke="#d6e0d8" stroke-width="3"/>
+            <circle cx="431" cy="144" r="10" fill="#c7853e"/>
+            <text x="390" y="223" font-size="19" fill="#22302d">暗い中で歩く</text>
+            <path d="M110 278h300" stroke="#8a3f33" stroke-width="7" stroke-linecap="round"/>
+            <path d="M392 260l30 18-30 18" fill="none" stroke="#8a3f33" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="132" y="315" font-size="21" fill="#8a3f33" font-weight="700">ふらつき・転倒・骨折を防ぐ視点が必要</text>
+          </svg>
+          <figcaption class="caption">夜間頻尿は排尿の問題だけでなく、睡眠、歩行、転倒予防を一緒に見ることが大切です。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>夜間多尿</strong>
+          夜に作られる尿が多い状態。むくみ、心臓・腎臓、睡眠時無呼吸、飲水や飲酒が関係することがあります。
+        </div>
+        <div class="mini-card">
+          <strong>膀胱容量の低下</strong>
+          少量でも尿意が強くなる状態。過活動膀胱、前立腺肥大、便秘、尿路感染なども候補になります。
+        </div>
+        <div class="mini-card">
+          <strong>睡眠の問題</strong>
+          眠りが浅いと尿意に気づきやすくなります。眠れない原因が尿意なのか、尿意に気づくほど眠りが浅いのかを見ます。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜夜間頻尿を排尿・睡眠・転倒の問題として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">尿と睡眠の仕組み：夜に尿が増える理由</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            通常、夜間は尿を濃くして量を減らす働きがあり、眠りが保たれやすくなっています。しかし高齢期には、昼間に足にたまった水分が横になることで血液中へ戻り、夜間に腎臓から尿として出やすくなることがあります。足のむくみが夕方に強い人では、夜間の尿量が増える手がかりになります。
+          </p>
+          <p>
+            心不全、腎機能低下、糖尿病、高血圧、睡眠時無呼吸症候群なども夜間頻尿に関係することがあります。睡眠時無呼吸では、いびきや呼吸の一時停止、日中の眠気と一緒に夜間頻尿が見られることがあります。糖尿病では、血糖が高い時に尿量が増え、のどの渇きや体重減少を伴う場合があります。
+          </p>
+          <p>
+            薬も重要です。利尿薬は心不全や高血圧などで必要な薬ですが、飲む時刻によって夜間の排尿に影響することがあります。睡眠薬や抗不安薬は、夜間に起きた時のふらつきを強めることがあります。薬は自己判断で変えず、夜間頻尿や転倒の状況を医師・薬剤師へ伝えて調整の可否を相談します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="昼のむくみが夜の尿になる図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-edema-title">
+            <title id="fig-edema-title">昼間のむくみと夜間尿の関係</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <rect x="60" y="70" width="130" height="190" rx="58" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <circle cx="125" cy="78" r="31" fill="#f6f0df" stroke="#c7853e" stroke-width="4"/>
+            <path d="M101 165h48v88c0 18-48 18-48 0z" fill="#d8edf6" stroke="#406f9f" stroke-width="4"/>
+            <circle cx="93" cy="280" r="16" fill="#d8edf6"/>
+            <circle cx="157" cy="280" r="16" fill="#d8edf6"/>
+            <text x="68" y="320" font-size="18" fill="#22302d">昼：足に水分</text>
+            <path d="M212 168h86" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M285 151l22 17-22 17" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="330" y="86" width="112" height="172" rx="36" fill="#eef3f8" stroke="#3c5271" stroke-width="5"/>
+            <path d="M344 178c28-18 55-18 84 0" fill="none" stroke="#406f9f" stroke-width="6" stroke-linecap="round"/>
+            <path d="M374 220c0 24 24 24 24 0" fill="none" stroke="#406f9f" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="386" cy="130" r="22" fill="#3c5271"/>
+            <circle cx="398" cy="120" r="18" fill="#eef3f8"/>
+            <text x="316" y="320" font-size="18" fill="#22302d">夜：腎臓から尿へ</text>
+            <text x="96" y="42" font-size="21" fill="#2d6048" font-weight="700">横になると水分の分布が変わる</text>
+          </svg>
+          <figcaption class="caption">むくみ、心臓や腎臓の働き、薬、睡眠の質が重なると、夜間の尿量が増えることがあります。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="夜間頻尿の原因と観察ポイント">
+        <thead>
+          <tr>
+            <th>考え方</th>
+            <th>背景にあること</th>
+            <th>家庭で見ること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>夜に尿が多い</td>
+            <td>むくみ、心不全、腎機能、糖尿病、睡眠時無呼吸、飲酒・飲水</td>
+            <td>夜間の尿量、夕方の足のむくみ、いびき、のどの渇き</td>
+          </tr>
+          <tr>
+            <td>膀胱にためにくい</td>
+            <td>過活動膀胱、前立腺肥大、便秘、尿路感染、膀胱刺激</td>
+            <td>少量で何度も行く、急な尿意、排尿痛、残尿感</td>
+          </tr>
+          <tr>
+            <td>眠りが浅い</td>
+            <td>不眠、昼寝の長さ、痛み、かゆみ、不安、生活リズム</td>
+            <td>起きた時に尿量が少ない、日中の眠気、寝つきの悪さ</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          夜間頻尿は、泌尿器の病気だけでなく内科疾患、睡眠障害、薬剤、生活習慣が関係します。医療機関では、症状、尿検査、血液検査、薬の確認、排尿日誌などを組み合わせて原因を探ります。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜夜間多尿・膀胱容量・睡眠の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        夜間頻尿を相談する時は、「夜に何回起きるか」だけでなく、「1回の尿量は多いか少ないか」「急いで行くほど尿意が強いか」「排尿痛や血尿があるか」「転びそうになったか」「昼間の眠気や活動量低下があるか」を整理します。数日だけでも記録すると、原因を考える助けになります。
+      </p>
+      <div class="two-col">
+        <div>
+          <h3>排尿日誌の簡単版</h3>
+          <p>
+            専門的な排尿日誌では、時刻、尿量、飲水量、尿意、尿もれなどを記録します。家庭ではまず3日程度、起きた時刻、トイレの回数、尿が多かったか少なかったか、むくみ、いびき、寝る前の飲酒やカフェイン、薬の時刻をメモします。量を測れない場合も、「少量」「普通」「多い」から始めて構いません。
+          </p>
+          <p>
+            尿の色が濃い、口が渇く、立つとふらつく場合は脱水の可能性もあります。夜間頻尿があるからといって水分を極端に減らすと、脱水、便秘、尿路感染、血圧低下につながることがあります。水分の調整は、持病や薬により適切さが変わるため、心不全や腎臓病がある人は特に相談が必要です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="排尿日誌のイラスト">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-diary-title">
+            <title id="fig-diary-title">排尿日誌の記録項目</title>
+            <rect x="32" y="28" width="456" height="304" rx="22" fill="#fffdf7" stroke="#d6e0d8" stroke-width="5"/>
+            <rect x="74" y="70" width="372" height="45" rx="8" fill="#eef7f6"/>
+            <text x="92" y="100" font-size="20" fill="#2d6048" font-weight="700">夜間の記録</text>
+            <line x1="86" y1="144" x2="434" y2="144" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="86" y1="190" x2="434" y2="190" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="86" y1="236" x2="434" y2="236" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="182" y1="130" x2="182" y2="264" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="286" y1="130" x2="286" y2="264" stroke="#d6e0d8" stroke-width="4"/>
+            <text x="94" y="170" font-size="18" fill="#22302d">時刻</text>
+            <text x="198" y="170" font-size="18" fill="#22302d">尿量</text>
+            <text x="304" y="170" font-size="18" fill="#22302d">症状</text>
+            <text x="94" y="218" font-size="18" fill="#5a6964">1:30</text>
+            <text x="198" y="218" font-size="18" fill="#5a6964">多い</text>
+            <text x="304" y="218" font-size="18" fill="#5a6964">急いだ</text>
+            <text x="94" y="262" font-size="18" fill="#5a6964">4:40</text>
+            <text x="198" y="262" font-size="18" fill="#5a6964">少量</text>
+            <text x="304" y="262" font-size="18" fill="#5a6964">眠い</text>
+            <circle cx="398" cy="92" r="17" fill="#406f9f"/>
+            <path d="M392 92l5 7 11-16" fill="none" stroke="#fffdf7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <figcaption class="caption">「少量で何度も」か「毎回しっかり出る」かで考える方向が変わります。</figcaption>
+        </figure>
+      </div>
+      <div class="flow" aria-label="相談目安の三段階">
+        <div class="flow-item">
+          <strong>次回相談</strong>
+          夜間1〜2回でも眠りが浅い、日中眠い、生活に困っている。排尿日誌や薬の一覧を持って相談する。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          夜間3回以上が続く、転びそうになった、尿もれが増えた、足のむくみや息切れ、強いいびきがある。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          発熱、排尿痛、血尿、強い腰背部痛、急な尿が出にくい状態、胸痛、強い息苦しさ、意識がはっきりしない。
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>特に注意したいこと</strong>
+        <p>
+          利尿薬、睡眠薬、血圧の薬、糖尿病の薬などを使っている人は、夜間の排尿やふらつきと関係する場合があります。ただし、薬を自己判断で中止・減量すると病状が悪化することがあります。薬の名前、飲む時刻、困っている症状をセットで伝えましょう。
+        </p>
+      </div>
+      <div class="footer">3ページ目｜排尿日誌・危険サイン・相談の準備</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる実践：夜間の転倒を防ぐ環境づくり</h2>
+      <p>
+        夜間頻尿の対策は、原因に合わせた医療相談と同時に、夜中に安全に動ける環境を作ることが大切です。眠気が残っている、足元が暗い、急いでいる、スリッパが脱げやすい、トイレまでの通路に物がある、といった条件が重なると転倒しやすくなります。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>足元を照らす</strong>
+          人感センサーライト、足元灯、ベッド横の手元灯を使い、急にまぶしすぎない明るさにします。
+        </div>
+        <div class="mini-card">
+          <strong>通路を短く安全に</strong>
+          つまずく物、コード、めくれたマットを除きます。必要に応じてポータブルトイレも相談します。
+        </div>
+        <div class="mini-card">
+          <strong>急がない仕組み</strong>
+          起き上がってすぐ歩かず、ベッド端で一呼吸。立ちくらみがある人は特にゆっくり動きます。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>飲み物と生活リズム</h3>
+          <p>
+            夕方以降のカフェインや飲酒は、尿量や睡眠の質に影響することがあります。コーヒー、緑茶、紅茶、栄養ドリンク、アルコールの量と時刻を見直します。ただし、熱中症予防や薬の内服に必要な水分まで減らすのは危険です。日中にこまめに水分を取り、寝る直前の大量摂取を避けるなど、全体の配分を考えます。
+          </p>
+          <p>
+            夕方のむくみがある場合は、日中の活動、足上げ、弾性ストッキングなどが話題になりますが、心臓病や足の血管の病気がある人では合わないこともあります。自己判断で強い圧迫を始めず、主治医や看護師、リハビリ専門職に相談してください。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="夜間の安全な通路の図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-path-title">
+            <title id="fig-path-title">ベッドからトイレまでの安全な通路</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#eef3f8"/>
+            <rect x="62" y="82" width="144" height="92" rx="16" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <rect x="78" y="100" width="112" height="22" rx="8" fill="#d8edf6"/>
+            <text x="87" y="202" font-size="19" fill="#22302d">ベッド</text>
+            <rect x="354" y="82" width="94" height="112" rx="18" fill="#fffdf7" stroke="#406f9f" stroke-width="5"/>
+            <rect x="377" y="102" width="48" height="32" rx="8" fill="#d8edf6"/>
+            <circle cx="401" cy="164" r="12" fill="#406f9f"/>
+            <text x="366" y="220" font-size="19" fill="#22302d">トイレ</text>
+            <path d="M208 128h126" stroke="#c7853e" stroke-width="12" stroke-linecap="round" stroke-dasharray="12 16"/>
+            <circle cx="252" cy="128" r="20" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <path d="M246 128l5 8 14-20" fill="none" stroke="#2d6048" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="220" y="260" width="92" height="34" rx="17" fill="#fffdf7" stroke="#3c5271" stroke-width="5"/>
+            <path d="M235 276h62" stroke="#3c5271" stroke-width="6" stroke-linecap="round"/>
+            <text x="159" y="322" font-size="21" fill="#2d6048" font-weight="700">明るく・片づけて・ゆっくり立つ</text>
+          </svg>
+          <figcaption class="caption">夜間は「急ぐ」「暗い」「眠い」が重なります。環境調整は治療と同じくらい大切な予防策です。</figcaption>
+        </figure>
+      </div>
+      <div class="night-box">
+        <strong>家族・支援者の視点</strong>
+        <p>
+          本人が「大丈夫」と言っていても、夜間の物音、朝の疲れ、あざ、薬の飲み忘れ、日中の居眠りは手がかりになります。本人の自立を尊重しながら、通路の片づけや照明など、本人が受け入れやすい小さな調整から始めます。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜飲水・照明・通路・立ち上がりの工夫</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：夜間頻尿は「原因探し」と「転倒予防」を同時に</h2>
+      <p>
+        夜間頻尿は、膀胱だけの問題に見えて、実際には睡眠、腎臓、心臓、代謝、薬、生活環境が重なることがあります。だからこそ、回数だけで判断せず、尿量、症状、むくみ、いびき、薬、転倒しかけた経験を一緒に見ます。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>3日ほど、夜間に起きた時刻、尿量の印象、尿意の強さ、転びそうになったかをメモする。</li>
+          <li>夕方のむくみ、いびき、日中の眠気、のどの渇き、排尿痛や血尿がないか確認する。</li>
+          <li>寝室からトイレまでの通路、照明、履物、手すり、マットのめくれを見直す。</li>
+          <li>水分や薬は自己判断で大きく変えず、主治医や薬剤師へ相談する。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          夜中のトイレは、本人にとっても家族にとっても遠慮しがちな困りごとです。でも、記録して相談すれば、原因の見立てや安全対策につながります。「恥ずかしいこと」ではなく、暮らしを守る大切な情報として扱いましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-001.html">Vol.1 梅雨時の体調管理の巻</a>
+          <a href="./index.html#topic-urination-sleep">排尿・睡眠</a>
+          <a href="./index.html#topic-emergency">早めに相談したいサイン</a>
+          <a href="./index.html#topic-frailty">フレイル・筋力低下</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://japanese-continence-society.or.jp/information/621/">日本排尿機能学会：夜間頻尿診療ガイドライン［第2版］アップデート版掲載のご案内</a></li>
+          <li><a href="https://japanese-continence-society.or.jp/guidelines/">日本排尿機能学会：ガイドライン・指針・声明文・排尿日誌・転載許諾</a></li>
+          <li><a href="https://www.urol.or.jp/public/symptom/03.html">日本泌尿器科学会：夜間、何度も排尿で起きる</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/heart/k-02-004">厚生労働省 e-ヘルスネット：高齢者の睡眠</a></li>
+          <li><a href="https://www.jpn-geriat-soc.or.jp/info/important_info/20210611_01.html">日本老年医学会：介護施設内での転倒に関するステートメント</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.4「夜間頻尿と転倒予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
