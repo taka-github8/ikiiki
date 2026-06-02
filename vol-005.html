@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.5</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --protein: #725239;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .protein-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .protein-box { border-left: 8px solid var(--protein); background: #fbf1e8; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.5｜低栄養とたんぱく質の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 低栄養の全体像</a>
+        <a href="#page-2">2. 筋肉と代謝の仕組み</a>
+        <a href="#page-3">3. 観察と相談目安</a>
+        <a href="#page-4">4. 食事の実践方法</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.5</div>
+      <h1 id="page-1">低栄養とたんぱく質の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            高齢期の低栄養は、単に「食が細い」だけの問題ではありません。筋肉量、免疫、傷の治り、活動量、転倒しやすさ、気力に関わり、フレイルの悪循環につながることがあります。
+          </p>
+          <p>
+            <span class="term">低栄養</span>とは、体に必要なエネルギーやたんぱく質などが不足し、体重減少、筋力低下、疲れやすさ、感染への弱さなどにつながる状態です。体格が細い人だけでなく、体重がある人でも、食事量が急に落ちたり、筋肉が減ったりしている場合は注意が必要です。
+          </p>
+          <p>
+            高齢期では、食欲低下、歯や義歯の問題、飲み込みにくさ、便秘、薬の副作用、うつ状態、もの忘れ、買い物や調理の負担、独居、経済的な不安、慢性疾患などが食事量を下げる要因になります。低栄養の対応は「もっと食べましょう」と言うだけでは足りず、原因を見つけて食べやすい仕組みを作ることが大切です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="低栄養からフレイルにつながる図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-cycle-title">
+            <title id="fig-cycle-title">低栄養とフレイルサイクル</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#edf6ef"/>
+            <circle cx="260" cy="180" r="90" fill="#fffdf7" stroke="#5b8d70" stroke-width="7"/>
+            <path d="M260 62a118 118 0 0 1 112 80" fill="none" stroke="#c7853e" stroke-width="10" stroke-linecap="round"/>
+            <path d="M374 119l6 40-36-18" fill="#c7853e"/>
+            <path d="M382 198a118 118 0 0 1-92 105" fill="none" stroke="#406f9f" stroke-width="10" stroke-linecap="round"/>
+            <path d="M313 296l-38 14 7-39" fill="#406f9f"/>
+            <path d="M228 303a118 118 0 0 1-91-100" fill="none" stroke="#8a3f33" stroke-width="10" stroke-linecap="round"/>
+            <path d="M128 227l-11-39 39 11" fill="#8a3f33"/>
+            <path d="M138 158a118 118 0 0 1 91-96" fill="none" stroke="#2f6f73" stroke-width="10" stroke-linecap="round"/>
+            <path d="M202 56l39-2-22 33" fill="#2f6f73"/>
+            <text x="214" y="166" font-size="23" fill="#2d6048" font-weight="700">低栄養</text>
+            <text x="199" y="200" font-size="18" fill="#5a6964">筋肉・活動量に影響</text>
+            <text x="342" y="85" font-size="18" fill="#22302d">食事量低下</text>
+            <text x="360" y="270" font-size="18" fill="#22302d">筋力低下</text>
+            <text x="120" y="300" font-size="18" fill="#22302d">活動量低下</text>
+            <text x="72" y="126" font-size="18" fill="#22302d">食欲低下</text>
+          </svg>
+          <figcaption class="caption">食事量低下、筋力低下、活動量低下が重なると、フレイルの悪循環が進みやすくなります。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>体重減少</strong>
+          服がゆるい、ベルト穴が変わった、体重が数か月で落ちた時は食事量だけでなく病気も確認します。
+        </div>
+        <div class="mini-card">
+          <strong>筋力低下</strong>
+          立ち上がりがつらい、歩く速度が落ちた、買い物袋が重いなどは筋肉低下のサインになります。
+        </div>
+        <div class="mini-card">
+          <strong>食べにくさ</strong>
+          歯、口の乾き、飲み込み、味覚、便秘、薬、気分の落ち込みなど、食事を妨げる原因を探します。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜低栄養を体重・筋肉・生活機能の問題として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">筋肉と代謝の仕組み：なぜたんぱく質が大切なのか</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            たんぱく質は、筋肉、皮膚、血液、免疫に関わる物質、酵素などの材料になります。食事から入ったたんぱく質は、消化でアミノ酸に分解され、体の中で必要な組織の材料として使われます。筋肉は体を動かすだけでなく、病気やけがの時の予備力にも関わります。
+          </p>
+          <p>
+            高齢期では、同じ量のたんぱく質を食べても筋肉を作る反応が若いころより起こりにくいことがあります。これを<span class="term">同化抵抗性</span>と呼ぶことがあります。運動、特に筋肉に刺激を入れる活動と、十分なエネルギー・たんぱく質を組み合わせることが、筋肉を保つうえで大切です。
+          </p>
+          <p>
+            ただし、腎臓病などでたんぱく質制限が指示されている人は、自己判断で増やしてはいけません。糖尿病、心不全、腎臓病、肝臓病、がん治療中、嚥下障害がある場合は、主治医や管理栄養士と相談しながら調整します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="たんぱく質が筋肉になる流れ">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-protein-title">
+            <title id="fig-protein-title">食事のたんぱく質と筋肉の流れ</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <rect x="58" y="92" width="112" height="74" rx="16" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <circle cx="92" cy="126" r="18" fill="#725239"/>
+            <rect x="112" y="108" width="42" height="34" rx="10" fill="#2f6f73"/>
+            <text x="72" y="208" font-size="19" fill="#22302d">食事</text>
+            <path d="M182 128h60" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M229 112l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="274" cy="128" r="46" fill="#eef7f6" stroke="#5b8d70" stroke-width="5"/>
+            <circle cx="258" cy="118" r="7" fill="#406f9f"/>
+            <circle cx="280" cy="130" r="7" fill="#c7853e"/>
+            <circle cx="295" cy="110" r="7" fill="#2f6f73"/>
+            <text x="233" y="208" font-size="19" fill="#22302d">アミノ酸</text>
+            <path d="M322 128h60" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M369 112l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M400 102c28-24 62-1 46 31-7 14-23 22-40 17-15-5-25-26-6-48z" fill="#d8edf6" stroke="#406f9f" stroke-width="5"/>
+            <path d="M396 157c28-22 68 1 50 34-8 14-25 20-41 14-16-6-24-25-9-48z" fill="#d8edf6" stroke="#406f9f" stroke-width="5"/>
+            <text x="388" y="246" font-size="19" fill="#22302d">筋肉</text>
+            <path d="M128 286c52-30 121-30 173 0 52 30 106 30 151 0" fill="none" stroke="#2f6f73" stroke-width="8" stroke-linecap="round"/>
+            <text x="95" y="330" font-size="21" fill="#2d6048" font-weight="700">材料だけでなく、運動の刺激も大切</text>
+          </svg>
+          <figcaption class="caption">たんぱく質は筋肉の材料ですが、体を動かす刺激や十分なエネルギーも一緒に必要です。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="低栄養で起こりやすい変化">
+        <thead>
+          <tr>
+            <th>体の変化</th>
+            <th>生活で見えること</th>
+            <th>確認したい背景</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>筋肉量の低下</td>
+            <td>歩行速度低下、立ち上がり困難、転倒しやすさ</td>
+            <td>食事量、活動量、病気、痛み、薬</td>
+          </tr>
+          <tr>
+            <td>免疫・回復力の低下</td>
+            <td>感染を繰り返す、傷が治りにくい、疲れやすい</td>
+            <td>たんぱく質不足、ビタミン・ミネラル不足、持病</td>
+          </tr>
+          <tr>
+            <td>食べる力の低下</td>
+            <td>むせる、固い物を避ける、食事に時間がかかる</td>
+            <td>歯科、嚥下、口腔乾燥、義歯、食形態</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          低栄養は、体重だけで判断しません。体重変化、食事摂取量、筋力、歩行、口腔状態、血液検査、病気の活動性を合わせて見ます。体重減少が続く場合は、がん、感染症、内分泌疾患、消化器疾患、うつ状態などの確認も必要になることがあります。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜たんぱく質・筋肉・同化抵抗性</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        低栄養はゆっくり進むことが多く、本人も周囲も気づきにくいことがあります。体重計だけでなく、服のゆるさ、食事の残し方、冷蔵庫の中身、買い物の頻度、歩く速さ、握力、疲れやすさを見ます。家族や支援者は、本人を責めずに「食べにくい理由」を一緒に探すことが大切です。
+      </p>
+      <div class="flow" aria-label="相談目安の三段階">
+        <div class="flow-item">
+          <strong>記録して相談</strong>
+          食事量が減った、肉・魚・卵・大豆製品を避ける、体重が少しずつ落ちている。次回受診や栄養相談で伝える。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          数か月で明らかな体重減少、むせ、飲み込みにくさ、義歯不調、強い疲労、転倒、買い物や調理が難しい。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          食事や水分がほとんど取れない、意識がぼんやりする、発熱や強い痛みを伴う、黒色便、血便、急な体重減少。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>体重と食事の記録</h3>
+          <p>
+            体重は毎日でなくても、週1回程度、同じ条件で測ると変化が見やすくなります。食事は細かいカロリー計算から始めなくても、主食、主菜、副菜がそろっているか、主菜をどれくらい食べたかを記録します。主菜は、肉、魚、卵、大豆製品、乳製品など、たんぱく質を多く含む料理です。
+          </p>
+          <p>
+            食欲が落ちた時は、薬の変更、便秘、口の痛み、味覚の変化、睡眠不足、気分の落ち込み、発熱、認知機能の変化も確認します。特に、食べられない理由が「面倒」「一人だと食べる気がしない」「噛むと痛い」など生活にある場合は、医療だけでなく介護・地域支援の工夫が役立ちます。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="低栄養の観察メモの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-note-title">
+            <title id="fig-note-title">体重と食事量の記録</title>
+            <rect x="40" y="34" width="440" height="292" rx="22" fill="#fffdf7" stroke="#d6e0d8" stroke-width="5"/>
+            <rect x="78" y="70" width="364" height="44" rx="10" fill="#eef7f6"/>
+            <text x="96" y="99" font-size="20" fill="#2d6048" font-weight="700">食事・体重メモ</text>
+            <line x1="82" y1="145" x2="438" y2="145" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="82" y1="192" x2="438" y2="192" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="82" y1="239" x2="438" y2="239" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="175" y1="130" x2="175" y2="268" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="296" y1="130" x2="296" y2="268" stroke="#d6e0d8" stroke-width="4"/>
+            <text x="94" y="170" font-size="18" fill="#22302d">日付</text>
+            <text x="196" y="170" font-size="18" fill="#22302d">体重</text>
+            <text x="316" y="170" font-size="18" fill="#22302d">主菜</text>
+            <text x="94" y="217" font-size="18" fill="#5a6964">6/3</text>
+            <text x="196" y="217" font-size="18" fill="#5a6964">--kg</text>
+            <text x="316" y="217" font-size="18" fill="#5a6964">半分</text>
+            <text x="94" y="264" font-size="18" fill="#5a6964">6/10</text>
+            <text x="196" y="264" font-size="18" fill="#5a6964">--kg</text>
+            <text x="316" y="264" font-size="18" fill="#5a6964">完食</text>
+          </svg>
+          <figcaption class="caption">細かく書けない時は、体重と主菜を食べられた量だけでも手がかりになります。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>相談時に伝えること</strong>
+        <ul>
+          <li>いつから食事量が減ったか、体重がどれくらい変わったか</li>
+          <li>噛みにくい、むせる、飲み込みにくい、口が乾く、義歯が合わないなどの口の問題</li>
+          <li>便秘、下痢、吐き気、痛み、発熱、気分の落ち込み、薬の変更</li>
+          <li>買い物、調理、食事の準備、同席者の有無など生活上の困りごと</li>
+        </ul>
+      </div>
+      <div class="footer">3ページ目｜体重・食事量・食べにくさの観察</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる実践：一回量より「食べられる形」を増やす</h2>
+      <p>
+        食事量が落ちている時に、急に一食の量を増やすのは難しいことがあります。まずは、食べやすい形で、主菜を毎食少しずつ入れることを考えます。肉がかたい場合はひき肉、魚、卵、豆腐、納豆、ヨーグルト、牛乳、チーズなどに置き換える方法があります。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>朝に足す</strong>
+          パンだけ、ご飯だけになりやすい朝食に、卵、牛乳、ヨーグルト、納豆、豆腐を足します。
+        </div>
+        <div class="mini-card">
+          <strong>間食を活用</strong>
+          食事量が少ない人は、補食として乳製品、豆乳、プリン、栄養補助食品を相談して使うことがあります。
+        </div>
+        <div class="mini-card">
+          <strong>食べる力に合わせる</strong>
+          むせる、噛みにくい時は、食形態やとろみ、歯科・嚥下相談を検討します。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>低栄養予防は「運動」と組み合わせる</h3>
+          <p>
+            たんぱく質を取るだけで筋肉が増えるとは限りません。椅子からの立ち座り、散歩、体操、リハビリなど、体に合った運動刺激と組み合わせることで、筋肉の維持に役立ちます。転倒リスクや痛みがある場合は、リハビリ専門職や主治医に運動内容を相談しましょう。
+          </p>
+          <p>
+            食事制限をしている人は注意が必要です。糖尿病では食事のバランス、腎臓病ではたんぱく質や塩分、心不全では水分や塩分が重要になります。本人の持病に合わせた栄養調整が必要なため、管理栄養士へ相談できる機会を使うと具体的です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="毎食にたんぱく質を足す図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-meal-title">
+            <title id="fig-meal-title">毎食に主菜を少し足す</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbf1e8"/>
+            <circle cx="130" cy="145" r="70" fill="#fffdf7" stroke="#c7853e" stroke-width="5"/>
+            <rect x="92" y="126" width="76" height="30" rx="12" fill="#f6f0df" stroke="#725239" stroke-width="4"/>
+            <circle cx="131" cy="96" r="24" fill="#fff7e8" stroke="#c7853e" stroke-width="4"/>
+            <text x="98" y="244" font-size="20" fill="#22302d">朝</text>
+            <circle cx="260" cy="145" r="70" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <rect x="222" y="118" width="76" height="48" rx="16" fill="#d8edf6" stroke="#406f9f" stroke-width="4"/>
+            <circle cx="238" cy="98" r="18" fill="#2f6f73"/>
+            <circle cx="286" cy="98" r="18" fill="#c7853e"/>
+            <text x="228" y="244" font-size="20" fill="#22302d">昼</text>
+            <circle cx="390" cy="145" r="70" fill="#fffdf7" stroke="#2f6f73" stroke-width="5"/>
+            <path d="M352 135c24-30 78-30 102 0-10 36-31 52-52 52s-41-16-50-52z" fill="#eef7f6" stroke="#2f6f73" stroke-width="4"/>
+            <text x="358" y="244" font-size="20" fill="#22302d">夕</text>
+            <path d="M102 292h316" stroke="#725239" stroke-width="8" stroke-linecap="round"/>
+            <path d="M400 274l30 18-30 18" fill="none" stroke="#725239" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="115" y="335" font-size="21" fill="#2d6048" font-weight="700">毎食少しずつ、食べやすい形で</text>
+          </svg>
+          <figcaption class="caption">一食で頑張るより、朝・昼・夕に少しずつ主菜を入れる方が続けやすいことがあります。</figcaption>
+        </figure>
+      </div>
+      <div class="protein-box">
+        <strong>食べられない時の工夫</strong>
+        <p>
+          食欲がない日は、汁物に豆腐や卵を入れる、牛乳や豆乳を使う、魚の缶詰を使う、やわらかい卵料理にするなど、調理の手間を減らす方法があります。むせがある場合は、自己判断で水分を減らすのではなく、嚥下評価や食形態の相談をしてください。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜毎食の主菜・補食・運動との組み合わせ</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：食事量の変化は早めに言葉にする</h2>
+      <p>
+        低栄養は、本人の努力不足ではありません。病気、薬、口腔機能、気分、生活環境が関係します。だからこそ、体重や食事量の変化を責めるのではなく、医療・歯科・栄養・介護の専門職と一緒に原因を探し、続けやすい食べ方を作ることが大切です。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>週1回程度、同じ条件で体重を測る。</li>
+          <li>毎食、主菜が入っているかを確認する。</li>
+          <li>噛みにくい、むせる、口が乾く、義歯が合わない時は歯科や専門職へ相談する。</li>
+          <li>食事量低下が続く時は、体重変化、薬の変更、便通、気分、買い物・調理の困りごとをメモする。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          「食べること」は治療や運動と同じくらい、体を支える土台です。食べられない理由を一緒に探せば、無理なく足せる一口が見つかることがあります。小さな変化を、早めに相談につなげましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-001.html">Vol.1 梅雨時の体調管理の巻</a>
+          <a href="./vol-002.html">Vol.2 食中毒と脱水予防の巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./index.html#topic-nutrition">水分・栄養</a>
+          <a href="./index.html#topic-frailty">フレイル・筋力低下</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://kennet.mhlw.go.jp/information/information/food/e-02-014.html">厚生労働省 e-ヘルスネット：高齢者の低栄養予防</a></li>
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/eiyou/syokuji_kijyun.html">厚生労働省：日本人の食事摂取基準</a></li>
+          <li><a href="https://www.ncgg.go.jp/hospital/navi/07.html">国立長寿医療研究センター：フレイルの原因は？</a></li>
+          <li><a href="https://www.ncgg.go.jp/ri/advice/44.html">国立長寿医療研究センター：良質なたんぱく質とは？食事ごとのたんぱく質摂取と筋肉量</a></li>
+          <li><a href="https://www.jasf.jp/contents/flail.html">日本サルコペニア・フレイル学会：フレイルとは</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.5「低栄養とたんぱく質の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
