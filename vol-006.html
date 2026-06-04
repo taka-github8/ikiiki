@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.6</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --mouth: #7a4a5f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .mouth-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .mouth-box { border-left: 8px solid var(--mouth); background: #f8eef3; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.6｜オーラルフレイルと誤嚥予防の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 口の衰えの全体像</a>
+        <a href="#page-2">2. かむ・飲み込む仕組み</a>
+        <a href="#page-3">3. 観察と相談目安</a>
+        <a href="#page-4">4. 口腔ケアの実践</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.6</div>
+      <h1 id="page-1">オーラルフレイルと誤嚥予防の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            口の衰えは、歯みがきだけの問題ではありません。かむ力、舌の動き、唾液、飲み込み、会話、食事の楽しみが少しずつ弱ると、低栄養、フレイル、誤嚥性肺炎のリスクに関わることがあります。
+          </p>
+          <p>
+            <span class="term">オーラルフレイル</span>は、かみにくさ、食べこぼし、むせ、滑舌の低下、口の乾きなど、口の機能の軽い衰えを含む考え方です。早い段階では本人も周囲も「年齢のせい」と考えがちですが、適切な口腔ケア、歯科受診、食事の工夫、口の体操で改善や進行予防につながることがあります。
+          </p>
+          <p>
+            口の機能が落ちると、やわらかい炭水化物に偏り、肉や魚、野菜を避けやすくなります。すると、たんぱく質や食物繊維が不足し、筋力低下や便秘、活動量低下につながる場合があります。また、口の中の細菌が増えた状態でむせや誤嚥が起こると、肺炎のリスクにも関係します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="口の衰えから低栄養や肺炎へつながる図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-overview-title">
+            <title id="fig-overview-title">口の衰えと全身への影響</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#f8eef3"/>
+            <path d="M110 92c42-35 103-35 145 0 21 18 21 52 0 70-42 36-103 36-145 0-21-18-21-52 0-70z" fill="#fffdf7" stroke="#7a4a5f" stroke-width="6"/>
+            <path d="M132 126c35 20 77 20 112 0" fill="none" stroke="#c7853e" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="154" cy="116" r="8" fill="#406f9f"/>
+            <circle cx="204" cy="116" r="8" fill="#406f9f"/>
+            <text x="113" y="214" font-size="19" fill="#22302d">口の機能低下</text>
+            <path d="M280 128h68" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M336 112l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="402" cy="92" r="42" fill="#edf6ef" stroke="#5b8d70" stroke-width="5"/>
+            <path d="M382 91h40" stroke="#2f6f73" stroke-width="7" stroke-linecap="round"/>
+            <path d="M400 72v40" stroke="#2f6f73" stroke-width="7" stroke-linecap="round"/>
+            <text x="360" y="154" font-size="18" fill="#22302d">食事偏り</text>
+            <circle cx="402" cy="226" r="42" fill="#fff0ed" stroke="#8a3f33" stroke-width="5"/>
+            <path d="M380 230c18-22 35-22 52 0" fill="none" stroke="#8a3f33" stroke-width="7" stroke-linecap="round"/>
+            <text x="348" y="292" font-size="18" fill="#22302d">むせ・誤嚥</text>
+            <text x="70" y="306" font-size="21" fill="#2d6048" font-weight="700">口の小さな変化を、栄養と肺炎予防につなげて見る</text>
+          </svg>
+          <figcaption class="caption">口の衰えは、食べる量や栄養、呼吸器感染、会話や外出意欲にも影響します。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>かみにくい</strong>
+          義歯、歯の痛み、咬合力低下で、肉や野菜を避けやすくなります。
+        </div>
+        <div class="mini-card">
+          <strong>むせやすい</strong>
+          飲み込みのタイミングが合わず、水分や食べ物が気管側へ入りやすくなります。
+        </div>
+        <div class="mini-card">
+          <strong>口が乾く</strong>
+          唾液が少ないと、食べ物をまとめにくく、口腔内の清潔も保ちにくくなります。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜口の機能を栄養・フレイル・肺炎予防とつなげて見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">かむ・飲み込む仕組み：誤嚥はなぜ起こるのか</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            食事は、口に入れる、かむ、舌でまとめる、のどへ送る、気管を守りながら食道へ送る、という複数の動きで成り立ちます。舌、頬、唇、歯、唾液、のどの筋肉が連携しているため、どこか一つの機能が落ちても食べにくさやむせにつながります。
+          </p>
+          <p>
+            <span class="term">誤嚥</span>とは、食べ物、飲み物、唾液、胃から戻った内容物などが、食道ではなく気管側へ入ることです。強くむせて気づく場合もありますが、むせが目立たない<span class="term">不顕性誤嚥</span>が疑われることもあります。高齢期、脳血管疾患、認知症、パーキンソン病、寝たきり、鎮静作用のある薬などでは、飲み込みや咳反射が弱くなることがあります。
+          </p>
+          <p>
+            誤嚥性肺炎は、誤嚥そのものだけで決まるわけではありません。口の中の細菌量、全身の抵抗力、栄養状態、活動量、持病、咳で出す力も関係します。つまり、予防では「むせを減らす」だけでなく、口腔内を清潔に保ち、栄養と活動量を守ることが重要です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="飲み込みと誤嚥の図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-swallow-title">
+            <title id="fig-swallow-title">正常な飲み込みと誤嚥</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <path d="M96 72c80 8 118 54 118 112 0 56-38 102-118 112" fill="none" stroke="#7a4a5f" stroke-width="9" stroke-linecap="round"/>
+            <path d="M120 154c42 12 72 12 100 0" fill="none" stroke="#c7853e" stroke-width="7" stroke-linecap="round"/>
+            <path d="M226 142c52 24 85 67 100 132" fill="none" stroke="#2f6f73" stroke-width="9" stroke-linecap="round"/>
+            <path d="M272 132c42 30 69 68 82 121" fill="none" stroke="#406f9f" stroke-width="9" stroke-linecap="round"/>
+            <path d="M238 160h70" stroke="#5a6964" stroke-width="7" stroke-linecap="round"/>
+            <path d="M295 145l22 15-22 15" fill="none" stroke="#5a6964" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="218" cy="158" r="13" fill="#c7853e"/>
+            <circle cx="314" cy="160" r="13" fill="#c7853e"/>
+            <path d="M350 126c35 13 52 40 47 80" fill="none" stroke="#8a3f33" stroke-width="9" stroke-linecap="round"/>
+            <path d="M380 207l20 29" stroke="#8a3f33" stroke-width="8" stroke-linecap="round"/>
+            <text x="86" y="330" font-size="20" fill="#2d6048" font-weight="700">気管を守り、食道へ送る動きが重要</text>
+            <text x="332" y="110" font-size="18" fill="#8a3f33">気管側</text>
+            <text x="275" y="304" font-size="18" fill="#2f6f73">食道側</text>
+          </svg>
+          <figcaption class="caption">飲み込みでは、食べ物をまとめ、のどへ送り、気管を守る動きが短時間で連携します。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="口腔機能低下と生活で見える変化">
+        <thead>
+          <tr>
+            <th>機能</th>
+            <th>低下すると見えること</th>
+            <th>確認したい背景</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>かむ力</td>
+            <td>肉・野菜を避ける、食事時間が長い、片側だけでかむ</td>
+            <td>歯、義歯、歯周病、顎の痛み</td>
+          </tr>
+          <tr>
+            <td>舌・唇の動き</td>
+            <td>食べこぼし、滑舌低下、食塊をまとめにくい</td>
+            <td>筋力低下、脳血管疾患、口腔乾燥</td>
+          </tr>
+          <tr>
+            <td>飲み込み</td>
+            <td>むせ、湿った声、食後の咳、発熱を繰り返す</td>
+            <td>嚥下障害、薬、認知機能、呼吸機能</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          誤嚥性肺炎の予防では、歯科、医科、看護、管理栄養士、言語聴覚士、リハビリ専門職の連携が有用です。むせがあるからといって水分や食事を自己判断で極端に制限すると、脱水や低栄養を招くことがあります。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜咀嚼・舌・唾液・嚥下・誤嚥の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        口の機能低下は、食事場面で見つかりやすいです。本人が「大丈夫」と言っていても、食べる速度、残す食品、むせ、声の変化、口臭、義歯の使用状況、体重変化を観察すると手がかりになります。家族や支援者は、食べ方を責めるのではなく、困っている場面を具体的に記録します。
+      </p>
+      <div class="flow" aria-label="相談目安の三段階">
+        <div class="flow-item">
+          <strong>次回相談</strong>
+          かみにくい、食べこぼす、滑舌が落ちた、口が乾く、義歯が合わない。歯科や受診時に相談する。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          むせが増えた、食後に咳が続く、体重が減る、食事時間が極端に長い、薬を飲み込みにくい。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          発熱を繰り返す、息苦しい、強い咳、食事や水分がほとんど取れない、意識がぼんやりする。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>食事場面の見方</h3>
+          <p>
+            むせの有無だけでなく、食後に声が湿った感じになる、のどに残る感じを訴える、食事中に疲れる、薬だけ飲みにくい、水分でむせる、口の中に食べ物が残る、といった点を見ます。これらは嚥下機能や口腔機能の低下を示すことがあります。
+          </p>
+          <p>
+            体重減少や低栄養がある場合は、食べにくさが背景にあるか確認します。特に「ご飯や麺は食べるが、肉や野菜を避ける」「硬いものを避けて菓子やパンが増える」などの変化は、栄養の偏りにつながります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="食事場面の観察メモ">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-note-title">
+            <title id="fig-note-title">食事場面の観察メモ</title>
+            <rect x="40" y="34" width="440" height="292" rx="22" fill="#fffdf7" stroke="#d6e0d8" stroke-width="5"/>
+            <rect x="78" y="70" width="364" height="44" rx="10" fill="#eef7f6"/>
+            <text x="96" y="99" font-size="20" fill="#2d6048" font-weight="700">口と食事のメモ</text>
+            <line x1="82" y1="145" x2="438" y2="145" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="82" y1="192" x2="438" y2="192" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="82" y1="239" x2="438" y2="239" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="182" y1="130" x2="182" y2="268" stroke="#d6e0d8" stroke-width="4"/>
+            <line x1="302" y1="130" x2="302" y2="268" stroke="#d6e0d8" stroke-width="4"/>
+            <text x="96" y="170" font-size="18" fill="#22302d">場面</text>
+            <text x="202" y="170" font-size="18" fill="#22302d">変化</text>
+            <text x="322" y="170" font-size="18" fill="#22302d">相談</text>
+            <text x="96" y="217" font-size="18" fill="#5a6964">食事</text>
+            <text x="202" y="217" font-size="18" fill="#5a6964">むせ</text>
+            <text x="322" y="217" font-size="18" fill="#5a6964">歯科</text>
+            <text x="96" y="264" font-size="18" fill="#5a6964">薬</text>
+            <text x="202" y="264" font-size="18" fill="#5a6964">飲みにくい</text>
+            <text x="322" y="264" font-size="18" fill="#5a6964">薬局</text>
+          </svg>
+          <figcaption class="caption">「いつ・何で・どのくらい困るか」を記録すると、歯科や医療相談が具体的になります。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>相談時に伝えること</strong>
+        <ul>
+          <li>むせる食品、水分、薬の種類、時間帯</li>
+          <li>体重変化、食事量、避けている食品、食事時間</li>
+          <li>義歯の使用状況、歯の痛み、口の乾き、口臭</li>
+          <li>発熱、咳、息苦しさ、食後の声の変化、肺炎の既往</li>
+        </ul>
+      </div>
+      <div class="footer">3ページ目｜むせ・食事量・体重・口腔状態の観察</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる実践：清潔・姿勢・食べる力を整える</h2>
+      <p>
+        口腔ケアは、歯みがきだけではなく、義歯の清掃、舌や粘膜の状態確認、口の乾燥対策、食事姿勢、食形態の調整を含みます。誤嚥性肺炎の予防では、口の中の細菌を減らすことと、飲み込みやすい食べ方を整えることの両方が重要です。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>清潔を保つ</strong>
+          歯、歯ぐき、舌、義歯を確認します。義歯は外して洗い、就寝時の扱いは歯科で確認します。
+        </div>
+        <div class="mini-card">
+          <strong>姿勢を整える</strong>
+          食事中は背中を起こし、足底を安定させます。食後すぐ横になる習慣も見直します。
+        </div>
+        <div class="mini-card">
+          <strong>口を動かす</strong>
+          口唇、舌、頬、発声の体操は、食べる力と会話の維持に役立つことがあります。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>食形態は自己判断で固定しない</h3>
+          <p>
+            むせるからといって、すぐに全てをミキサー食にする必要があるとは限りません。水分でむせる人、固形物でむせる人、薬だけ飲みにくい人では、必要な工夫が違います。食形態やとろみは、本人の飲み込み、栄養量、好み、介助環境を見ながら調整します。
+          </p>
+          <p>
+            薬の飲み込みにくさも相談対象です。錠剤を砕く、カプセルを開ける、とろみ剤に混ぜるなどは、薬の効き方や吸収に影響する場合があります。自己判断で変更せず、薬剤師や主治医に確認します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="口腔ケアの三本柱">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-care-title">
+            <title id="fig-care-title">口腔ケアの三本柱</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#eef7f6"/>
+            <circle cx="130" cy="145" r="66" fill="#fffdf7" stroke="#5b8d70" stroke-width="5"/>
+            <path d="M104 132c20 16 41 16 61 0" fill="none" stroke="#7a4a5f" stroke-width="7" stroke-linecap="round"/>
+            <rect x="118" y="92" width="22" height="60" rx="9" fill="#406f9f"/>
+            <text x="88" y="242" font-size="20" fill="#22302d">清潔</text>
+            <circle cx="260" cy="145" r="66" fill="#fffdf7" stroke="#c7853e" stroke-width="5"/>
+            <path d="M238 170v-60h46v60" fill="none" stroke="#c7853e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M224 170h74" stroke="#c7853e" stroke-width="7" stroke-linecap="round"/>
+            <text x="218" y="242" font-size="20" fill="#22302d">姿勢</text>
+            <circle cx="390" cy="145" r="66" fill="#fffdf7" stroke="#2f6f73" stroke-width="5"/>
+            <path d="M362 132c18 22 38 22 56 0" fill="none" stroke="#2f6f73" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="374" cy="112" r="8" fill="#2f6f73"/>
+            <circle cx="406" cy="112" r="8" fill="#2f6f73"/>
+            <text x="348" y="242" font-size="20" fill="#22302d">口の運動</text>
+            <path d="M102 300h316" stroke="#7a4a5f" stroke-width="8" stroke-linecap="round"/>
+            <text x="95" y="338" font-size="21" fill="#2d6048" font-weight="700">清潔・姿勢・動きの3点で支える</text>
+          </svg>
+          <figcaption class="caption">口腔ケア、食事姿勢、口の運動を組み合わせると、食事と会話の維持につながります。</figcaption>
+        </figure>
+      </div>
+      <div class="mouth-box">
+        <strong>毎日の小さな実践</strong>
+        <p>
+          食前に口を動かす、食後に口腔内を確認する、義歯を洗う、寝る前の口腔ケアを丁寧にする、口の乾きが強い時は歯科や薬剤師に相談する。これらは特別な道具がなくても始めやすい対策です。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜口腔清掃・姿勢・食形態・口の運動</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：口の変化は早めに相談する</h2>
+      <p>
+        オーラルフレイルは、口だけの問題ではなく、栄養、フレイル、肺炎予防、会話、外出意欲に関わります。むせやかみにくさを放置せず、歯科・医科・栄養・リハビリの相談につなげることで、食べる力と生活の質を守りやすくなります。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>食べこぼし、むせ、滑舌低下、口の乾き、義歯の不具合をメモする。</li>
+          <li>肉、魚、野菜を避けていないか、体重が落ちていないか確認する。</li>
+          <li>歯・歯ぐき・舌・義歯を毎日確認し、口腔ケアを続ける。</li>
+          <li>むせが増える、発熱を繰り返す、食事量が落ちる時は早めに相談する。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          口の小さな変化は、体全体の変化を知らせる合図です。食べにくさやむせを我慢せず、早めに相談することが、栄養と暮らしを守る一歩になります。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-005.html">Vol.5 低栄養とたんぱく質の巻</a>
+          <a href="./vol-002.html">Vol.2 食中毒と脱水予防の巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./index.html#topic-oral-care">口腔ケア・嚥下</a>
+          <a href="./index.html#topic-infection">感染症・食中毒予防</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.gerodontology.jp/committee/002370.shtml">日本老年歯科医学会：オーラルフレイルを知っていますか？</a></li>
+          <li><a href="https://www.jda.or.jp/enlightenment/oral/about.html">日本歯科医師会：オーラルフレイルについて</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/dictionary-summaries/h-elderly-care.html">厚生労働省 e-ヘルスネット：歯・口腔の健康 / 高齢者への対応</a></li>
+          <li><a href="https://www.jrs.or.jp/citizen/disease/a/a-12.html">日本呼吸器学会：誤嚥性肺炎</a></li>
+          <li><a href="https://www.jads.jp/assets/pdf/basic/r06/document-240329.pdf">日本歯科医学会：口腔機能低下症に関する基本的な考え方</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.6「オーラルフレイルと誤嚥予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
