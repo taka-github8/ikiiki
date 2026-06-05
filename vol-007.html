@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.7</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --glucose: #8b4b3b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--leaf);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .glucose-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .glucose-box { border-left: 8px solid var(--glucose); background: #fff2ed; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--leaf); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.7｜高血糖と認知症予防の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 健診結果から考える</a>
+        <a href="#page-2">2. 血糖と脳の仕組み</a>
+        <a href="#page-3">3. 検査値と相談目安</a>
+        <a href="#page-4">4. 早めに始める対策</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.7</div>
+      <h1 id="page-1">高血糖と認知症予防の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            熊野町の集団健診では、血糖値が高めの方が多い傾向が見られました。高血糖は自覚症状がないまま進むことがあり、血管、神経、腎臓、目だけでなく、脳の健康とも関係します。
+          </p>
+          <p>
+            「血糖値が高い」と聞くと、甘いものや体重だけの問題と思われがちです。しかし糖尿病や高血糖の状態が長く続くと、全身の血管に負担がかかります。脳の細い血管にも影響が及ぶと、脳梗塞や小さな血流障害が起こりやすくなり、認知機能の低下や血管性認知症のリスクに関係することがあります。
+          </p>
+          <p>
+            ただし、「高血糖だから必ず認知症になる」という意味ではありません。大切なのは、健診で高めと言われた段階で放置しないことです。早めに医療機関で確認し、生活習慣や治療について相談することで、将来の合併症を減らしやすくなります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="高血糖が血管と脳に影響する図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-overview-title">
+            <title id="fig-overview-title">高血糖と脳血管の関係</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fff2ed"/>
+            <circle cx="100" cy="112" r="44" fill="#fffdf7" stroke="#8b4b3b" stroke-width="6"/>
+            <circle cx="83" cy="105" r="9" fill="#c7853e"/>
+            <circle cx="112" cy="121" r="9" fill="#c7853e"/>
+            <circle cx="115" cy="91" r="9" fill="#c7853e"/>
+            <text x="58" y="190" font-size="18" fill="#22302d">高血糖</text>
+            <path d="M154 116h68" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M210 100l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M248 88c52 10 68 48 49 86-17 34-69 39-98 8-29-31-8-105 49-94z" fill="#eef7f6" stroke="#5b8d70" stroke-width="6"/>
+            <path d="M226 134c34-24 62-16 84 10" fill="none" stroke="#406f9f" stroke-width="7" stroke-linecap="round"/>
+            <text x="225" y="210" font-size="18" fill="#22302d">血管に負担</text>
+            <path d="M318 116h68" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M374 100l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M420 78c46 0 72 35 60 74-9 28-39 44-64 34-13 22-48 15-55-9-7-24 10-44 30-47-5-27 7-52 29-52z" fill="#eef3f8" stroke="#406f9f" stroke-width="6"/>
+            <path d="M401 136c26-12 49-10 72 4" fill="none" stroke="#8a3f33" stroke-width="6" stroke-linecap="round"/>
+            <text x="382" y="228" font-size="18" fill="#22302d">脳の健康</text>
+            <text x="68" y="306" font-size="21" fill="#2d6048" font-weight="700">健診結果を放置せず、早めの確認につなげる</text>
+          </svg>
+          <figcaption class="caption">高血糖は、脳だけでなく全身の血管に関わる生活習慣病のサインです。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>自覚症状が少ない</strong>
+          高血糖は症状がないまま続くことがあります。健診結果が早期発見の入口になります。
+        </div>
+        <div class="mini-card">
+          <strong>血管に負担</strong>
+          動脈硬化が進むと、心臓、腎臓、目、足、脳の血管に影響します。
+        </div>
+        <div class="mini-card">
+          <strong>脳の予防にも関係</strong>
+          糖尿病や高血糖の管理は、認知症予防を考えるうえでも重要な要素です。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜熊野町の健診結果を入口に、高血糖を脳の健康と結びつけて見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">血糖と脳の仕組み：高血糖が続くとなぜ問題になるのか</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            血糖とは血液中のブドウ糖の量です。ブドウ糖は脳や筋肉の大切なエネルギー源ですが、血液中に多すぎる状態が長く続くと、血管の内側に負担がかかります。糖尿病ではインスリンの働きが不足したり効きにくくなったりして、慢性的な高血糖が起こります。
+          </p>
+          <p>
+            脳には細い血管が多く張り巡らされています。高血糖、高血圧、脂質異常、喫煙などが重なると動脈硬化が進み、脳梗塞や小さな血管障害が起こりやすくなります。これらは血管性認知症のリスクに関係します。また、糖尿病ではアルツハイマー型認知症も多いことが示されています。
+          </p>
+          <p>
+            もう一つ注意したいのは低血糖です。血糖を下げる薬を使っている人が、食事を抜く、薬を間違える、体調不良になるなどで重い低血糖を起こすと、意識障害や転倒につながり、認知機能にも影響することがあります。血糖管理は「下げれば下げるほどよい」ではなく、本人の年齢、持病、生活状況に合わせて安全に行います。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="血糖値と脳血管の仕組み">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-mechanism-title">
+            <title id="fig-mechanism-title">血糖、血管、脳の関係</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <path d="M78 108c74-42 138-42 212 0 74 42 126 42 178 0" fill="none" stroke="#406f9f" stroke-width="16" stroke-linecap="round"/>
+            <circle cx="124" cy="104" r="10" fill="#c7853e"/>
+            <circle cx="184" cy="126" r="10" fill="#c7853e"/>
+            <circle cx="250" cy="100" r="10" fill="#c7853e"/>
+            <circle cx="318" cy="130" r="10" fill="#c7853e"/>
+            <circle cx="396" cy="104" r="10" fill="#c7853e"/>
+            <text x="94" y="176" font-size="19" fill="#22302d">血液中の糖が多い状態が続く</text>
+            <path d="M260 202v58" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M244 246l16 22 16-22" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M204 276c18-32 84-40 116 0 22-12 57 7 54 38-3 33-45 42-70 24-23 20-70 17-91-10-23 7-54-8-56-32-2-20 18-30 47-20z" fill="#eef3f8" stroke="#406f9f" stroke-width="5"/>
+            <path d="M214 314c46-20 91-16 132 8" fill="none" stroke="#8a3f33" stroke-width="6" stroke-linecap="round"/>
+            <text x="137" y="350" font-size="20" fill="#2d6048" font-weight="700">脳の細い血管を守ることが重要</text>
+          </svg>
+          <figcaption class="caption">脳血管の健康には、血糖だけでなく血圧、脂質、喫煙、運動不足も関係します。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="高血糖と認知機能に関係する要因">
+        <thead>
+          <tr>
+            <th>要因</th>
+            <th>脳への関わり</th>
+            <th>確認すること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>高血糖の持続</td>
+            <td>血管障害や認知機能低下と関係することがあります</td>
+            <td>HbA1c、空腹時血糖、治療中断の有無</td>
+          </tr>
+          <tr>
+            <td>動脈硬化</td>
+            <td>脳梗塞や血管性認知症のリスクに関係します</td>
+            <td>血圧、脂質、喫煙、腎機能、尿たんぱく</td>
+          </tr>
+          <tr>
+            <td>低血糖</td>
+            <td>意識障害、転倒、認知機能への影響が問題になります</td>
+            <td>薬、食事量、ふらつき、冷汗、動悸、ぼんやり</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          糖尿病と認知症は双方向に影響します。高血糖が長く続くと認知機能が低下しやすくなる一方で、認知機能が低下すると薬、食事、運動の管理が難しくなり、糖尿病が悪化しやすくなります。早めに治療の仕組みを作ることが重要です。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜高血糖・動脈硬化・低血糖と脳の関係</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">検査値と相談目安：HbA1cを見落とさない</h2>
+      <p>
+        健診結果では、血糖値だけでなく<span class="term">HbA1c</span>にも注目します。HbA1cは、過去1〜2か月程度の血糖の状態を反映する指標です。血糖値は食事の影響を受けますが、HbA1cは日頃の血糖の高さを知る手がかりになります。
+      </p>
+      <div class="flow" aria-label="受診目安の三段階">
+        <div class="flow-item">
+          <strong>生活を見直す</strong>
+          基準より少し高め、または前回より上がっている。健診結果を保管し、食事・運動・体重を見直す。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに受診</strong>
+          受診勧奨と書かれている、HbA1c 6.5%前後以上、空腹時血糖126mg/dL前後以上、治療中断がある。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          強い口渇、多尿、急な体重減少、意識がぼんやりする、感染症が治りにくい、低血糖症状がある。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>健診結果を持って相談する</h3>
+          <p>
+            医療機関では、再検査、HbA1c、空腹時血糖、尿検査、腎機能、脂質、血圧、体重、服薬状況などを確認します。一回の数値だけで自己判断せず、過去の健診結果と比較することが重要です。特に、以前から高めだった人、治療を中断している人、家族に糖尿病がある人は早めに相談してください。
+          </p>
+          <p>
+            高齢者では、血糖を下げすぎることによる低血糖も避ける必要があります。認知機能、転倒リスク、食事量、腎機能、独居かどうか、薬を自分で管理できるかによって、治療目標は変わります。薬の開始・中止・増減は、必ず主治医や薬剤師と相談します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="HbA1cと血糖値の違い">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-hba1c-title">
+            <title id="fig-hba1c-title">血糖値とHbA1cの違い</title>
+            <rect x="34" y="34" width="452" height="292" rx="22" fill="#fffdf7" stroke="#d6e0d8" stroke-width="5"/>
+            <rect x="76" y="80" width="160" height="172" rx="16" fill="#fff2ed" stroke="#8b4b3b" stroke-width="5"/>
+            <circle cx="126" cy="140" r="17" fill="#c7853e"/>
+            <circle cx="178" cy="170" r="17" fill="#c7853e"/>
+            <text x="102" y="220" font-size="20" fill="#22302d">血糖値</text>
+            <text x="92" y="246" font-size="15" fill="#5a6964">その時点の値</text>
+            <rect x="284" y="80" width="160" height="172" rx="16" fill="#eef7f6" stroke="#5b8d70" stroke-width="5"/>
+            <path d="M314 180c24-52 78-52 100 0" fill="none" stroke="#2f6f73" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="322" cy="178" r="8" fill="#2f6f73"/>
+            <circle cx="364" cy="146" r="8" fill="#2f6f73"/>
+            <circle cx="406" cy="178" r="8" fill="#2f6f73"/>
+            <text x="326" y="220" font-size="20" fill="#22302d">HbA1c</text>
+            <text x="310" y="246" font-size="15" fill="#5a6964">1〜2か月の目安</text>
+            <text x="94" y="304" font-size="21" fill="#2d6048" font-weight="700">結果表の両方を見る</text>
+          </svg>
+          <figcaption class="caption">血糖値とHbA1cは役割が違います。健診結果では両方を確認します。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>受診時に伝えること</strong>
+        <ul>
+          <li>健診結果、過去のHbA1c・血糖値、体重変化</li>
+          <li>口渇、多尿、体重減少、疲れやすさ、視力の変化、足のしびれ</li>
+          <li>飲んでいる薬、治療中断、低血糖の経験、食事量の変化</li>
+          <li>薬の管理、買い物・調理、運動、家族や支援者の協力状況</li>
+        </ul>
+      </div>
+      <div class="footer">3ページ目｜HbA1c・空腹時血糖・受診勧奨を確認する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">早めに始める対策：治療と生活改善をセットで</h2>
+      <p>
+        高血糖対策は、食事だけ、運動だけ、薬だけで完結するものではありません。食事、身体活動、体重、睡眠、薬、通院継続を組み合わせて、無理なく続く方法を作ります。健診で高めと言われた時点で、まず医療機関に相談し、必要な検査と方針を確認します。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>食後に動く</strong>
+          食後の軽い散歩や家事は、血糖上昇を抑える助けになります。転倒リスクがある人は安全な範囲で行います。
+        </div>
+        <div class="mini-card">
+          <strong>飲み物を見直す</strong>
+          甘い飲み物、砂糖入りコーヒー、スポーツ飲料、果汁飲料は血糖を上げやすいため量を確認します。
+        </div>
+        <div class="mini-card">
+          <strong>主食を整える</strong>
+          ご飯・パン・麺を極端に抜くのではなく、量、食べる順番、主菜・副菜との組み合わせを見直します。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>高齢者では「続けられる設計」が重要</h3>
+          <p>
+            厳しすぎる食事制限は、低栄養や筋力低下につながることがあります。特に高齢者では、たんぱく質、野菜、主食のバランスを取りながら、本人の食べる力や生活環境に合わせて調整します。管理栄養士に相談できる場合は、普段の食事を具体的に見てもらうと現実的な改善策が出しやすくなります。
+          </p>
+          <p>
+            認知機能が気になる人では、薬の飲み忘れ、重複、食事の抜け、低血糖に注意が必要です。お薬カレンダー、家族や支援者の確認、薬剤師への相談、通院日のメモなど、本人だけに負担を集中させない仕組みを作ります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="血糖管理の生活サイクル">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-practice-title">
+            <title id="fig-practice-title">血糖管理の生活サイクル</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#eef7f6"/>
+            <circle cx="260" cy="190" r="92" fill="#fffdf7" stroke="#5b8d70" stroke-width="7"/>
+            <path d="M260 70a120 120 0 0 1 112 77" fill="none" stroke="#406f9f" stroke-width="10" stroke-linecap="round"/>
+            <path d="M375 122l4 39-34-20" fill="#406f9f"/>
+            <path d="M392 205a120 120 0 0 1-91 105" fill="none" stroke="#c7853e" stroke-width="10" stroke-linecap="round"/>
+            <path d="M322 303l-36 16 5-39" fill="#c7853e"/>
+            <path d="M229 310a120 120 0 0 1-96-99" fill="none" stroke="#8b4b3b" stroke-width="10" stroke-linecap="round"/>
+            <path d="M124 235l-12-38 39 10" fill="#8b4b3b"/>
+            <path d="M133 165a120 120 0 0 1 92-92" fill="none" stroke="#2f6f73" stroke-width="10" stroke-linecap="round"/>
+            <path d="M198 66l39-3-21 33" fill="#2f6f73"/>
+            <text x="214" y="176" font-size="23" fill="#2d6048" font-weight="700">継続</text>
+            <text x="198" y="208" font-size="18" fill="#5a6964">無理なく続ける</text>
+            <text x="345" y="82" font-size="18" fill="#22302d">食事</text>
+            <text x="372" y="262" font-size="18" fill="#22302d">運動</text>
+            <text x="132" y="306" font-size="18" fill="#22302d">薬・通院</text>
+            <text x="76" y="118" font-size="18" fill="#22302d">記録</text>
+          </svg>
+          <figcaption class="caption">血糖管理は、毎日の生活と医療相談を循環させることが重要です。</figcaption>
+        </figure>
+      </div>
+      <div class="glucose-box">
+        <strong>治療は早めに、ただし自己判断で変えない</strong>
+        <p>
+          健診で高血糖を指摘されたら、まず受診して状態を確認します。すでに治療中の人は、薬を自己判断で増減せず、低血糖の症状や飲み忘れを含めて相談します。治療を中断している場合は、叱られることを心配して先延ばしにせず、再開方法を相談してください。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜食事・運動・薬・支援体制を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：健診結果は脳を守る入口</h2>
+      <p>
+        糖尿病や高血糖は、認知症と関連することが分かっています。ただし、結果を怖がるだけでは行動につながりません。健診結果を「早めに気づけた情報」として扱い、医療機関で確認し、続けられる対策に変えることが重要です。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>健診結果の血糖値とHbA1cを確認し、受診勧奨の有無を見る。</li>
+          <li>前回より数値が上がっていないか、治療中断がないか確認する。</li>
+          <li>甘い飲み物、間食、主食量、食後の活動を一つだけ見直す。</li>
+          <li>薬の飲み忘れ、低血糖、もの忘れが気になる時は早めに相談する。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          血糖管理は、目や腎臓を守るだけでなく、脳の健康を守る生活習慣病対策でもあります。熊野町の健診結果を、自分の体を見直すきっかけにしましょう。放置せず、早めの相談が次の一歩です。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-005.html">Vol.5 低栄養とたんぱく質の巻</a>
+          <a href="./index.html#topic-diabetes">血糖・糖尿病</a>
+          <a href="./index.html#topic-dementia">認知症予防</a>
+          <a href="./index.html#topic-emergency">早めに相談したいサイン</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.ncgg.go.jp/dementia/cause/006.html">国立長寿医療研究センター：糖尿病や高血圧で認知症になりやすいでしょうか？</a></li>
+          <li><a href="https://dmic.jihs.go.jp/general/about-dm/070/060/01.html">糖尿病情報センター：認知症</a></li>
+          <li><a href="https://dmic.jihs.go.jp/general/about-dm/030/index.html">糖尿病情報センター：診断と検査</a></li>
+          <li><a href="https://www.mhlw.go.jp/content/10900000/001231390.pdf">厚生労働省：標準的な健診・保健指導プログラム 令和6年度版（PDF）</a></li>
+          <li><a href="https://dmic.jihs.go.jp/general/about-dm/050/index.html">糖尿病情報センター：治療のはなし</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.7「高血糖と認知症予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
