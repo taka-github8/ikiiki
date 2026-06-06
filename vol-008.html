@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.8</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --night: #3f557a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--night);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .night-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .night-box { border-left: 8px solid var(--night); background: #eef3f8; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--night); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.8｜睡眠と薬の安全確認の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 睡眠を健康指標として見る</a>
+        <a href="#page-2">2. 体内時計と病態</a>
+        <a href="#page-3">3. 観察ポイントと相談目安</a>
+        <a href="#page-4">4. 生活で整える方法</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.8</div>
+      <h1 id="page-1">睡眠と薬の安全確認の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            高齢期の睡眠は、若い頃と同じ長さや深さを目指すよりも、「日中に安全に活動できるか」「夜間の転倒や混乱が増えていないか」を一緒に見ることが大切です。
+          </p>
+          <p>
+            年齢を重ねると、睡眠は浅くなり、夜中に目が覚めやすくなります。これは加齢に伴う自然な変化でもありますが、夜間頻尿、痛み、かゆみ、息苦しさ、うつ状態、認知症、薬の影響が重なると、眠れない状態が長引くことがあります。
+          </p>
+          <p>
+            睡眠の問題は、単に「寝つきが悪い」だけで終わりません。日中の眠気、ふらつき、転倒、食欲低下、もの忘れ、意欲低下、家族の介護負担にもつながります。睡眠薬を使っている場合は、眠れるかどうかだけでなく、翌朝のぼんやり、足元の不安定さ、夜間の記憶の抜け、せん妄のような急な混乱がないかを確認します。
+          </p>
+          <p>
+            重要なのは、薬を自己判断で始めたり中止したりしないことです。眠れない原因を整理し、生活で整えられる部分と医療で確認する部分を分けて考えると、安全に相談しやすくなります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="睡眠と日中活動のつながり">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-overview-title">
+            <title id="fig-overview-title">睡眠、日中活動、安全の循環</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#eef3f8"/>
+            <circle cx="260" cy="180" r="104" fill="#fffdf7" stroke="#3f557a" stroke-width="7"/>
+            <path d="M260 82a98 98 0 0 1 0 196z" fill="#dce8f2"/>
+            <circle cx="218" cy="144" r="24" fill="#f7d06f"/>
+            <path d="M314 212c-25 20-67 11-80-22 20 7 42 1 56-16 3 18 12 30 24 38z" fill="#3f557a"/>
+            <text x="100" y="64" font-size="20" fill="#22302d" font-weight="700">夜の休養</text>
+            <text x="346" y="64" font-size="20" fill="#22302d" font-weight="700">朝の安全</text>
+            <text x="54" y="310" font-size="18" fill="#2d6048">睡眠は、日中活動・転倒予防・認知機能とつながります</text>
+            <path d="M107 103c31-43 80-70 133-77" fill="none" stroke="#5b8d70" stroke-width="8" stroke-linecap="round"/>
+            <path d="M404 103c-31-43-80-70-133-77" fill="none" stroke="#5b8d70" stroke-width="8" stroke-linecap="round"/>
+            <path d="M107 256c31 43 80 70 133 77" fill="none" stroke="#5b8d70" stroke-width="8" stroke-linecap="round"/>
+            <path d="M404 256c-31 43-80 70-133 77" fill="none" stroke="#5b8d70" stroke-width="8" stroke-linecap="round"/>
+          </svg>
+          <figcaption class="caption">睡眠は「長さ」だけでなく、昼夜のメリハリと翌日の安全で評価します。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>眠りは浅くなる</strong>
+          加齢により中途覚醒や早朝覚醒が増えます。変化そのものを病気と決めつけません。
+        </div>
+        <div class="mini-card">
+          <strong>昼の状態を見る</strong>
+          日中の眠気、居眠り、活動量低下、食欲低下、転倒しかけた経験を確認します。
+        </div>
+        <div class="mini-card">
+          <strong>薬の影響も確認</strong>
+          睡眠薬、抗不安薬、痛み止め、かぜ薬などが眠気やふらつきに関係することがあります。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜睡眠を、休養・認知機能・転倒予防をつなぐ健康指標として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体内時計と病態：なぜ昼夜のリズムが乱れるのか</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            睡眠には、体内時計と睡眠圧の2つが関係します。<span class="term">体内時計</span>は、朝の光、食事、活動、人との交流などを手がかりに、起きる時間と眠る時間のリズムを整えます。<span class="term">睡眠圧</span>は、日中に起きて活動するほど夜に眠りやすくなる力です。
+          </p>
+          <p>
+            高齢期は、体内時計のメリハリが弱くなり、昼寝や居眠りが増え、夜間の覚醒時間が長くなる傾向があります。認知症がある場合は、この昼夜リズムの乱れがさらに強くなり、夕方から夜に落ち着かなくなる、夜に活動して昼に眠る、といった状態が起こることがあります。
+          </p>
+          <p>
+            さらに、夜間頻尿、痛み、息苦しさ、むずむず脚、睡眠時無呼吸、抑うつ、不安、薬の副作用などが重なると、眠れない原因が一つではなくなります。眠れないからすぐ睡眠薬を増やすのではなく、まず「何が眠りを妨げているか」を分けて見ることが重要です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="体内時計と睡眠圧の図">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-clock-title">
+            <title id="fig-clock-title">体内時計と睡眠圧</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <circle cx="144" cy="150" r="72" fill="#fff7e8" stroke="#c7853e" stroke-width="6"/>
+            <circle cx="144" cy="150" r="10" fill="#c7853e"/>
+            <path d="M144 150v-42M144 150l36 22" stroke="#8a3f33" stroke-width="7" stroke-linecap="round"/>
+            <text x="84" y="250" font-size="20" fill="#22302d">朝の光</text>
+            <text x="210" y="250" font-size="20" fill="#22302d">食事</text>
+            <text x="326" y="250" font-size="20" fill="#22302d">活動</text>
+            <path d="M230 118h92" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M310 102l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="344" y="86" width="92" height="126" rx="16" fill="#eef3f8" stroke="#3f557a" stroke-width="5"/>
+            <path d="M366 166c20 20 48 20 66 0" fill="none" stroke="#3f557a" stroke-width="6" stroke-linecap="round"/>
+            <text x="340" y="250" font-size="20" fill="#22302d">夜の眠気</text>
+            <text x="78" y="318" font-size="21" fill="#2d6048" font-weight="700">昼の刺激が、夜の眠りを支えます</text>
+          </svg>
+          <figcaption class="caption">光、食事、活動、人との交流は、体内時計を整える重要な手がかりです。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="睡眠を乱す原因の見方">
+        <thead>
+          <tr>
+            <th>分類</th>
+            <th>起こりやすいこと</th>
+            <th>確認したい例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>体の症状</td>
+            <td>眠りが途中で切れる、寝つけない</td>
+            <td>痛み、かゆみ、息苦しさ、夜間頻尿、咳、むずむず脚</td>
+          </tr>
+          <tr>
+            <td>脳とこころ</td>
+            <td>昼夜逆転、夕方以降の不安、意欲低下</td>
+            <td>認知症、せん妄、うつ、不安、急な環境変化</td>
+          </tr>
+          <tr>
+            <td>薬と嗜好品</td>
+            <td>翌朝の眠気、ふらつき、夜間の転倒</td>
+            <td>睡眠薬、抗不安薬、抗ヒスタミン薬、飲酒、夕方以降のカフェイン</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>医学的な見方</strong>
+        <p>
+          高齢者の不眠は、加齢変化、身体疾患、精神症状、薬剤、生活リズムが重なって起こることが多くあります。診療では「眠れない」という訴えだけでなく、発症時期、日中の眠気、転倒、せん妄、服薬内容、飲酒、カフェイン、夜間頻尿を合わせて見ます。
+        </p>
+      </div>
+      <div class="footer">2ページ目｜体内時計、睡眠圧、病気、薬の影響を分けて見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと相談目安：眠れない原因を記録する</h2>
+      <p>
+        睡眠の相談では、細かい検査より先に、生活の記録が役立ちます。寝床に入った時刻、実際に眠れた印象、夜中に起きた回数、昼寝、日中の眠気、カフェイン、飲酒、薬の飲み方、転倒しかけた経験を数日分だけでも書くと、原因の見立てがしやすくなります。
+      </p>
+      <div class="flow" aria-label="睡眠相談の三段階">
+        <div class="flow-item">
+          <strong>まず記録</strong>
+          起床時刻、昼寝、日中活動、夜間覚醒、薬、飲酒、カフェインを3日から1週間ほど確認します。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          眠れない状態が続く、日中の眠気が強い、転倒しかける、もの忘れや不安が増える時は相談します。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          急な混乱、幻視、意識がぼんやりする、強いいびきと無呼吸、転倒、薬の飲み間違いがある時は早めに医療へつなげます。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>睡眠薬を使っている時の確認</h3>
+          <p>
+            睡眠薬や抗不安薬は、必要な場面では有用です。一方で高齢者では、過鎮静、認知機能の悪化、運動機能低下、転倒、骨折、せん妄などに注意が必要です。特に、翌朝まで眠気が残る、足元がふらつく、夜間の行動を覚えていない、日中にぼんやりする場合は、薬の量や種類、飲む時刻が合っているか確認します。
+          </p>
+          <p>
+            ただし、急に中止すると不眠の悪化や離脱症状が起こることがあります。薬を減らしたい、変えたい、合っているか不安という時は、主治医や薬剤師に「眠れるか」だけでなく「翌日の安全」も含めて相談します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="睡眠薬と転倒リスクの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-medicine-title">
+            <title id="fig-medicine-title">睡眠薬と翌朝の安全確認</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fff2ed"/>
+            <rect x="72" y="84" width="92" height="122" rx="18" fill="#fffdf7" stroke="#8a3f33" stroke-width="6"/>
+            <line x1="92" y1="124" x2="144" y2="124" stroke="#8a3f33" stroke-width="6" stroke-linecap="round"/>
+            <line x1="92" y1="160" x2="144" y2="160" stroke="#8a3f33" stroke-width="6" stroke-linecap="round"/>
+            <text x="82" y="244" font-size="18" fill="#22302d">睡眠薬</text>
+            <path d="M184 146h74" stroke="#5a6964" stroke-width="8" stroke-linecap="round"/>
+            <path d="M246 130l22 16-22 16" fill="none" stroke="#5a6964" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="332" cy="108" r="28" fill="#dce8f2" stroke="#3f557a" stroke-width="5"/>
+            <path d="M332 138v72M302 174h60M332 210l-34 54M332 210l44 50" fill="none" stroke="#3f557a" stroke-width="7" stroke-linecap="round"/>
+            <path d="M278 282h150" stroke="#c7853e" stroke-width="9" stroke-linecap="round"/>
+            <text x="278" y="320" font-size="19" fill="#2d6048" font-weight="700">翌朝のふらつき・転倒も確認</text>
+          </svg>
+          <figcaption class="caption">薬の評価は「眠れたか」だけでなく、翌日の安全と認知機能を含めて見ます。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>せん妄を疑うサイン</strong>
+        <p>
+          せん妄は、急に注意力や意識が乱れ、時間や場所が分かりにくくなる状態です。認知症の進行と見分けにくいことがありますが、「数時間から数日の急な変化」「夕方から夜に悪化」「話がまとまらない」「見えないものを見たと言う」「眠りと覚醒が乱れる」場合は、感染症、脱水、便秘、薬、痛みなどの原因確認が必要です。
+        </p>
+      </div>
+      <div class="footer">3ページ目｜睡眠記録、薬の影響、せん妄サインを相談につなげる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活で整える方法：寝床だけでなく昼間から準備する</h2>
+      <p>
+        睡眠対策は、夜だけ頑張っても効果が出にくいことがあります。朝に光を浴びる、食事時刻を整える、昼間に体を動かす、人と話す、夕方以降の刺激を減らすという流れで、体内時計に手がかりを与えます。持病や関節痛がある人は、無理な運動ではなく、座ってできる体操や家事、短い散歩など、安全な範囲から始めます。
+      </p>
+      <div class="two-col">
+        <div>
+          <table class="compare" aria-label="睡眠を整える生活方法">
+            <thead>
+              <tr>
+                <th>時間帯</th>
+                <th>整え方</th>
+                <th>注意点</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>朝</td>
+                <td>起床時刻を大きくずらさず、光を浴びる</td>
+                <td>日光を避ける必要がある人は、室内の明るさや食事時刻を活用します</td>
+              </tr>
+              <tr>
+                <td>昼</td>
+                <td>活動量を保ち、昼寝は長くしすぎない</td>
+                <td>強い眠気が続く時は睡眠不足や睡眠時無呼吸も相談します</td>
+              </tr>
+              <tr>
+                <td>夕方</td>
+                <td>カフェイン、飲酒、寝酒を見直す</td>
+                <td>寝酒は眠りを浅くし、中途覚醒や転倒につながることがあります</td>
+              </tr>
+              <tr>
+                <td>夜</td>
+                <td>照明、室温、トイレまでの通路を整える</td>
+                <td>暗すぎる通路や段差は、夜間転倒の原因になります</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <figure class="figure-card" aria-label="一日の睡眠対策">
+          <svg viewBox="0 0 520 380" role="img" aria-labelledby="fig-day-title">
+            <title id="fig-day-title">一日の睡眠対策</title>
+            <rect x="18" y="18" width="484" height="344" rx="22" fill="#fbfff8"/>
+            <path d="M104 118h312" stroke="#d6e0d8" stroke-width="16" stroke-linecap="round"/>
+            <circle cx="116" cy="118" r="34" fill="#fff7e8" stroke="#c7853e" stroke-width="5"/>
+            <circle cx="222" cy="118" r="34" fill="#edf6ef" stroke="#5b8d70" stroke-width="5"/>
+            <circle cx="328" cy="118" r="34" fill="#fff2ed" stroke="#8a3f33" stroke-width="5"/>
+            <circle cx="434" cy="118" r="34" fill="#eef3f8" stroke="#3f557a" stroke-width="5"/>
+            <text x="92" y="190" font-size="18" fill="#22302d">朝</text>
+            <text x="198" y="190" font-size="18" fill="#22302d">昼</text>
+            <text x="300" y="190" font-size="18" fill="#22302d">夕方</text>
+            <text x="410" y="190" font-size="18" fill="#22302d">夜</text>
+            <text x="68" y="246" font-size="18" fill="#2d6048" font-weight="700">光</text>
+            <text x="148" y="246" font-size="18" fill="#2d6048" font-weight="700">活動</text>
+            <text x="238" y="246" font-size="18" fill="#2d6048" font-weight="700">食事</text>
+            <text x="324" y="246" font-size="18" fill="#2d6048" font-weight="700">刺激を減らす</text>
+            <text x="106" y="310" font-size="21" fill="#3f557a" font-weight="700">夜の眠りは、昼の過ごし方から整える</text>
+          </svg>
+          <figcaption class="caption">体内時計は、毎日の光・食事・活動の繰り返しで調整されます。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>寝床時間を長くしすぎない</strong>
+          眠れないまま長く横になると、夜間覚醒や昼夜逆転が強くなることがあります。
+        </div>
+        <div class="mini-card">
+          <strong>昼寝は短めに</strong>
+          長い昼寝は夜の眠気を弱めます。強い眠気が続く場合は原因を相談します。
+        </div>
+        <div class="mini-card">
+          <strong>寝酒に頼らない</strong>
+          飲酒は寝つきをよく感じても、睡眠を浅くし、夜間覚醒や転倒を増やすことがあります。
+        </div>
+      </div>
+      <div class="night-box">
+        <strong>薬を見直す時の伝え方</strong>
+        <p>
+          受診や薬局では、「眠れません」だけでなく、「朝も眠気が残る」「夜にトイレへ行く時ふらつく」「薬を飲んだ後の記憶があいまい」「家族から昼間ぼんやりしていると言われる」と具体的に伝えます。薬の変更は自己判断で行わず、減量や切り替えの可否を相談します。
+        </p>
+      </div>
+      <div class="footer">4ページ目｜朝の光、昼の活動、夕方以降の刺激、薬の相談を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：眠りは「翌日の安全」まで含めて整える</h2>
+      <p>
+        高齢期の睡眠では、夜の眠りだけを切り取らず、日中の活動、認知機能、転倒、服薬、家族の負担を一緒に見ます。睡眠薬は必要な場合もありますが、翌朝のふらつきやぼんやりが強い場合は、治療の目的と安全性を確認する必要があります。
+      </p>
+      <div class="check">
+        <strong>今日からできる確認</strong>
+        <ul>
+          <li>起床時刻、昼寝、夜間覚醒、日中の眠気を3日ほどメモする。</li>
+          <li>睡眠薬や抗不安薬を使っている人は、翌朝の眠気、ふらつき、転倒しかけた経験を確認する。</li>
+          <li>寝酒、夕方以降のカフェイン、暗い通路、足元の障害物を見直す。</li>
+          <li>急な混乱、幻視、意識のぼんやり、転倒、薬の飲み間違いがある時は早めに相談する。</li>
+        </ul>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          「眠れない」は、年齢のせいだけで片づけないほうがよいサインです。生活のリズム、体の症状、薬の影響を一緒に見ることで、無理に薬へ頼りすぎず、安全に眠る方法を探しやすくなります。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-004.html">Vol.4 夜間頻尿と転倒予防の巻</a>
+          <a href="./vol-007.html">Vol.7 高血糖と認知症予防の巻</a>
+          <a href="./index.html#topic-medication">薬の整理・副作用</a>
+          <a href="./index.html#topic-sleep">睡眠・昼夜リズム</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/suimin/index.html">厚生労働省：睡眠対策</a></li>
+          <li><a href="https://www.mhlw.go.jp/content/001305530.pdf">厚生労働省：健康づくりのための睡眠ガイド2023（PDF）</a></li>
+          <li><a href="https://www.mhlw.go.jp/web/t_doc?dataId=00tc3422&amp;dataType=1">厚生労働省：高齢者の医薬品適正使用の指針（総論編）について</a></li>
+          <li><a href="https://www.pmda.go.jp/files/000269728.pdf">PMDA：高齢者の医薬品適正使用の指針 総論編（PDF）</a></li>
+          <li><a href="https://www.ncgg.go.jp/dementia/with/face/sleep/002.html">国立長寿医療研究センター：昼間はうとうとして、夜になると全く寝ません</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.8「睡眠と薬の安全確認の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
