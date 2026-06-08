@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.9</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --bowel: #8a5a32;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--bowel);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .bowel-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .bowel-box { border-left: 8px solid var(--bowel); background: #fff4e8; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--bowel); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.9｜便秘と腸の動きの巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 便秘を全身のサインとして見る</a>
+        <a href="#page-2">2. 腸と直腸の仕組み</a>
+        <a href="#page-3">3. 観察ポイントと相談目安</a>
+        <a href="#page-4">4. 生活で整える実践方法</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.9</div>
+      <h1 id="page-1">便秘と腸の動きの巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            便秘は「何日出ていないか」だけで決まるものではありません。便が硬い、強くいきむ、出しきれない、腹部膨満感がつらいなど、生活の困りごととして見ることが大切です。
+          </p>
+          <p>
+            高齢期の便秘は、食物繊維や水分の不足だけでなく、活動量の低下、腹筋や骨盤底筋の弱り、トイレへ行くタイミングの乱れ、薬の副作用、糖尿病・パーキンソン病・甲状腺機能低下症などの病気が関係することがあります。つまり、便秘は腸だけの問題ではなく、栄養、運動、薬、認知機能、生活環境を合わせて考える症状です。
+          </p>
+          <p>
+            一方で、自己判断で下剤を増やし続けたり、浣腸を繰り返したりすると、腹痛、下痢、脱水、電解質異常、ふらつきにつながる場合があります。便秘薬は種類によって働き方が違うため、特に高齢者では主治医や薬剤師と相談しながら調整します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="便秘に関係する要因を示す図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-bowel-overview-title">
+            <title id="fig-bowel-overview-title">便秘に関係する体と生活の要因</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fff4e8"/>
+            <circle cx="260" cy="178" r="72" fill="#fffdf7" stroke="#8a5a32" stroke-width="7"/>
+            <path d="M217 162c22-55 103-44 96 17-5 47-65 53-78 18-7-18 8-33 29-29" fill="none" stroke="#8a5a32" stroke-width="13" stroke-linecap="round"/>
+            <text x="221" y="282" font-size="23" fill="#2d6048" font-weight="700">腸の動き</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="48" y="58" width="130" height="54" rx="10"/>
+              <rect x="342" y="58" width="130" height="54" rx="10"/>
+              <rect x="48" y="244" width="130" height="54" rx="10"/>
+              <rect x="342" y="244" width="130" height="54" rx="10"/>
+            </g>
+            <text x="77" y="92" font-size="19" fill="#22302d">水分・食事</text>
+            <text x="371" y="92" font-size="19" fill="#22302d">活動量</text>
+            <text x="76" y="278" font-size="19" fill="#22302d">薬の影響</text>
+            <text x="371" y="278" font-size="19" fill="#22302d">病気・加齢</text>
+            <path d="M177 93c28 19 47 36 66 60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M343 93c-28 19-47 36-66 60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M177 257c28-19 47-36 66-60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M343 257c-28-19-47-36-66-60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+          </svg>
+          <figcaption class="caption">便秘は、腸の動きだけでなく、食事量、薬、運動、病気、トイレ環境が重なって起こることがあります。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>回数だけで判断しない</strong>
+          毎日出ていても、強くいきむ、硬い、残った感じが強い場合は便秘症状として相談対象になります。
+        </div>
+        <div class="mini-card">
+          <strong>急な変化は確認する</strong>
+          いつもと違う便秘、腹痛、血便、体重減少などがある場合は、早めに医療機関へ相談します。
+        </div>
+        <div class="mini-card">
+          <strong>薬も原因になる</strong>
+          痛み止め、鉄剤、抗コリン作用のある薬、睡眠薬、抗うつ薬などで便秘が目立つことがあります。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜便秘を腸だけでなく全身状態として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：便は大腸で水分を吸収され、直腸で「便意」として感じる</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            食べ物は胃と小腸で消化・吸収されたあと、大腸へ進みます。大腸では水分が吸収され、内容物が少しずつ固まって便になります。腸が波のように縮む<span class="term">ぜん動運動</span>によって便が直腸へ送られ、直腸にたまると便意として感じます。
+          </p>
+          <p>
+            便が大腸に長くとどまると、水分が吸収されすぎて硬くなります。硬い便は出しにくく、強いいきみが必要になり、肛門の痛みや痔、血圧上昇、排便後の疲労につながることがあります。反対に、水分や食物繊維を急に増やしすぎると、お腹の張りや下痢が出る人もいます。
+          </p>
+          <p>
+            高齢期では、腸の動きがゆっくりになるだけでなく、直腸に便があっても便意を感じにくい、足腰の弱りでトイレへ急げない、認知機能の低下で排便リズムを作りにくい、といった要因も重なります。便秘を改善するには、便の硬さ、腸の動き、出す力、トイレ環境を分けて見ることが役立ちます。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="大腸で便が作られる流れの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-colon-title">
+            <title id="fig-colon-title">大腸で便が作られ排出される流れ</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fbfff8"/>
+            <path d="M160 80h180c42 0 76 34 76 76v36c0 42-34 76-76 76H209c-28 0-51-23-51-51v-12" fill="none" stroke="#8a5a32" stroke-width="28" stroke-linecap="round"/>
+            <path d="M159 80c-34 0-62 28-62 62v76c0 27 18 50 43 58" fill="none" stroke="#8a5a32" stroke-width="28" stroke-linecap="round"/>
+            <path d="M209 268v50" stroke="#8a5a32" stroke-width="28" stroke-linecap="round"/>
+            <g fill="#f4e9d1" stroke="#c7853e" stroke-width="2">
+              <circle cx="134" cy="118" r="12"/>
+              <circle cx="222" cy="91" r="12"/>
+              <circle cx="330" cy="113" r="12"/>
+              <circle cx="383" cy="190" r="12"/>
+              <circle cx="287" cy="260" r="12"/>
+              <circle cx="211" cy="311" r="12"/>
+            </g>
+            <path d="M122 282h-48" stroke="#406f9f" stroke-width="5" stroke-linecap="round"/>
+            <path d="M382 76h50" stroke="#406f9f" stroke-width="5" stroke-linecap="round"/>
+            <text x="50" y="296" font-size="17" fill="#406f9f">水分吸収</text>
+            <text x="383" y="67" font-size="17" fill="#406f9f">ぜん動</text>
+            <text x="250" y="336" font-size="18" fill="#22302d">直腸・肛門</text>
+          </svg>
+          <figcaption class="caption">便秘では「便が硬い」「腸の移動が遅い」「出す力やタイミングが合わない」が組み合わさります。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="便秘が起こる主な仕組みと観察ポイント">
+        <thead>
+          <tr>
+            <th>仕組み</th>
+            <th>起こりやすい状況</th>
+            <th>観察ポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>便が硬くなる</td>
+            <td>食事量低下、水分不足、発汗、利尿薬、食物繊維不足</td>
+            <td>硬い便、ころころ便、肛門痛、排便後の出血</td>
+          </tr>
+          <tr>
+            <td>腸の移動が遅い</td>
+            <td>活動量低下、寝たきり、糖尿病、パーキンソン病、甲状腺機能低下症</td>
+            <td>腹部膨満感、食欲低下、排便間隔の延長</td>
+          </tr>
+          <tr>
+            <td>出しにくい</td>
+            <td>骨盤底筋の協調不良、便意の我慢、トイレ環境、認知機能低下</td>
+            <td>強いいきみ、残便感、長時間トイレに座る</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>薬剤性便秘にも注意します。</strong>
+        痛み止めの一部、鉄剤、抗コリン作用をもつ薬、抗うつ薬、睡眠薬、抗精神病薬、カルシウム拮抗薬などで便秘が目立つことがあります。薬を自己判断で中止せず、「いつから便秘が悪くなったか」「薬が変わった時期」を薬剤師や主治医へ伝えます。
+      </div>
+      <div class="footer">2ページ目｜大腸・直腸・薬剤性便秘の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        便秘の相談では、「何日出ていないか」だけでは判断しきれません。便の硬さ、いきみ、残便感、腹痛、食欲、吐き気、体重変化、血便、薬の変更、生活の変化を合わせて見ると、医療者が状態を判断しやすくなります。
+      </p>
+      <div class="flow" aria-label="相談目安の段階">
+        <div class="flow-item">
+          <strong>様子を記録する</strong>
+          便が硬い、2〜3日出にくい、軽い張りがある。食事量・水分・活動量・便の形を記録します。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに相談</strong>
+          便秘が急に悪化、腹部膨満感、食欲低下、薬の変更後、下剤を使っても改善しない。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで受診</strong>
+          強い腹痛、嘔吐、血便・黒色便、発熱、体重減少、便もガスも出ない、意識がぼんやりする。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>便の形を言葉にする</h3>
+          <p>
+            「普通です」だけでは伝わりにくいため、ころころした硬い便、太く硬い便、泥状、水様、細くなった便など、形を具体的に伝えます。可能であれば、便の形を7段階で見る<span class="term">ブリストル便形状スケール</span>のような考え方を参考にします。
+          </p>
+          <div class="check">
+            <ul>
+              <li>何日ごとに出るか、いつから変わったか</li>
+              <li>便の硬さ、量、色、血液の有無</li>
+              <li>腹痛、吐き気、食欲低下、体重減少の有無</li>
+              <li>薬の変更、市販薬、サプリメント、下剤の使用状況</li>
+              <li>水分、食事量、運動量、トイレまでの移動しやすさ</li>
+            </ul>
+          </div>
+        </div>
+        <figure class="figure-card" aria-label="便の記録メモの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-record-title">
+            <title id="fig-record-title">便秘相談のための記録メモ</title>
+            <rect x="42" y="32" width="436" height="296" rx="18" fill="#fffdf7" stroke="#d6e0d8" stroke-width="4"/>
+            <rect x="42" y="32" width="436" height="58" rx="18" fill="#edf6ef"/>
+            <text x="78" y="70" font-size="24" fill="#2d6048" font-weight="700">便通メモ</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="76" y="120" width="368" height="38" rx="8"/>
+              <rect x="76" y="172" width="368" height="38" rx="8"/>
+              <rect x="76" y="224" width="368" height="38" rx="8"/>
+            </g>
+            <text x="96" y="145" font-size="18" fill="#22302d">日付・排便回数</text>
+            <text x="96" y="197" font-size="18" fill="#22302d">硬さ・色・血液の有無</text>
+            <text x="96" y="249" font-size="18" fill="#22302d">腹痛・薬・食事量の変化</text>
+            <path d="M378 282l24 24 46-58" fill="none" stroke="#5b8d70" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <figcaption class="caption">便通メモは、薬の調整や検査の必要性を考える材料になります。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>急な便秘を「いつものこと」と決めつけないでください。</strong>
+        高齢者では、腸閉塞、腫瘍、炎症、脱水、薬の影響、感染症、低栄養などが隠れていることがあります。特に、便秘に強い痛みや嘔吐が重なる時、血便や黒い便がある時、便もガスも出ない時は早めの受診が必要です。
+      </div>
+      <div class="footer">3ページ目｜便の記録と警告症状</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる実践：腸を動かす条件を少しずつ整える</h2>
+      <p>
+        便秘対策は、下剤だけで完結しません。食事量、水分、身体活動、トイレ習慣、薬の見直しを組み合わせることで、便が作られ、運ばれ、出しやすくなる条件を整えます。ただし、心臓病や腎臓病で水分制限がある人、飲み込みに不安がある人、急な腹痛がある人は、自己判断で水分や食物繊維を増やしすぎないようにします。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>食事量と食物繊維</strong>
+          食物繊維は便のかさや腸内環境に関わります。野菜、海藻、きのこ、豆類、果物、穀類を、食べやすい形で少しずつ増やします。
+        </div>
+        <div class="mini-card">
+          <strong>水分と便の硬さ</strong>
+          水分不足では便が硬くなりやすくなります。制限がない人は、食事や服薬のタイミングに合わせてこまめに取ります。
+        </div>
+        <div class="mini-card">
+          <strong>身体活動</strong>
+          歩行、体操、立ち座り、家事などで体を動かすと、腸の動きや腹圧を使う力を保ちやすくなります。転倒に注意します。
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="bowel-box">
+          <h3>排便リズムを作る</h3>
+          <p>
+            朝食後は、胃に食べ物が入る刺激で大腸が動きやすくなることがあります。便意が弱い人でも、朝食後や決まった時間に、焦らずトイレに座る習慣を作ると、排便のきっかけをつかみやすくなります。
+          </p>
+          <p>
+            足が床につかない、便座が高い、寒い、暗い、手すりがない、急いでいる、といった環境は排便を妨げます。足台や手すり、暖房、照明、衣服の調整など、出しやすい環境を整えることも医療的な支援の一部です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="便秘対策の流れの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-practice-title">
+            <title id="fig-practice-title">便秘対策の4つの条件</title>
+            <rect x="22" y="22" width="476" height="316" rx="22" fill="#fbfff8"/>
+            <circle cx="260" cy="178" r="64" fill="#fff4e8" stroke="#8a5a32" stroke-width="7"/>
+            <text x="226" y="188" font-size="25" fill="#2d6048" font-weight="700">排便</text>
+            <g fill="#edf6ef" stroke="#5b8d70" stroke-width="3">
+              <rect x="56" y="52" width="150" height="58" rx="12"/>
+              <rect x="314" y="52" width="150" height="58" rx="12"/>
+              <rect x="56" y="250" width="150" height="58" rx="12"/>
+              <rect x="314" y="250" width="150" height="58" rx="12"/>
+            </g>
+            <text x="92" y="88" font-size="20" fill="#22302d">食事</text>
+            <text x="350" y="88" font-size="20" fill="#22302d">水分</text>
+            <text x="92" y="286" font-size="20" fill="#22302d">運動</text>
+            <text x="336" y="286" font-size="20" fill="#22302d">トイレ習慣</text>
+            <path d="M205 88l45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 88l-45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M205 282l45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 282l-45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+          </svg>
+          <figcaption class="caption">便秘対策は、食事・水分・運動・トイレ習慣を一つずつ整えると続けやすくなります。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="生活での工夫と注意点">
+        <thead>
+          <tr>
+            <th>工夫</th>
+            <th>具体例</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>食物繊維を増やす</td>
+            <td>野菜を汁物に入れる、豆腐や納豆、果物、きのこを足す</td>
+            <td>急に増やすと張りや下痢が出ることがある</td>
+          </tr>
+          <tr>
+            <td>体を動かす</td>
+            <td>食後の室内歩行、椅子からの立ち座り、腹式呼吸</td>
+            <td>転倒、息切れ、痛みがある時は無理をしない</td>
+          </tr>
+          <tr>
+            <td>薬を点検する</td>
+            <td>お薬手帳で開始時期と便秘悪化の時期を照合する</td>
+            <td>自己判断で中止・増量しない</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">4ページ目｜便秘薬だけに頼らず条件を整える</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：便秘は「出す力」と「体全体」を一緒に見る</h2>
+      <p>
+        便秘はよくある症状ですが、年齢のせいだけで片づける必要はありません。便が硬い、出しにくい、張って食べられない、薬を使っても改善しない、といった困りごとは生活の質に直結します。便秘をきっかけに、食事量、低栄養、脱水、薬の副作用、運動不足、認知機能、トイレ環境を見直すことができます。
+      </p>
+      <div class="box">
+        <strong>今日から確認する3つの視点</strong>
+        <ul>
+          <li>便の回数だけでなく、硬さ、いきみ、残便感、腹痛、食欲を記録する。</li>
+          <li>薬が変わった時期、水分・食事量、活動量、トイレ環境を一緒に見る。</li>
+          <li>血便、強い腹痛、嘔吐、体重減少、便もガスも出ない時は早めに相談する。</li>
+        </ul>
+      </div>
+      <div class="clinical">
+        下剤や浣腸は、必要な場面では大切な治療です。ただし、便秘の原因や体の状態によって合う薬が異なります。薬を増やす前に、主治医、薬剤師、看護師、管理栄養士、リハビリ専門職などへ、便通メモとお薬手帳を見せて相談してください。
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-005.html">Vol.5 低栄養とたんぱく質の巻</a>
+          <a href="./vol-008.html">Vol.8 睡眠と薬の安全確認の巻</a>
+          <a href="./vol-002.html">Vol.2 食中毒と脱水予防の巻</a>
+          <a href="./index.html#topic-bowel">排便・便秘</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://minds.jcqhc.or.jp/summary/c00812/">Mindsガイドラインライブラリ：便通異常症診療ガイドライン2023―慢性便秘症</a></li>
+          <li><a href="https://jpn-ga.or.jp/blog/ct_for-members/8705/">日本消化管学会：「便通異常症診療ガイドライン2023（慢性便秘症・慢性下痢症）」発刊のお知らせ</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/keywords/dietary-fiber">厚生労働省 e-ヘルスネット：食物繊維</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/exercise/s-00-004.html">厚生労働省 e-ヘルスネット：健康づくりのための身体活動・運動ガイド2023 高齢者版</a></li>
+          <li><a href="https://www.ncgg.go.jp/hospital/iryokankei/letter/100.html">国立長寿医療研究センター：フレイル高齢者・認知機能低下高齢者の下部尿路機能障害</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.9「便秘と腸の動きの巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
