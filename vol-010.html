@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.10</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --ear: #6f5f9f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--ear);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .ear-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .ear-box { border-left: 8px solid var(--ear); background: #f1f1fb; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--ear); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.10｜聞こえと認知症予防の巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 聞こえを健康指標として見る</a>
+        <a href="#page-2">2. 耳と脳の仕組み</a>
+        <a href="#page-3">3. 観察ポイントと相談目安</a>
+        <a href="#page-4">4. 生活での聞こえ支援</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.10</div>
+      <h1 id="page-1">聞こえと認知症予防の巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            聞こえにくさは、耳だけの問題ではありません。会話、外出、服薬説明、安全確認、社会参加に関係し、認知症予防やフレイル予防の視点からも早めに気づきたい変化です。
+          </p>
+          <p>
+            高齢期の難聴は「年だから仕方ない」と見過ごされやすい一方で、本人にとっては大きな負担になります。聞き返しが増える、会話の途中で疲れる、テレビの音量が大きくなる、集まりを避けるようになるなどの変化は、本人の性格の問題ではなく、聞こえの変化が背景にあるかもしれません。
+          </p>
+          <p>
+            難聴があると、会話の内容を聞き取るために強い集中が必要になり、脳の疲労感が増えることがあります。また、会話が減ると、外出や人との交流が少なくなり、孤立、抑うつ、認知機能低下のリスクと関係する可能性があります。国立長寿医療研究センターは、海外研究として中年期の難聴が高齢期の認知症リスク上昇と関連するデータを紹介しています。
+          </p>
+          <p>
+            ただし、難聴があるから必ず認知症になるという意味ではありません。大切なのは、耳鼻咽喉科で原因を確認し、治療できる病気や耳あか、補聴器などの聴覚支援、家族や支援者の話し方の工夫を早めに検討することです。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="聞こえにくさから生活機能へ影響する図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-hearing-overview-title">
+            <title id="fig-hearing-overview-title">聞こえにくさと生活機能のつながり</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#f1f1fb"/>
+            <path d="M156 100c-45 8-76 47-76 92 0 54 44 98 98 98 45 0 83-30 94-72" fill="none" stroke="#6f5f9f" stroke-width="18" stroke-linecap="round"/>
+            <path d="M159 137c-25 10-41 32-41 58 0 34 27 61 61 61 27 0 50-18 58-43" fill="none" stroke="#6f5f9f" stroke-width="13" stroke-linecap="round"/>
+            <path d="M178 174c-10 5-17 15-17 27 0 16 13 30 30 30" fill="none" stroke="#6f5f9f" stroke-width="11" stroke-linecap="round"/>
+            <path d="M278 130c45 8 75 36 83 80" fill="none" stroke="#406f9f" stroke-width="8" stroke-linecap="round"/>
+            <path d="M288 90c72 14 118 60 130 132" fill="none" stroke="#406f9f" stroke-width="8" stroke-linecap="round"/>
+            <rect x="294" y="238" width="150" height="56" rx="12" fill="#fbfff8" stroke="#d6e0d8" stroke-width="3"/>
+            <text x="317" y="273" font-size="20" fill="#2d6048" font-weight="700">会話・外出</text>
+            <text x="74" y="326" font-size="21" fill="#2d6048" font-weight="700">聞こえは社会参加の入り口</text>
+          </svg>
+          <figcaption class="caption">聞こえにくさは、会話量、外出、受診時の説明理解、安全確認に影響します。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>本人の努力不足ではない</strong>
+          聞き返しや聞き間違いは、注意力や性格だけで説明できません。耳の検査で状態を確認します。
+        </div>
+        <div class="mini-card">
+          <strong>脳への負担を見る</strong>
+          聞き取るために強く集中する状態が続くと、会話後の疲労や人付き合いの回避につながります。
+        </div>
+        <div class="mini-card">
+          <strong>安全にも関係する</strong>
+          車、自転車、火災報知器、電話、玄関チャイム、服薬説明が聞き取りにくいと生活リスクになります。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜聞こえを生活機能と認知症予防の視点で見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：音は耳で受け取り、脳で「言葉」として理解する</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            音は外耳から入り、鼓膜と耳小骨を通って内耳へ伝わります。内耳の蝸牛では、音の振動が神経の信号に変わり、聴神経を通って脳へ送られます。脳はその信号を、声、言葉、方向、危険な音として意味づけます。
+          </p>
+          <p>
+            難聴には、音がうまく伝わらない<span class="term">伝音難聴</span>と、内耳や神経で音を感じ取りにくい<span class="term">感音難聴</span>があります。耳あか、中耳炎、鼓膜の病気などは治療で改善することがあります。一方、加齢性難聴では高い音から聞き取りにくくなり、音は聞こえても言葉がはっきりしない、騒がしい場所で聞き取りにくい、という形で気づかれることがあります。
+          </p>
+          <p>
+            聞こえにくさが続くと、脳は少ない手がかりから言葉を推測しようとします。そのため、会話に強い集中が必要になり、疲労感や不安につながることがあります。聞こえの支援では、耳だけでなく、話す環境、視線、口元、背景雑音、本人の認知機能を合わせて考えます。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="音が耳から脳へ届く流れの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-ear-path-title">
+            <title id="fig-ear-path-title">音が耳から脳へ届く流れ</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fbfff8"/>
+            <path d="M105 104c-35 12-58 47-52 88 8 54 55 92 109 84 44-6 79-38 89-80" fill="none" stroke="#6f5f9f" stroke-width="17" stroke-linecap="round"/>
+            <path d="M112 146c-18 9-29 29-26 51 5 31 34 52 65 47" fill="none" stroke="#6f5f9f" stroke-width="12" stroke-linecap="round"/>
+            <circle cx="205" cy="187" r="20" fill="#f6f0df" stroke="#8a5a32" stroke-width="5"/>
+            <path d="M225 187h76" stroke="#c7853e" stroke-width="8" stroke-linecap="round"/>
+            <path d="M301 187c24-42 83-43 106-2 21 38-15 82-58 67-35-12-28-65 8-61" fill="none" stroke="#406f9f" stroke-width="9" stroke-linecap="round"/>
+            <path d="M410 184h48" stroke="#5b8d70" stroke-width="7" stroke-linecap="round"/>
+            <path d="M448 166l24 18-24 18" fill="none" stroke="#5b8d70" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="64" y="308" font-size="17" fill="#22302d">外耳・中耳</text>
+            <text x="200" y="308" font-size="17" fill="#22302d">内耳</text>
+            <text x="318" y="308" font-size="17" fill="#22302d">聴神経</text>
+            <text x="423" y="308" font-size="17" fill="#22302d">脳</text>
+          </svg>
+          <figcaption class="caption">耳から入った音は、脳で言葉として理解されます。聞こえ支援は「音量」だけでなく「理解しやすさ」を整えます。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="難聴の種類と観察ポイント">
+        <thead>
+          <tr>
+            <th>種類</th>
+            <th>起こりやすい背景</th>
+            <th>観察ポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>伝音難聴</td>
+            <td>耳あか、外耳炎、中耳炎、鼓膜や耳小骨の問題</td>
+            <td>耳が詰まる、片側だけ聞こえにくい、耳だれ、耳痛</td>
+          </tr>
+          <tr>
+            <td>感音難聴</td>
+            <td>加齢、騒音、突発性難聴、内耳や神経の障害</td>
+            <td>高い音が聞きにくい、言葉が不明瞭、騒がしい場所が苦手</td>
+          </tr>
+          <tr>
+            <td>聞こえの理解の問題</td>
+            <td>認知機能低下、疲労、注意力低下、背景雑音</td>
+            <td>音は聞こえるが内容が入らない、長い説明が苦手</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>補聴器は「買えばすぐ終わり」ではありません。</strong>
+        聴力検査、耳の病気の確認、機器の調整、装用練習、生活場面での使い方が重要です。購入前に耳鼻咽喉科や補聴器相談医へ相談すると、本人に合う選択をしやすくなります。
+      </div>
+      <div class="footer">2ページ目｜外耳・中耳・内耳・脳で理解する聞こえ</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        聞こえにくさは、本人が自覚しにくいことがあります。家族や支援者は「聞こえないのに返事をする」「会議や集まりで黙る」「説明を聞き間違える」「テレビ音量が大きい」「電話を避ける」など、生活の変化として観察します。
+      </p>
+      <div class="flow" aria-label="相談目安の段階">
+        <div class="flow-item">
+          <strong>生活で気づく</strong>
+          聞き返し、聞き間違い、テレビ音量、会話疲れ、外出や集まりの回避を記録します。
+        </div>
+        <div class="flow-item warning">
+          <strong>耳鼻咽喉科へ相談</strong>
+          片側の聞こえにくさ、耳鳴り、耳閉感、めまい、耳あか、補聴器検討、説明の聞き取り不安。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで受診</strong>
+          突然の難聴、強いめまい、顔の動かしにくさ、激しい耳痛、耳だれ、頭部外傷後の聞こえの変化。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>受診時に伝えること</h3>
+          <p>
+            「右と左のどちらか」「いつからか」「急にか徐々にか」「耳鳴り、めまい、耳痛、耳だれがあるか」「会話で困る場面」「使っている薬」「糖尿病や血管の病気の有無」を伝えると、診察や検査につながりやすくなります。
+          </p>
+          <div class="check">
+            <ul>
+              <li>家族からテレビ音量を指摘される</li>
+              <li>病院や薬局の説明を聞き返すことが増えた</li>
+              <li>玄関チャイム、電話、車の接近音に気づきにくい</li>
+              <li>会話の場を避ける、表情が硬くなる、疲れやすい</li>
+              <li>補聴器を持っているが使いにくく、しまったままになっている</li>
+            </ul>
+          </div>
+        </div>
+        <figure class="figure-card" aria-label="聞こえの生活チェック表の図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-check-title">
+            <title id="fig-check-title">聞こえの生活チェック</title>
+            <rect x="42" y="32" width="436" height="296" rx="18" fill="#fffdf7" stroke="#d6e0d8" stroke-width="4"/>
+            <rect x="42" y="32" width="436" height="58" rx="18" fill="#edf6ef"/>
+            <text x="78" y="70" font-size="24" fill="#2d6048" font-weight="700">聞こえメモ</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="76" y="118" width="368" height="38" rx="8"/>
+              <rect x="76" y="170" width="368" height="38" rx="8"/>
+              <rect x="76" y="222" width="368" height="38" rx="8"/>
+            </g>
+            <text x="96" y="143" font-size="18" fill="#22302d">聞き取りにくい場所</text>
+            <text x="96" y="195" font-size="18" fill="#22302d">右・左・両方、いつから</text>
+            <text x="96" y="247" font-size="18" fill="#22302d">耳鳴り・めまい・耳痛</text>
+            <path d="M370 286c22-20 62-20 84 0" stroke="#6f5f9f" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M384 306c14-13 42-13 56 0" stroke="#6f5f9f" stroke-width="8" fill="none" stroke-linecap="round"/>
+          </svg>
+          <figcaption class="caption">聞こえメモは、耳鼻咽喉科での聴力検査や補聴器相談の助けになります。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>突然の聞こえにくさは早めの受診が重要です。</strong>
+        突発性難聴など、早期治療が大切な病気が含まれます。片側だけ急に聞こえない、耳鳴りや耳閉感が強い、めまいを伴う場合は、様子を見続けず耳鼻咽喉科へ相談してください。
+      </div>
+      <div class="footer">3ページ目｜聞こえの観察と受診相談の目安</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活での実践：聞き取りやすい環境を作る</h2>
+      <p>
+        聞こえ支援は、本人だけに努力を求めるものではありません。周囲の話し方、部屋の環境、説明の伝え方、補聴器の調整を組み合わせることで、会話の疲れや聞き間違いを減らしやすくなります。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>顔を見て話す</strong>
+          後ろから話しかけず、正面から、口元が見える明るさで話します。大声より、はっきり区切ることが有効です。
+        </div>
+        <div class="mini-card">
+          <strong>雑音を減らす</strong>
+          テレビを消す、換気扇や水音を避ける、静かな席を選ぶなど、背景音を減らすと理解しやすくなります。
+        </div>
+        <div class="mini-card">
+          <strong>大事なことは書く</strong>
+          受診日、薬の変更、注意点、約束は紙やメモで残します。聞こえにくい時ほど記録が安全を支えます。
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="ear-box">
+          <h3>補聴器を使う時の考え方</h3>
+          <p>
+            補聴器は、周囲の音をすべて若い頃の聞こえに戻す道具ではありません。必要な音を拾いやすくし、会話の手がかりを増やす支援機器です。最初から長時間使うより、静かな場所から慣らし、調整を重ねることが大切です。
+          </p>
+          <p>
+            「合わない」と感じる時も、機器そのものが悪いとは限りません。耳あか、耳の病気、装着方法、音量設定、使う場面、本人の疲労や認知機能が関係します。販売店だけでなく、耳鼻咽喉科や補聴器相談医と連携して確認します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="聞き取りやすい会話環境の図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-support-title">
+            <title id="fig-support-title">聞き取りやすい会話環境</title>
+            <rect x="22" y="22" width="476" height="316" rx="22" fill="#fbfff8"/>
+            <circle cx="144" cy="126" r="42" fill="#fff4e8" stroke="#c7853e" stroke-width="5"/>
+            <circle cx="368" cy="126" r="42" fill="#f1f1fb" stroke="#6f5f9f" stroke-width="5"/>
+            <rect x="105" y="170" width="78" height="96" rx="18" fill="#edf6ef" stroke="#5b8d70" stroke-width="4"/>
+            <rect x="329" y="170" width="78" height="96" rx="18" fill="#edf6ef" stroke="#5b8d70" stroke-width="4"/>
+            <path d="M198 124c37-26 86-26 124 0" stroke="#406f9f" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M208 157c32 18 72 18 104 0" stroke="#406f9f" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <rect x="102" y="288" width="316" height="34" rx="10" fill="#fffdf7" stroke="#d6e0d8" stroke-width="3"/>
+            <text x="126" y="311" font-size="18" fill="#2d6048" font-weight="700">正面・明るさ・静かな環境・メモ</text>
+          </svg>
+          <figcaption class="caption">聞こえの支援は、音を大きくするだけでなく、相手の顔、環境音、記録を整えることが重要です。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="生活での聞こえ支援">
+        <thead>
+          <tr>
+            <th>場面</th>
+            <th>工夫</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>病院・薬局</td>
+            <td>聞こえにくいことを先に伝え、説明を紙で残してもらう</td>
+            <td>聞き取れたふりをせず、薬の変更点は必ず確認する</td>
+          </tr>
+          <tr>
+            <td>家族の会話</td>
+            <td>近くで正面から、短い文で、話題を先に伝える</td>
+            <td>大声で責めると会話を避けやすくなる</td>
+          </tr>
+          <tr>
+            <td>外出・安全</td>
+            <td>車、自転車、アラーム、玄関チャイムに気づける工夫をする</td>
+            <td>片側難聴やめまいがある時は転倒・事故に注意する</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">4ページ目｜話し方・環境・補聴器相談を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：聞こえを整えることは、つながりを守ること</h2>
+      <p>
+        聞こえにくさは、本人の不注意や気持ちの問題ではありません。耳の病気、加齢、騒音、薬や全身状態、認知機能、会話環境が関係します。聞こえを整えることは、会話を増やし、外出や受診の安全を支え、孤立を防ぐための健康づくりです。
+      </p>
+      <div class="box">
+        <strong>今日から確認する3つの視点</strong>
+        <ul>
+          <li>聞き返し、聞き間違い、テレビ音量、会話疲れ、外出回避を生活の変化として見る。</li>
+          <li>片側だけ、急に、耳鳴りやめまいを伴う聞こえの変化は早めに耳鼻咽喉科へ相談する。</li>
+          <li>大切な説明は、正面から短く話し、紙やメモで残して、本人だけに負担を集めない。</li>
+        </ul>
+      </div>
+      <div class="clinical">
+        補聴器や集音器を検討する前に、耳の病気や耳あか、聴力の状態を確認することが大切です。補聴器は調整と慣れが必要な医療・生活支援の道具です。耳鼻咽喉科、補聴器相談医、認定補聴器技能者、家族や支援者と相談しながら進めてください。
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-007.html">Vol.7 高血糖と認知症予防の巻</a>
+          <a href="./vol-008.html">Vol.8 睡眠と薬の安全確認の巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-004.html">Vol.4 夜間頻尿と転倒予防の巻</a>
+          <a href="./index.html#topic-hearing">聞こえ・難聴</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://kennet.mhlw.go.jp/information/information/dictionary/sensory-organ/ys-02.html">厚生労働省 e-ヘルスネット：難聴</a></li>
+          <li><a href="https://www.mhlw.go.jp/stf/houdou_kouhou/kouhou_shuppan/magazine/202411_004.html">厚生労働省：聞こえるを大切にする「聞こえにくい」「聞こえない」に寄り添う（後編）</a></li>
+          <li><a href="https://www.ncgg.go.jp/hospital/navi/02.html">国立長寿医療研究センター：耳が聞こえにくいと認知症になりやすい？</a></li>
+          <li><a href="https://www.jibika.or.jp/modules/certification/index.php?content_id=39">日本耳鼻咽喉科頭頸部外科学会：補聴器相談医名簿</a></li>
+          <li><a href="https://www.mhlw.go.jp/content/12201000/001475659.pdf">厚生労働省：障害にいたらない難聴に関する取組について（PDF）</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.10「聞こえと認知症予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
