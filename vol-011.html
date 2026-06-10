@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.11</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --heart: #9c4f4f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--heart);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .heart-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .heart-box { border-left: 8px solid var(--heart); background: #fff1f1; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--heart); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.11｜足のむくみと心不全サインの巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. むくみを全身のサインとして見る</a>
+        <a href="#page-2">2. 心臓・腎臓・血管の仕組み</a>
+        <a href="#page-3">3. 観察ポイントと相談目安</a>
+        <a href="#page-4">4. 生活での予防と記録</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.11</div>
+      <h1 id="page-1">足のむくみと心不全サインの巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            足のむくみは、立ちっぱなしや座りっぱなしでも起こります。一方で、心臓、腎臓、肝臓、栄養状態、薬、血栓などの病気が背景にあることもあります。
+          </p>
+          <p>
+            むくみは、医学的には<span class="term">浮腫</span>と呼ばれます。皮膚の下の組織に水分が多くたまった状態です。夕方に靴下の跡が強く残る、足首が太く見える、すねを押すとへこみが残る、体重が急に増えるなどで気づかれます。
+          </p>
+          <p>
+            特に高齢期では、足のむくみだけを見て判断するのではなく、息切れ、横になると苦しい、夜間に何度も尿に起きる、食欲低下、疲れやすさ、体重増加、薬の変更を一緒に確認します。心不全では、心臓の働きが弱くなり、血液や水分が体にたまりやすくなるため、むくみや息切れが出ることがあります。
+          </p>
+          <p>
+            ただし、むくみがあるから必ず心不全という意味ではありません。原因は複数あり、対応も違います。利尿薬を自己判断で増やす、水分を極端に減らす、圧迫靴下を急に使う、といった対応は体調を崩すことがあります。まずは変化を記録し、医療機関や薬剤師に相談しやすい形に整えます。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="足のむくみに関係する全身の要因を示す図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-edema-overview-title">
+            <title id="fig-edema-overview-title">むくみに関係する心臓・腎臓・血管・薬</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fff1f1"/>
+            <path d="M252 106c-27-42-92-17-80 37 9 42 80 85 80 85s71-43 80-85c12-54-53-79-80-37z" fill="#d46a6a" stroke="#9c4f4f" stroke-width="6"/>
+            <path d="M252 228v54" stroke="#406f9f" stroke-width="9" stroke-linecap="round"/>
+            <path d="M214 283c-28 22-50 36-90 33" stroke="#406f9f" stroke-width="10" stroke-linecap="round"/>
+            <path d="M290 283c28 22 50 36 90 33" stroke="#406f9f" stroke-width="10" stroke-linecap="round"/>
+            <ellipse cx="117" cy="316" rx="46" ry="19" fill="#edf6ef" stroke="#5b8d70" stroke-width="4"/>
+            <ellipse cx="387" cy="316" rx="46" ry="19" fill="#edf6ef" stroke="#5b8d70" stroke-width="4"/>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="46" y="56" width="132" height="54" rx="10"/>
+              <rect x="342" y="56" width="132" height="54" rx="10"/>
+              <rect x="46" y="166" width="132" height="54" rx="10"/>
+              <rect x="342" y="166" width="132" height="54" rx="10"/>
+            </g>
+            <text x="84" y="90" font-size="19" fill="#22302d">心臓</text>
+            <text x="380" y="90" font-size="19" fill="#22302d">腎臓</text>
+            <text x="84" y="200" font-size="19" fill="#22302d">静脈</text>
+            <text x="380" y="200" font-size="19" fill="#22302d">薬・栄養</text>
+            <text x="186" y="332" font-size="20" fill="#2d6048" font-weight="700">足に水分がたまる</text>
+          </svg>
+          <figcaption class="caption">むくみは、心臓だけでなく、腎臓、静脈、薬、栄養状態など複数の要因で起こります。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>体重とセットで見る</strong>
+          心不全では、脂肪ではなく水分がたまって体重が増えることがあります。数日単位の変化を見ます。
+        </div>
+        <div class="mini-card">
+          <strong>息切れを見逃さない</strong>
+          階段や坂道での息切れ、横になると苦しい、夜間に咳で起きるなどは重要なサインです。
+        </div>
+        <div class="mini-card">
+          <strong>片側だけは別に考える</strong>
+          片足だけ急に腫れる、痛い、赤い、熱をもつ場合は血栓や炎症の確認が必要です。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜足のむくみを全身状態として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：水分は血管・腎臓・心臓のバランスで保たれる</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            体の水分は、血管の中、細胞の中、細胞の外に分かれて存在しています。血液は心臓のポンプ作用で全身をめぐり、腎臓は塩分と水分を尿として調整します。血管の圧、血液中のたんぱく質、リンパの流れも、水分が組織へしみ出す量に関係します。
+          </p>
+          <p>
+            心不全では、心臓が必要な血液を十分に送り出しにくくなったり、心臓に戻る血液を受け止めにくくなったりします。その結果、血液が肺や足にうっ滞し、息切れ、むくみ、体重増加、疲れやすさ、食欲低下が出ることがあります。
+          </p>
+          <p>
+            腎臓の働きが落ちると、水分や塩分を体の外へ出しにくくなります。また、低栄養や肝臓の病気で血液中のアルブミンというたんぱく質が少ないと、血管内に水分を保ちにくくなり、むくみやすくなることがあります。薬では、血圧の薬の一部、痛み止め、糖尿病薬の一部、ステロイドなどでむくみが目立つ場合があります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="心臓と腎臓が水分を調整する図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-fluid-title">
+            <title id="fig-fluid-title">心臓・腎臓・血管の水分調整</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fbfff8"/>
+            <path d="M156 96c-22-33-75-13-65 30 7 32 65 67 65 67s58-35 65-67c10-43-43-63-65-30z" fill="#d46a6a" stroke="#9c4f4f" stroke-width="5"/>
+            <path d="M336 92c-38 0-62 38-48 78 9 26 31 49 48 69 17-20 39-43 48-69 14-40-10-78-48-78z" fill="#eef7f6" stroke="#2f6f73" stroke-width="5"/>
+            <path d="M212 151h88" stroke="#406f9f" stroke-width="8" stroke-linecap="round"/>
+            <path d="M288 132l28 19-28 19" fill="none" stroke="#406f9f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M250 234c-58 38-110 44-168 24" stroke="#c7853e" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M270 234c58 38 110 44 168 24" stroke="#c7853e" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <ellipse cx="95" cy="267" rx="42" ry="18" fill="#f6f0df" stroke="#c7853e" stroke-width="4"/>
+            <ellipse cx="425" cy="267" rx="42" ry="18" fill="#f6f0df" stroke="#c7853e" stroke-width="4"/>
+            <text x="128" y="226" font-size="17" fill="#22302d">ポンプ</text>
+            <text x="303" y="226" font-size="17" fill="#22302d">尿で調整</text>
+            <text x="202" y="316" font-size="20" fill="#2d6048" font-weight="700">塩分・水分・血流のバランス</text>
+          </svg>
+          <figcaption class="caption">心臓と腎臓は、血液の流れと水分量を保つために連携しています。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="むくみの主な原因と観察ポイント">
+        <thead>
+          <tr>
+            <th>背景</th>
+            <th>起こりやすい特徴</th>
+            <th>一緒に見ること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>心不全</td>
+            <td>両足のむくみ、体重増加、息切れ、夜間の呼吸苦</td>
+            <td>体重、血圧、脈、尿量、横になると苦しいか</td>
+          </tr>
+          <tr>
+            <td>腎臓・肝臓・低栄養</td>
+            <td>全身のむくみ、まぶたの腫れ、だるさ、食欲低下</td>
+            <td>尿検査、腎機能、アルブミン、食事量、体重変化</td>
+          </tr>
+          <tr>
+            <td>静脈・リンパ・血栓</td>
+            <td>片側が強い、痛み、赤み、熱感、長時間同じ姿勢後</td>
+            <td>急な片足の腫れ、息苦しさ、胸痛の有無</td>
+          </tr>
+          <tr>
+            <td>薬の影響</td>
+            <td>薬の開始・増量後にむくみが目立つ</td>
+            <td>お薬手帳、開始時期、体重、血圧、尿量</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>むくみは「水を飲みすぎた」だけで説明しないことが大切です。</strong>
+        心臓や腎臓の病気では、水分だけでなく塩分、薬、血圧、尿量、体重変化を合わせて見ます。水分制限や利尿薬の調整は、主治医の方針に従います。
+      </div>
+      <div class="footer">2ページ目｜心臓・腎臓・血管・薬の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイントと医療相談の目安</h2>
+      <p>
+        むくみの相談では、足だけを見るより、体重、息切れ、尿量、食欲、疲れやすさ、薬の変更、血圧、脈を一緒に伝えると判断しやすくなります。特に心不全の悪化では、むくみより先に体重増加や息切れが目立つことがあります。
+      </p>
+      <div class="flow" aria-label="相談目安の段階">
+        <div class="flow-item">
+          <strong>記録して相談</strong>
+          夕方に靴下跡が強い、軽いむくみ、体重が少し増えた。体重・血圧・尿量・薬を記録します。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに受診</strong>
+          数日で体重が2〜3kg増える、息切れが増える、横になると苦しい、食欲低下、尿が少ない。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          安静でも息苦しい、胸痛、冷汗、意識がぼんやり、片足だけ急に腫れて痛い、血の混じる痰。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>毎日同じ条件で見る</h3>
+          <p>
+            体重は、朝起きてトイレ後、食事前など、できるだけ同じ条件で測ると変化がわかりやすくなります。足のむくみは、すねを数秒押してへこみが残るか、靴下の跡がどの程度残るか、左右差があるかを見ます。
+          </p>
+          <div class="check">
+            <ul>
+              <li>体重が数日で増えていないか</li>
+              <li>階段や坂道で息切れが増えていないか</li>
+              <li>横になると苦しい、夜間に咳や息苦しさで起きないか</li>
+              <li>尿量が減った、夜間尿が増えた、食欲が落ちたか</li>
+              <li>薬の開始・変更・飲み忘れ・自己中断がないか</li>
+            </ul>
+          </div>
+        </div>
+        <figure class="figure-card" aria-label="むくみと体重の記録メモの図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-record-title">
+            <title id="fig-record-title">むくみと心不全サインの記録</title>
+            <rect x="42" y="32" width="436" height="296" rx="18" fill="#fffdf7" stroke="#d6e0d8" stroke-width="4"/>
+            <rect x="42" y="32" width="436" height="58" rx="18" fill="#edf6ef"/>
+            <text x="78" y="70" font-size="24" fill="#2d6048" font-weight="700">むくみメモ</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="76" y="118" width="368" height="38" rx="8"/>
+              <rect x="76" y="170" width="368" height="38" rx="8"/>
+              <rect x="76" y="222" width="368" height="38" rx="8"/>
+            </g>
+            <text x="96" y="143" font-size="18" fill="#22302d">朝の体重・血圧・脈</text>
+            <text x="96" y="195" font-size="18" fill="#22302d">息切れ・尿量・夜間の症状</text>
+            <text x="96" y="247" font-size="18" fill="#22302d">薬の変更・飲み忘れ</text>
+            <path d="M370 292h72" stroke="#9c4f4f" stroke-width="8" stroke-linecap="round"/>
+            <path d="M428 276l24 16-24 16" fill="none" stroke="#9c4f4f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <figcaption class="caption">体重・息切れ・尿量・薬の変化を一緒に記録すると、医療機関で状態を伝えやすくなります。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>急な息苦しさ、胸痛、片足だけの強い腫れは早めに相談してください。</strong>
+        心不全の急な悪化、心筋梗塞、肺塞栓、深部静脈血栓症など、急いで対応が必要な病気が隠れることがあります。強い症状がある場合は、救急相談や医療機関への連絡を優先します。
+      </div>
+      <div class="footer">3ページ目｜体重・息切れ・尿量・左右差を観察する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活での実践：ためこまない・見逃さない仕組みを作る</h2>
+      <p>
+        むくみ対策では、足を高くする、歩く、ふくらはぎを動かすなどの工夫が役立つことがあります。一方で、心不全や腎臓病がある場合は、塩分、水分、薬の調整が重要になるため、自己判断だけで対応しないことが必要です。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>塩分を見直す</strong>
+          塩分が多い食事は水分を体にためやすくします。漬物、汁物、加工食品、麺の汁などを見直します。
+        </div>
+        <div class="mini-card">
+          <strong>ふくらはぎを動かす</strong>
+          長時間同じ姿勢を避け、足首回し、つま先上げ、短い歩行で血液を戻す力を保ちます。
+        </div>
+        <div class="mini-card">
+          <strong>薬を自己調整しない</strong>
+          利尿薬、血圧薬、痛み止めの変更は、むくみや腎機能に影響します。お薬手帳で相談します。
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="heart-box">
+          <h3>心不全を持つ人のセルフチェック</h3>
+          <p>
+            すでに心不全、心筋梗塞、弁膜症、不整脈、高血圧、腎臓病などで通院している人は、体重増加と息切れの変化を早めに相談することが再入院予防につながります。心不全手帳や血圧手帳を使っている場合は、毎日の記録を受診時に見せます。
+          </p>
+          <p>
+            圧迫靴下は、静脈やリンパのむくみに役立つことがありますが、心不全が悪化している時や動脈の血流が悪い時には注意が必要です。使う前に医療者へ相談します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="むくみ予防の生活習慣の図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-practice-title">
+            <title id="fig-practice-title">むくみをためこまない生活の工夫</title>
+            <rect x="22" y="22" width="476" height="316" rx="22" fill="#fbfff8"/>
+            <circle cx="260" cy="178" r="66" fill="#fff1f1" stroke="#9c4f4f" stroke-width="7"/>
+            <text x="225" y="188" font-size="25" fill="#2d6048" font-weight="700">記録</text>
+            <g fill="#edf6ef" stroke="#5b8d70" stroke-width="3">
+              <rect x="56" y="52" width="150" height="58" rx="12"/>
+              <rect x="314" y="52" width="150" height="58" rx="12"/>
+              <rect x="56" y="250" width="150" height="58" rx="12"/>
+              <rect x="314" y="250" width="150" height="58" rx="12"/>
+            </g>
+            <text x="92" y="88" font-size="20" fill="#22302d">体重</text>
+            <text x="350" y="88" font-size="20" fill="#22302d">塩分</text>
+            <text x="82" y="286" font-size="20" fill="#22302d">足の運動</text>
+            <text x="350" y="286" font-size="20" fill="#22302d">薬</text>
+            <path d="M205 88l45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 88l-45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M205 282l45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 282l-45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+          </svg>
+          <figcaption class="caption">毎日の体重、塩分、足の動き、薬の確認を組み合わせると、変化に早く気づきやすくなります。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="生活での工夫と注意点">
+        <thead>
+          <tr>
+            <th>工夫</th>
+            <th>具体例</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>塩分を控える</td>
+            <td>汁物を具だくさんにする、麺の汁を残す、調味料をかけすぎない</td>
+            <td>食欲が落ちるほど極端に制限せず、主治医や管理栄養士へ相談</td>
+          </tr>
+          <tr>
+            <td>足を動かす</td>
+            <td>足首回し、つま先上げ、短時間の歩行、長時間同じ姿勢を避ける</td>
+            <td>息切れ、胸痛、ふらつき、強い痛みがある時は無理をしない</td>
+          </tr>
+          <tr>
+            <td>薬を確認する</td>
+            <td>利尿薬、血圧薬、痛み止め、糖尿病薬の変更時期をメモする</td>
+            <td>自己判断で増減・中止しない。薬局でお薬手帳を見せる</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">4ページ目｜塩分・体重・足の動き・薬を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：むくみは「足」だけでなく「水分のたまり方」を見る</h2>
+      <p>
+        足のむくみは、軽い生活上の変化でも起こりますが、心不全や腎臓病、血栓、薬の影響などのサインになることもあります。重要なのは、むくみだけを切り離さず、体重、息切れ、尿量、夜間の症状、食欲、薬の変化を一緒に見ることです。
+      </p>
+      <div class="box">
+        <strong>今日から確認する3つの視点</strong>
+        <ul>
+          <li>朝の体重、むくみ、息切れ、尿量を同じ条件で記録する。</li>
+          <li>数日で体重が増える、横になると苦しい、夜間に息苦しい時は早めに相談する。</li>
+          <li>利尿薬や水分制限、圧迫靴下は自己判断で変えず、主治医・薬剤師へ確認する。</li>
+        </ul>
+      </div>
+      <div class="clinical">
+        心不全は、悪化と改善を繰り返しながら進むことがあります。早めに変化へ気づき、受診や薬の調整につなげることで、入院を防ぎやすくなる場合があります。本人だけで抱えず、家族、地域支援者、医療職と記録を共有してください。
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-004.html">Vol.4 夜間頻尿と転倒予防の巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-007.html">Vol.7 高血糖と認知症予防の巻</a>
+          <a href="./vol-005.html">Vol.5 低栄養とたんぱく質の巻</a>
+          <a href="./index.html#topic-heart-edema">心臓・むくみ</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.j-circ.or.jp/cms/wp-content/uploads/2025/03/JCS2025_Kato.pdf">日本循環器学会／日本心不全学会：2025年改訂版 心不全診療ガイドライン（PDF）</a></li>
+          <li><a href="https://www.jhfs.or.jp/topics/files/techo3_book1.pdf">日本心不全学会：心不全手帳 第3版（PDF）</a></li>
+          <li><a href="https://j-circ-assoc.or.jp/learn/56/">日本循環器協会：心不全</a></li>
+          <li><a href="https://www.jhf.or.jp/topics/2021/008150/">日本心臓財団：心不全とは、こんな病気です</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/metabolic.html">厚生労働省 e-ヘルスネット：生活習慣病予防</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.11「足のむくみと心不全サインの巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
