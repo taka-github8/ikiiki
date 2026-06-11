@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.12</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #22302d;
+      --muted: #5a6964;
+      --green: #2d6048;
+      --leaf: #5b8d70;
+      --teal: #2f6f73;
+      --blue: #406f9f;
+      --soft: #edf6ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d6e0d8;
+      --accent: #c7853e;
+      --alert: #8a3f33;
+      --balance: #4f6f9c;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--balance);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .balance-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .balance-box { border-left: 8px solid var(--balance); background: #eef3fb; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .page-links a:hover, .page-links a:focus,
+    .related-links a:hover, .related-links a:focus,
+    .brand a:hover, .brand a:focus {
+      outline: 3px solid #c9dfc4;
+      outline-offset: 3px;
+    }
+    .two-col, .three-col { display: grid; gap: 14px; align-items: start; }
+    .two-col { grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      height: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .figure-card { border: 1px solid var(--line); background: #fbfff8; }
+    .figure-card svg { display: block; width: 100%; height: auto; max-height: 280px; }
+    .caption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfff8;
+      border: 1px solid var(--line);
+    }
+    .flow-item.warning { background: #fff7e8; border-color: #e2bd72; }
+    .flow-item.danger { background: #fff0ed; border-color: #d69487; }
+    .flow-item strong { display: block; margin-bottom: 6px; color: var(--green); font-size: 18px; }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 16px;
+    }
+    .compare th, .compare td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    .compare th { background: #eef7f6; color: var(--green); }
+    .related { background: var(--soft); }
+    .source-list { margin-top: 8px; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+    @media (max-width: 760px) {
+      body { font-size: 18px; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; margin-bottom: 18px; }
+      .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      .compare { font-size: 15px; }
+    }
+    @media print {
+      body { background: white; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { max-width: none; padding: 0; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; border-top: 8px solid var(--balance); box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <p class="meta">Vol.12｜めまいとふらつきの巻｜医学的解説版</p>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-label="この号のページ内目次">
+      <h2>この号の目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. めまいを転倒サインとして見る</a>
+        <a href="#page-2">2. 内耳・脳・血圧の仕組み</a>
+        <a href="#page-3">3. 危険サインと相談目安</a>
+        <a href="#page-4">4. 生活での予防と記録</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">いきいき通信案 Vol.12</div>
+      <h1 id="page-1">めまいとふらつきの巻</h1>
+      <div class="two-col">
+        <div>
+          <p class="lead">
+            めまい・ふらつきは、転倒の前ぶれになることがあります。耳、脳、血圧、薬、脱水、低血糖など、原因を分けて考えることが大切です。
+          </p>
+          <p>
+            めまいには、周囲がぐるぐる回る感じ、体がふわふわする感じ、立ち上がった時に目の前が暗くなる感じ、歩くとまっすぐ進みにくい感じなどがあります。症状の言い方が違うだけで、背景にある病気や対応が変わることがあります。
+          </p>
+          <p>
+            高齢期では、めまいそのものより、転倒、骨折、外出回避、食事量低下、薬の飲み間違いにつながることが問題になります。睡眠薬、降圧薬、利尿薬、糖尿病薬、抗不安薬、痛み止めなど、薬の影響でふらつきやすくなることもあります。
+          </p>
+          <p>
+            一方で、突然の強いめまいに、ろれつが回らない、片側の手足が動きにくい、ものが二重に見える、激しい頭痛、歩けないほどのふらつきが重なる場合は、脳卒中など急いで確認が必要な病気が隠れることがあります。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="めまいに関係する耳、脳、血圧、薬の図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-dizzy-overview-title">
+            <title id="fig-dizzy-overview-title">めまいに関係する複数の要因</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#eef3fb"/>
+            <circle cx="260" cy="178" r="70" fill="#fffdf7" stroke="#4f6f9c" stroke-width="7"/>
+            <path d="M224 166c20-44 82-34 76 16-4 39-54 43-65 16-6-15 7-27 24-23" fill="none" stroke="#4f6f9c" stroke-width="11" stroke-linecap="round"/>
+            <text x="231" y="286" font-size="23" fill="#2d6048" font-weight="700">バランス</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="46" y="58" width="132" height="54" rx="10"/>
+              <rect x="342" y="58" width="132" height="54" rx="10"/>
+              <rect x="46" y="244" width="132" height="54" rx="10"/>
+              <rect x="342" y="244" width="132" height="54" rx="10"/>
+            </g>
+            <text x="91" y="92" font-size="19" fill="#22302d">内耳</text>
+            <text x="386" y="92" font-size="19" fill="#22302d">脳</text>
+            <text x="84" y="278" font-size="19" fill="#22302d">血圧</text>
+            <text x="379" y="278" font-size="19" fill="#22302d">薬</text>
+            <path d="M177 93c28 19 47 36 66 60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M343 93c-28 19-47 36-66 60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M177 257c28-19 47-36 66-60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+            <path d="M343 257c-28-19-47-36-66-60" stroke="#5b8d70" stroke-width="5" fill="none"/>
+          </svg>
+          <figcaption class="caption">めまいは、内耳だけでなく、脳、血圧、薬、脱水、低血糖などを合わせて考えます。</figcaption>
+        </figure>
+      </div>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>症状の型を分ける</strong>
+          ぐるぐる、ふわふわ、立ちくらみ、歩きにくいなど、感じ方を具体的に伝えます。
+        </div>
+        <div class="mini-card">
+          <strong>転倒リスクを見る</strong>
+          夜間、起床直後、入浴後、薬を飲んだ後は、ふらつきと転倒が重なりやすい場面です。
+        </div>
+        <div class="mini-card">
+          <strong>突然の神経症状に注意</strong>
+          ろれつ、片側の脱力、二重に見える、激しい頭痛は、早急な確認が必要です。
+        </div>
+      </div>
+      <div class="footer">1ページ目｜めまいを転倒と急病のサインとして見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：体の向きは、内耳・目・足裏・脳で保たれる</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            体のバランスは、内耳、目、筋肉や関節、足裏の感覚、脳が連携して保っています。内耳には、頭の動きや重力を感じる器官があり、視線を安定させたり姿勢を保ったりする手がかりになります。
+          </p>
+          <p>
+            良性発作性頭位めまい症では、寝返りや起き上がり、頭の向きを変えた時に、短時間の回転性めまいが出ることがあります。内耳の中の小さな耳石が関係するとされ、耳鼻咽喉科で診断や体位治療、前庭リハビリを検討することがあります。
+          </p>
+          <p>
+            立ち上がった時のふらつきは、血圧が一時的に下がり、脳への血流が不足することで起こることがあります。脱水、食事量低下、発熱、利尿薬、降圧薬、糖尿病による自律神経障害などが関係する場合があります。
+          </p>
+          <p>
+            脳幹や小脳の脳卒中では、めまい、ふらつき、歩行障害が目立つことがあります。耳の病気と区別が難しいこともあるため、突然の症状、神経症状、歩けないほどのふらつきがある場合は早めの受診が重要です。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="内耳、目、足裏、脳がバランスを保つ図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-balance-title">
+            <title id="fig-balance-title">体のバランスを保つ情報の流れ</title>
+            <rect x="18" y="18" width="484" height="324" rx="22" fill="#fbfff8"/>
+            <circle cx="260" cy="178" r="58" fill="#fffdf7" stroke="#4f6f9c" stroke-width="7"/>
+            <text x="238" y="188" font-size="25" fill="#2d6048" font-weight="700">脳</text>
+            <g fill="#edf6ef" stroke="#5b8d70" stroke-width="3">
+              <rect x="55" y="62" width="140" height="56" rx="12"/>
+              <rect x="325" y="62" width="140" height="56" rx="12"/>
+              <rect x="55" y="242" width="140" height="56" rx="12"/>
+              <rect x="325" y="242" width="140" height="56" rx="12"/>
+            </g>
+            <text x="102" y="97" font-size="20" fill="#22302d">内耳</text>
+            <text x="377" y="97" font-size="20" fill="#22302d">目</text>
+            <text x="91" y="277" font-size="20" fill="#22302d">足裏</text>
+            <text x="358" y="277" font-size="20" fill="#22302d">筋力</text>
+            <path d="M195 92l54 54" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M325 92l-54 54" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M195 270l54-54" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M325 270l-54-54" stroke="#c7853e" stroke-width="6" fill="none"/>
+          </svg>
+          <figcaption class="caption">バランスは内耳だけでなく、視覚、足裏の感覚、筋力、脳の処理で保たれます。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="めまいの主な背景と観察ポイント">
+        <thead>
+          <tr>
+            <th>背景</th>
+            <th>起こりやすい特徴</th>
+            <th>一緒に見ること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>内耳のめまい</td>
+            <td>頭の向きでぐるぐるする、耳鳴り、耳閉感、聞こえの変化</td>
+            <td>寝返り、起床時、耳症状、吐き気、持続時間</td>
+          </tr>
+          <tr>
+            <td>血圧・脱水</td>
+            <td>立ち上がりで目の前が暗い、入浴後や食後にふらつく</td>
+            <td>血圧、脈、食事量、水分、発熱、利尿薬・降圧薬</td>
+          </tr>
+          <tr>
+            <td>薬・低血糖</td>
+            <td>眠気、ぼんやり、冷汗、動悸、食事抜き後のふらつき</td>
+            <td>睡眠薬、糖尿病薬、飲み忘れ、食事量、血糖測定</td>
+          </tr>
+          <tr>
+            <td>脳・神経</td>
+            <td>突然の歩行困難、ろれつ、片側のしびれ、二重に見える</td>
+            <td>発症時刻、神経症状、頭痛、意識、脳卒中リスク</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="clinical">
+        <strong>自己判断でめまい体操を始めないでください。</strong>
+        良性発作性頭位めまい症では体位治療が有効な場合がありますが、首や腰の病気、脳卒中の可能性、強い吐き気がある場合は危険になることがあります。診断と安全確認を受けてから行います。
+      </div>
+      <div class="footer">2ページ目｜内耳・血圧・薬・脳の仕組み</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">危険サインと医療相談の目安</h2>
+      <p>
+        めまいは多くの場合、すぐに命に関わるものではありません。しかし、脳卒中や心臓の病気、強い脱水、低血糖、感染症などが隠れる場合があります。急に始まったか、神経症状を伴うか、歩けるか、意識がはっきりしているかを確認します。
+      </p>
+      <div class="flow" aria-label="相談目安の段階">
+        <div class="flow-item">
+          <strong>記録して相談</strong>
+          軽いふらつき、短いめまい、薬の変更後の眠気。発症時刻、姿勢、薬、血圧を記録します。
+        </div>
+        <div class="flow-item warning">
+          <strong>早めに受診</strong>
+          めまいが繰り返す、吐き気が強い、耳鳴りや聞こえの変化、転倒しかけた、食事や水分が取れない。
+        </div>
+        <div class="flow-item danger">
+          <strong>急いで相談</strong>
+          ろれつが回らない、片側の麻痺、二重に見える、激しい頭痛、歩けない、胸痛、失神。
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>受診時に伝えること</h3>
+          <p>
+            「いつ始まったか」「何をしていた時か」「ぐるぐるか、ふわふわか、立ちくらみか」「どのくらい続いたか」「耳鳴りや聞こえの変化があるか」「手足や言葉の異常があるか」「薬が変わったか」を伝えます。
+          </p>
+          <div class="check">
+            <ul>
+              <li>発症した時刻、急に始まったか徐々にか</li>
+              <li>頭の向き、起き上がり、入浴、食後、薬の後との関係</li>
+              <li>耳鳴り、耳の詰まり、聞こえの変化、吐き気</li>
+              <li>片側のしびれ、脱力、ろれつ、二重に見える、強い頭痛</li>
+              <li>血圧、脈、血糖、体温、食事量、水分量、転倒の有無</li>
+            </ul>
+          </div>
+        </div>
+        <figure class="figure-card" aria-label="危険なめまいのサインを示す図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-redflag-title">
+            <title id="fig-redflag-title">危険なめまいのサイン</title>
+            <rect x="42" y="32" width="436" height="296" rx="18" fill="#fffdf7" stroke="#d6e0d8" stroke-width="4"/>
+            <rect x="42" y="32" width="436" height="58" rx="18" fill="#fff0ed"/>
+            <text x="78" y="70" font-size="24" fill="#8a3f33" font-weight="700">急いで相談</text>
+            <g fill="#fbfff8" stroke="#d6e0d8" stroke-width="3">
+              <rect x="76" y="118" width="368" height="38" rx="8"/>
+              <rect x="76" y="170" width="368" height="38" rx="8"/>
+              <rect x="76" y="222" width="368" height="38" rx="8"/>
+            </g>
+            <text x="96" y="143" font-size="18" fill="#22302d">片側の麻痺・しびれ、ろれつ</text>
+            <text x="96" y="195" font-size="18" fill="#22302d">二重に見える、歩けない</text>
+            <text x="96" y="247" font-size="18" fill="#22302d">激しい頭痛、胸痛、失神</text>
+            <path d="M376 292l24 24 46-58" fill="none" stroke="#8a3f33" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <figcaption class="caption">めまいに神経症状や失神を伴う時は、耳だけの問題と決めつけず早急に相談します。</figcaption>
+        </figure>
+      </div>
+      <div class="alert-box">
+        <strong>脳卒中を疑う症状は時間が重要です。</strong>
+        突然、顔や手足の片側が動きにくい、ろれつが回らない、言葉が出ない、立てない・歩けない、視野がおかしい、経験のない激しい頭痛がある場合は、救急相談や119番を含めて早急に対応します。
+      </div>
+      <div class="footer">3ページ目｜危険サインと受診時の伝え方</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活での実践：ふらつく前提で安全を作る</h2>
+      <p>
+        めまいを完全になくすことが難しい場合でも、転倒を防ぎ、原因を見つけやすくすることはできます。起き上がり、服薬、入浴、夜間トイレ、脱水、低血糖など、起こりやすい場面をあらかじめ整えます。
+      </p>
+      <div class="three-col">
+        <div class="mini-card">
+          <strong>急に立たない</strong>
+          起床時は、布団の中で足首を動かし、座って一呼吸置いてから立ち上がります。
+        </div>
+        <div class="mini-card">
+          <strong>薬と食事を確認</strong>
+          睡眠薬、降圧薬、利尿薬、糖尿病薬の後のふらつき、食事抜き、飲み忘れを記録します。
+        </div>
+        <div class="mini-card">
+          <strong>足元を整える</strong>
+          夜間照明、手すり、滑りにくい履物、床の物を片付けることが転倒予防になります。
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="balance-box">
+          <h3>ふらつきメモを作る</h3>
+          <p>
+            ふらつきは、診察室では再現しないことがあります。いつ、どこで、何をした時に起こったかをメモすると、薬、血圧、内耳、脳、脱水、低血糖のどれが関係しそうか考えやすくなります。
+          </p>
+          <p>
+            「朝の起床直後」「夕食前」「入浴後」「睡眠薬を飲んだ翌朝」「トイレに急いだ時」など、場面がわかるだけでも対策が変わります。家族や支援者は、転倒しかけた場所や時間帯も一緒に記録します。
+          </p>
+        </div>
+        <figure class="figure-card" aria-label="ふらつき予防の生活環境の図">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="fig-practice-title">
+            <title id="fig-practice-title">ふらつき予防の4つの工夫</title>
+            <rect x="22" y="22" width="476" height="316" rx="22" fill="#fbfff8"/>
+            <circle cx="260" cy="178" r="66" fill="#eef3fb" stroke="#4f6f9c" stroke-width="7"/>
+            <text x="226" y="188" font-size="25" fill="#2d6048" font-weight="700">安全</text>
+            <g fill="#edf6ef" stroke="#5b8d70" stroke-width="3">
+              <rect x="56" y="52" width="150" height="58" rx="12"/>
+              <rect x="314" y="52" width="150" height="58" rx="12"/>
+              <rect x="56" y="250" width="150" height="58" rx="12"/>
+              <rect x="314" y="250" width="150" height="58" rx="12"/>
+            </g>
+            <text x="86" y="88" font-size="20" fill="#22302d">起き方</text>
+            <text x="350" y="88" font-size="20" fill="#22302d">薬</text>
+            <text x="92" y="286" font-size="20" fill="#22302d">水分</text>
+            <text x="340" y="286" font-size="20" fill="#22302d">足元</text>
+            <path d="M205 88l45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 88l-45 55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M205 282l45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+            <path d="M315 282l-45-55" stroke="#c7853e" stroke-width="6" fill="none"/>
+          </svg>
+          <figcaption class="caption">起き方、薬、水分、足元を整えると、ふらつきから転倒へ進む流れを減らしやすくなります。</figcaption>
+        </figure>
+      </div>
+      <table class="compare" aria-label="生活での工夫と注意点">
+        <thead>
+          <tr>
+            <th>工夫</th>
+            <th>具体例</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>立ち上がりをゆっくり</td>
+            <td>寝返り、座る、足首運動、立つ、数秒待って歩く</td>
+            <td>胸痛、息切れ、失神がある時は無理に歩かない</td>
+          </tr>
+          <tr>
+            <td>水分・食事を保つ</td>
+            <td>食事を抜かない、発熱や下痢後は脱水に注意する</td>
+            <td>心不全や腎臓病で水分制限がある人は主治医の指示を優先</td>
+          </tr>
+          <tr>
+            <td>薬を点検する</td>
+            <td>眠気、ふらつき、低血圧、低血糖をお薬手帳と一緒に相談</td>
+            <td>自己判断で中止・増減しない</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">4ページ目｜起き方・薬・水分・足元を整える</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：めまいは「型」と「危険サイン」を分ける</h2>
+      <p>
+        めまい・ふらつきは、内耳の病気、血圧の変動、薬、脱水、低血糖、脳や心臓の病気など、幅広い原因で起こります。大切なのは、すべてを怖がることではなく、急いで相談すべきサインと、記録して相談するサインを分けることです。
+      </p>
+      <div class="box">
+        <strong>今日から確認する3つの視点</strong>
+        <ul>
+          <li>ぐるぐる、ふわふわ、立ちくらみ、歩きにくいなど、感じ方を具体的に記録する。</li>
+          <li>起床時、入浴後、食後、薬の後、夜間トイレなど、ふらつく場面を確認する。</li>
+          <li>ろれつ、片側の麻痺、二重に見える、激しい頭痛、失神がある時は早急に相談する。</li>
+        </ul>
+      </div>
+      <div class="clinical">
+        めまいを「年のせい」と決めつけると、転倒や受診遅れにつながることがあります。症状が軽くても繰り返す場合は、主治医、耳鼻咽喉科、脳神経内科、薬剤師、リハビリ専門職などへ、ふらつきメモとお薬手帳を見せて相談してください。
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-004.html">Vol.4 夜間頻尿と転倒予防の巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-008.html">Vol.8 睡眠と薬の安全確認の巻</a>
+          <a href="./vol-011.html">Vol.11 足のむくみと心不全サインの巻</a>
+          <a href="./index.html#topic-dizziness">めまい・ふらつき</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.neurology-jp.org/public/disease/memai_detail.html">日本神経学会：症状編 めまい</a></li>
+          <li><a href="https://www.memai.jp/guide/">日本めまい平衡医学会：ガイドライン等一覧</a></li>
+          <li><a href="https://www.jsnt.gr.jp/guideline/memai2020.html">日本神経治療学会：標準的神経治療 めまい 2020</a></li>
+          <li><a href="https://www.jsa-web.org/citizen/87.html">日本脳卒中協会：脳卒中の主な症状</a></li>
+          <li><a href="https://www.ncvc.go.jp/hospital/pub/knowledge/disease/stroke-2/">国立循環器病研究センター：脳卒中</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.12「めまいとふらつきの巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
