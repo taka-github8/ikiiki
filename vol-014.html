@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.14</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #26302d;
+      --muted: #5d6964;
+      --green: #2f6048;
+      --leaf: #5f8e71;
+      --teal: #2f7070;
+      --blue: #406f9f;
+      --soft: #eef7ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d8e0d8;
+      --accent: #c88b42;
+      --alert: #8a3f33;
+      --bone: #b88556;
+      --lilac: #6f6594;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--bone);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .bone-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .bone-box { border-left: 8px solid var(--bone); background: #fff5ea; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { color: var(--green); }
+    table {
+      width: 100%;
+      margin: 14px 0;
+      border-collapse: collapse;
+      overflow-wrap: anywhere;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #eef6ea; color: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .flow .step {
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      font-weight: 700;
+    }
+    .arrow { color: var(--bone); font-size: 28px; font-weight: 700; text-align: center; }
+    .figure-card {
+      border: 1px solid var(--line);
+      background: #fbfff8;
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .caption { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+    .source-list a { overflow-wrap: anywhere; }
+    @media (max-width: 760px) {
+      body { font-size: 17px; }
+      .site-header { position: static; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; }
+      .grid-2, .grid-3, .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { padding: 0; }
+      .page { box-shadow: none; margin: 0; width: 100%; min-height: auto; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <div class="meta">Vol.14｜医学的解説版</div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-labelledby="nav-title">
+      <h2 id="nav-title">ページ内目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 骨折予防の全体像</a>
+        <a href="#page-2">2. 骨が弱くなる仕組み</a>
+        <a href="#page-3">3. 観察と相談の目安</a>
+        <a href="#page-4">4. 生活でできる予防</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">Vol.14</div>
+      <h1 id="page-1">骨粗しょう症と骨折予防の巻</h1>
+      <p class="lead">
+        骨粗しょう症は「骨が少し弱い」だけではありません。転倒や軽い力で骨折しやすくなり、歩く力、食事、睡眠、認知機能、介護負担にまで影響することがあります。
+      </p>
+      <div class="grid-2">
+        <div>
+          <p>
+            骨粗しょう症は、骨の量や質が低下して骨折しやすくなる状態です。高齢期では、背骨の圧迫骨折、手首の骨折、肩の近くの骨折、太ももの付け根の骨折が生活機能に大きく影響します。特に太ももの付け根の骨折は、手術や入院、リハビリが必要になることが多く、その後の転倒予防と再骨折予防が重要になります。
+          </p>
+          <p>
+            ここで大切なのは、「痛くないから大丈夫」と判断しないことです。骨密度が下がっていても、骨折するまで自覚症状が少ない人がいます。また、背中が丸くなる、身長が縮む、立ち上がりや歩行が不安定になるなど、ゆっくり進む変化として出ることもあります。
+          </p>
+        </div>
+        <div class="figure-card" aria-label="骨の強さの図解">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="bone-compare-title">
+            <title id="bone-compare-title">健康な骨と骨粗しょう症の骨の比較</title>
+            <rect x="20" y="24" width="220" height="292" rx="18" fill="#eef7ef" stroke="#d8e0d8" stroke-width="4"/>
+            <rect x="280" y="24" width="220" height="292" rx="18" fill="#fff5ea" stroke="#d8e0d8" stroke-width="4"/>
+            <text x="130" y="60" text-anchor="middle" fill="#2f6048" font-size="24" font-weight="700">骨が保たれた状態</text>
+            <text x="390" y="60" text-anchor="middle" fill="#2f6048" font-size="24" font-weight="700">骨がもろい状態</text>
+            <g stroke="#b88556" stroke-width="14" stroke-linecap="round">
+              <line x1="70" y1="110" x2="190" y2="110"/>
+              <line x1="70" y1="160" x2="190" y2="160"/>
+              <line x1="70" y1="210" x2="190" y2="210"/>
+              <line x1="70" y1="260" x2="190" y2="260"/>
+              <line x1="90" y1="96" x2="90" y2="274"/>
+              <line x1="140" y1="96" x2="140" y2="274"/>
+              <line x1="180" y1="96" x2="180" y2="274"/>
+            </g>
+            <g stroke="#d6a778" stroke-width="8" stroke-linecap="round">
+              <line x1="325" y1="112" x2="455" y2="112"/>
+              <line x1="320" y1="178" x2="452" y2="166"/>
+              <line x1="338" y1="248" x2="458" y2="232"/>
+              <line x1="350" y1="94" x2="332" y2="270"/>
+              <line x1="408" y1="94" x2="390" y2="260"/>
+              <line x1="462" y1="116" x2="432" y2="274"/>
+            </g>
+            <circle cx="365" cy="180" r="22" fill="#fffdf7"/>
+            <circle cx="430" cy="218" r="30" fill="#fffdf7"/>
+            <text x="130" y="306" text-anchor="middle" fill="#5d6964" font-size="18">網目が密で支えが多い</text>
+            <text x="390" y="306" text-anchor="middle" fill="#5d6964" font-size="18">すき間が増え支えが少ない</text>
+          </svg>
+          <p class="caption">骨の強さは骨密度だけでなく、骨の構造や質にも左右されます。</p>
+        </div>
+      </div>
+      <div class="bone-box">
+        <strong>今回の視点</strong>
+        <p>
+          骨粗しょう症対策は、カルシウムを多く摂るだけでは不十分です。骨の作り替え、筋力、転倒しにくい環境、薬の影響、過去の骨折歴、栄養状態を一緒に見ます。すでに骨折したことがある人は、次の骨折を防ぐ「二次骨折予防」が特に大切です。
+        </p>
+      </div>
+      <div class="footer">1ページ目｜骨粗しょう症は生活機能を守るテーマ</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：骨は毎日「作り替え」られている</h2>
+      <p>
+        骨は一度できたらそのまま残る硬い柱ではなく、古い骨を壊し、新しい骨を作る作業をくり返しています。この作業を骨のリモデリングといいます。古い骨を壊す細胞を破骨細胞、新しい骨を作る細胞を骨芽細胞と呼びます。若い時期や健康な状態では、壊す量と作る量のバランスが保たれます。
+      </p>
+      <p>
+        加齢、閉経後の女性ホルモン低下、低栄養、ビタミンD不足、活動量低下、喫煙、多量飲酒、一部の薬や病気の影響などが重なると、骨を壊す働きが相対的に強くなり、骨量が減りやすくなります。糖尿病、腎臓病、関節リウマチ、ステロイド薬の使用などがある場合は、骨折リスクの評価が必要になることがあります。
+      </p>
+      <div class="grid-2">
+        <div class="figure-card">
+          <svg viewBox="0 0 520 330" role="img" aria-labelledby="remodel-title">
+            <title id="remodel-title">骨のリモデリングの図解</title>
+            <rect x="22" y="28" width="476" height="250" rx="18" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <circle cx="130" cy="154" r="62" fill="#eef7ef" stroke="#5f8e71" stroke-width="6"/>
+            <circle cx="390" cy="154" r="62" fill="#fff5ea" stroke="#b88556" stroke-width="6"/>
+            <text x="130" y="145" text-anchor="middle" fill="#2f6048" font-size="25" font-weight="700">骨形成</text>
+            <text x="130" y="176" text-anchor="middle" fill="#2f6048" font-size="18">骨芽細胞</text>
+            <text x="390" y="145" text-anchor="middle" fill="#8a5834" font-size="25" font-weight="700">骨吸収</text>
+            <text x="390" y="176" text-anchor="middle" fill="#8a5834" font-size="18">破骨細胞</text>
+            <path d="M205 154 H315" stroke="#2f7070" stroke-width="10" stroke-linecap="round"/>
+            <path d="M300 136 L326 154 L300 172" fill="none" stroke="#2f7070" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="260" y="220" text-anchor="middle" fill="#5d6964" font-size="18">作る力と壊す力のバランス</text>
+            <text x="260" y="258" text-anchor="middle" fill="#8a3f33" font-size="19" font-weight="700">壊す力が上回る状態が続くと骨量低下へ</text>
+          </svg>
+          <p class="caption">骨粗しょう症は、骨吸収と骨形成のバランスが崩れることで進みます。</p>
+        </div>
+        <div class="clinical">
+          <strong>骨を守る材料と刺激</strong>
+          <p>
+            骨にはカルシウムだけでなく、たんぱく質、ビタミンD、ビタミンK、マグネシウムなどが関わります。さらに、歩行や筋力トレーニングのように体重がかかる刺激は、骨と筋肉の維持に役立ちます。ただし、すでに骨折歴や強い腰痛がある場合は、運動内容を医師やリハビリ専門職に確認します。
+          </p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>骨密度</strong>
+          <p>骨の中にどれだけミネラルがあるかを示す目安です。DXA法などで測定します。</p>
+        </div>
+        <div class="mini-card">
+          <strong>骨質</strong>
+          <p>骨の微細な構造やしなやかさの要素です。骨密度だけで骨折しやすさが決まるわけではありません。</p>
+        </div>
+        <div class="mini-card">
+          <strong>転倒リスク</strong>
+          <p>筋力、視力、薬、夜間トイレ、床の段差などが関係します。骨と同時に環境も見ます。</p>
+        </div>
+      </div>
+      <div class="footer">2ページ目｜骨の作り替え、栄養、運動刺激を理解する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイント：痛みがなくても「骨折しやすさ」を見る</h2>
+      <p>
+        骨粗しょう症は、健診の血液検査だけでは分かりにくいことがあります。骨密度測定、レントゲン、血液検査、服薬歴、転倒歴、過去の骨折歴を組み合わせて評価します。特に「転んだだけ」「尻もちをついただけ」で骨折した経験がある場合は、骨が弱くなっている可能性を考えます。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>観察すること</th>
+            <th>背景にある可能性</th>
+            <th>相談時に伝える内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>身長が以前より縮んだ、背中が丸くなった</td>
+            <td>背骨の圧迫骨折や姿勢変化が隠れていることがあります</td>
+            <td>いつ頃から変わったか、腰背部痛の有無、写真や健診記録</td>
+          </tr>
+          <tr>
+            <td>軽い転倒や尻もちの後から腰、背中、股関節が痛い</td>
+            <td>背骨、骨盤、大腿骨近位部などの骨折確認が必要なことがあります</td>
+            <td>転び方、痛む場所、立てるか、歩けるか、痛み止めの使用</td>
+          </tr>
+          <tr>
+            <td>ここ1年で転倒が増えた、歩幅が狭くなった</td>
+            <td>筋力低下、めまい、薬、視力低下、足の痛みなどが関係します</td>
+            <td>転倒した場所、時間帯、服薬内容、ふらつきやしびれの有無</td>
+          </tr>
+          <tr>
+            <td>食事量低下、体重減少、外出減少がある</td>
+            <td>低栄養、筋肉量低下、日照不足が骨と筋肉の両方に影響します</td>
+            <td>体重変化、食事回数、たんぱく質食品、外出頻度</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">
+        <strong>早めに医療機関へ相談したいサイン</strong>
+        <ul>
+          <li>転倒後に強い腰痛、背部痛、股関節痛があり、立つ、歩く、寝返りが難しい。</li>
+          <li>背中や腰の痛みが数日たっても改善しない、痛みで食事や睡眠が崩れている。</li>
+          <li>足のしびれ、力が入りにくい、排尿や排便の異常を伴う。</li>
+          <li>過去に骨折があり、骨粗しょう症の検査や治療を中断している。</li>
+        </ul>
+      </div>
+      <div class="flow" aria-label="相談の流れ">
+        <div class="step">1. 転倒歴、痛み、身長変化を記録</div>
+        <div class="arrow">→</div>
+        <div class="step">2. お薬手帳と健診結果を持参</div>
+        <div class="arrow">→</div>
+        <div class="step">3. 骨密度、画像、栄養、転倒リスクを相談</div>
+      </div>
+      <div class="figure-card">
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="fracture-title">
+          <title id="fracture-title">骨折しやすい部位</title>
+          <rect x="20" y="20" width="600" height="210" rx="18" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <g fill="none" stroke="#b88556" stroke-width="14" stroke-linecap="round">
+            <path d="M125 65 C115 112 116 158 130 205"/>
+            <path d="M125 65 C150 112 150 158 136 205"/>
+            <line x1="295" y1="72" x2="340" y2="176"/>
+            <line x1="340" y1="176" x2="316" y2="214"/>
+            <line x1="470" y1="78" x2="470" y2="180"/>
+            <line x1="430" y1="180" x2="510" y2="180"/>
+            <line x1="510" y1="180" x2="535" y2="205"/>
+          </g>
+          <circle cx="130" cy="132" r="24" fill="#fff0ed" stroke="#8a3f33" stroke-width="4"/>
+          <circle cx="330" cy="165" r="24" fill="#fff0ed" stroke="#8a3f33" stroke-width="4"/>
+          <circle cx="510" cy="180" r="20" fill="#fff0ed" stroke="#8a3f33" stroke-width="4"/>
+          <text x="130" y="244" text-anchor="middle" fill="#2f6048" font-size="20" font-weight="700">背骨</text>
+          <text x="330" y="244" text-anchor="middle" fill="#2f6048" font-size="20" font-weight="700">太ももの付け根</text>
+          <text x="510" y="244" text-anchor="middle" fill="#2f6048" font-size="20" font-weight="700">手首</text>
+        </svg>
+        <p class="caption">背骨、太ももの付け根、手首は高齢期の生活機能に影響しやすい部位です。</p>
+      </div>
+      <div class="footer">3ページ目｜身長、痛み、転倒歴、服薬歴をまとめて相談する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる予防：骨、筋肉、家の中を同時に整える</h2>
+      <p>
+        骨折予防は、食事だけ、運動だけ、薬だけで完結しません。骨を作る材料を入れ、骨と筋肉に安全な刺激を入れ、転びにくい環境を作ることが基本です。骨粗しょう症の治療薬を使っている人は、自己判断で中断せず、歯科治療予定や副作用が心配な時も主治医、歯科医師、薬剤師へ相談してください。
+      </p>
+      <div class="grid-2">
+        <div class="bone-box">
+          <h3>食事の柱</h3>
+          <ul>
+            <li>主食、主菜、副菜をそろえ、欠食を減らす。</li>
+            <li>牛乳、乳製品、大豆製品、小魚、青菜などを無理なく組み合わせる。</li>
+            <li>たんぱく質を毎食少しずつ入れ、筋肉量低下も防ぐ。</li>
+            <li>腎臓病、結石、サプリメント使用中の人は、カルシウムやビタミンDの追加を相談する。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <h3>運動の柱</h3>
+          <ul>
+            <li>歩行、立ち座り、かかと上げなど、体重がかかる動きを生活に入れる。</li>
+            <li>椅子や手すりを使い、転倒しにくい形で下肢筋力を保つ。</li>
+            <li>強い腰痛、骨折歴、ふらつきがある人は、運動前に専門職へ相談する。</li>
+            <li>痛みが増える運動、息切れが強い運動は無理に続けない。</li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>場面</th>
+            <th>今日からの工夫</th>
+            <th>確認したいこと</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>玄関、廊下、トイレ</td>
+            <td>段差、敷物、コード、暗い照明を見直す</td>
+            <td>夜間トイレまでの動線、手すり、足元灯</td>
+          </tr>
+          <tr>
+            <td>起床時</td>
+            <td>すぐ立たず、ベッド端で足踏みしてから立つ</td>
+            <td>めまい、血圧の薬、睡眠薬、夜間頻尿</td>
+          </tr>
+          <tr>
+            <td>買い物、外出</td>
+            <td>靴底のすり減り、荷物の重さ、杖の高さを確認</td>
+            <td>歩幅、疲れやすさ、途中で休める場所</td>
+          </tr>
+          <tr>
+            <td>服薬管理</td>
+            <td>骨粗しょう症薬、眠気の出る薬、血圧薬をお薬手帳で確認</td>
+            <td>飲み忘れ、副作用、歯科治療予定、転倒後の痛み</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="figure-card">
+        <svg viewBox="0 0 650 320" role="img" aria-labelledby="home-title">
+          <title id="home-title">転倒予防の住環境</title>
+          <rect x="28" y="34" width="594" height="232" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <rect x="70" y="78" width="500" height="146" rx="8" fill="#eef7ef" stroke="#5f8e71" stroke-width="5"/>
+          <line x1="70" y1="154" x2="570" y2="154" stroke="#d8e0d8" stroke-width="4"/>
+          <line x1="238" y1="78" x2="238" y2="224" stroke="#d8e0d8" stroke-width="4"/>
+          <line x1="404" y1="78" x2="404" y2="224" stroke="#d8e0d8" stroke-width="4"/>
+          <circle cx="115" cy="118" r="18" fill="#fff5ea" stroke="#b88556" stroke-width="4"/>
+          <path d="M115 136 V182 M92 160 H138 M115 182 L96 210 M115 182 L135 210" stroke="#2f6048" stroke-width="7" stroke-linecap="round"/>
+          <rect x="267" y="105" width="88" height="18" rx="9" fill="#b88556"/>
+          <text x="311" y="100" text-anchor="middle" fill="#2f6048" font-size="18" font-weight="700">手すり</text>
+          <circle cx="455" cy="118" r="18" fill="#ffe9a8" stroke="#c88b42" stroke-width="4"/>
+          <path d="M455 88 V60" stroke="#c88b42" stroke-width="8" stroke-linecap="round"/>
+          <text x="489" y="105" fill="#2f6048" font-size="18" font-weight="700">足元灯</text>
+          <path d="M272 196 C306 178 344 212 378 193" fill="none" stroke="#8a3f33" stroke-width="8" stroke-linecap="round"/>
+          <text x="325" y="248" text-anchor="middle" fill="#8a3f33" font-size="18" font-weight="700">コードや敷物はつまずきの原因</text>
+          <text x="320" y="298" text-anchor="middle" fill="#5d6964" font-size="18">骨を強くする対策と同じくらい、転ばない環境づくりが重要です。</text>
+        </svg>
+      </div>
+      <div class="footer">4ページ目｜栄養、運動、住環境、薬の確認を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：骨折予防は「検査して、続ける」ことが大切</h2>
+      <p>
+        骨粗しょう症は、症状が少ないまま進むことがある一方で、骨折してから生活への影響が大きく出る病気です。身長低下、背中や腰の痛み、過去の骨折、転倒の増加、食事量低下、薬の影響を見逃さず、早めに相談することが骨折予防につながります。
+      </p>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>検査</strong>
+          <p>骨密度、レントゲン、血液検査、転倒リスクを必要に応じて確認します。</p>
+        </div>
+        <div class="mini-card">
+          <strong>治療</strong>
+          <p>薬が必要な場合は、効果と注意点を理解し、中断せず相談しながら続けます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>生活</strong>
+          <p>食事、運動、日光、住環境、靴、薬の整理を組み合わせます。</p>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          骨は静かに弱くなることがありますが、気づいた時点から対策できます。「転ばない」「折れにくくする」「折れた後に次を防ぐ」を一緒に進めることが、これからの歩く力を守ります。気になる痛みや転倒歴があれば、早めに主治医、整形外科、薬剤師、管理栄養士、リハビリ専門職へ相談してください。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-004.html">Vol.4 夜間頻尿と転倒予防の巻</a>
+          <a href="./vol-005.html">Vol.5 低栄養とたんぱく質の巻</a>
+          <a href="./vol-012.html">Vol.12 めまいとふらつきの巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./index.html#topic-bone-fall">骨・転倒・骨折予防</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://kennet.mhlw.go.jp/information/information/dictionary/food/ye-043.html">厚生労働省 e-ヘルスネット：骨粗鬆症</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/food/e-02-007.html">厚生労働省 e-ヘルスネット：骨粗鬆症の予防のための食生活</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/exercise/s-05-001.html">厚生労働省 e-ヘルスネット：骨粗鬆症予防のための運動</a></li>
+          <li><a href="https://www.josteo.com/data/publications/guideline/2025_01.pdf">日本骨粗鬆症学会ほか：骨粗鬆症の予防と治療ガイドライン 2025年版</a></li>
+          <li><a href="https://www.ncgg.go.jp/hospital/shinryo/senmon/kossetsu.html">国立長寿医療研究センター：骨折予防外来</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.14「骨粗しょう症と骨折予防の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
