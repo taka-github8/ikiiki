@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.15</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #25302d;
+      --muted: #5c6964;
+      --green: #2e6048;
+      --leaf: #5f8e71;
+      --teal: #2f7070;
+      --blue: #3d6f9f;
+      --soft: #edf7ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d8e0d8;
+      --accent: #c98d42;
+      --alert: #8a3f33;
+      --kidney: #8f5b73;
+      --urine: #c79d37;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--kidney);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .kidney-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .kidney-box { border-left: 8px solid var(--kidney); background: #f7eef3; }
+    .check { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--accent); }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { color: var(--green); }
+    table {
+      width: 100%;
+      margin: 14px 0;
+      border-collapse: collapse;
+      overflow-wrap: anywhere;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #eef6ea; color: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .flow .step {
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      font-weight: 700;
+    }
+    .arrow { color: var(--kidney); font-size: 28px; font-weight: 700; text-align: center; }
+    .figure-card {
+      border: 1px solid var(--line);
+      background: #fbfff8;
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .caption { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+    .source-list a { overflow-wrap: anywhere; }
+    @media (max-width: 760px) {
+      body { font-size: 17px; }
+      .site-header { position: static; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; }
+      .grid-2, .grid-3, .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { padding: 0; }
+      .page { box-shadow: none; margin: 0; width: 100%; min-height: auto; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <div class="meta">Vol.15｜医学的解説版</div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-labelledby="nav-title">
+      <h2 id="nav-title">ページ内目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 腎臓を守る全体像</a>
+        <a href="#page-2">2. ろ過とCKDの仕組み</a>
+        <a href="#page-3">3. 検査値と相談目安</a>
+        <a href="#page-4">4. 生活と薬の整え方</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">Vol.15</div>
+      <h1 id="page-1">腎臓の働きと慢性腎臓病の巻</h1>
+      <p class="lead">
+        慢性腎臓病（CKD）は、腎臓の働きの低下や尿たんぱくが3か月以上続く状態です。自覚症状が少ない段階から見つけ、血圧・血糖・薬・脱水を整えることが、透析予防だけでなく心臓や脳を守ることにもつながります。
+      </p>
+      <div class="grid-2">
+        <div>
+          <p>
+            腎臓は、血液をろ過して老廃物を尿として出すだけでなく、水分、塩分、カリウム、酸とアルカリのバランスを整えます。また、血圧を調整するホルモン、貧血に関わるホルモン、骨を保つビタミンDの働きにも関係しています。つまり腎臓は、血液、血管、骨、薬の効き方にまで関わる臓器です。
+          </p>
+          <p>
+            CKDは、高血圧、糖尿病、加齢、腎炎、脂質異常、肥満、喫煙、薬の影響などが重なって進むことがあります。初期には痛みやだるさが出にくいため、健診や通院時の尿検査、血清クレアチニン、eGFRの確認が重要です。
+          </p>
+        </div>
+        <div class="figure-card" aria-label="腎臓の働きの図解">
+          <svg viewBox="0 0 560 380" role="img" aria-labelledby="kidney-overview-title">
+            <title id="kidney-overview-title">腎臓が血液をろ過して尿を作る流れ</title>
+            <rect x="22" y="24" width="516" height="306" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <path d="M170 82 C112 92 88 150 112 205 C132 250 168 274 205 250 C237 230 238 179 212 153 C196 136 198 100 170 82Z" fill="#f7eef3" stroke="#8f5b73" stroke-width="8"/>
+            <path d="M390 82 C448 92 472 150 448 205 C428 250 392 274 355 250 C323 230 322 179 348 153 C364 136 362 100 390 82Z" fill="#f7eef3" stroke="#8f5b73" stroke-width="8"/>
+            <path d="M218 154 C254 174 306 174 342 154" fill="none" stroke="#3d6f9f" stroke-width="12" stroke-linecap="round"/>
+            <path d="M210 238 C260 284 300 284 350 238" fill="none" stroke="#c79d37" stroke-width="10" stroke-linecap="round"/>
+            <text x="280" y="58" text-anchor="middle" fill="#2e6048" font-size="24" font-weight="700">血液をろ過し、体内環境を整える</text>
+            <text x="280" y="145" text-anchor="middle" fill="#3d6f9f" font-size="20" font-weight="700">血液</text>
+            <text x="280" y="304" text-anchor="middle" fill="#8a6b20" font-size="20" font-weight="700">尿として老廃物を排出</text>
+            <text x="280" y="348" text-anchor="middle" fill="#5c6964" font-size="18">水分・塩分・血圧・貧血・骨にも関係</text>
+          </svg>
+          <p class="caption">腎臓は「尿を作る臓器」だけでなく、全身のバランス調整役です。</p>
+        </div>
+      </div>
+      <div class="kidney-box">
+        <strong>今回の視点</strong>
+        <p>
+          腎臓を守るには、検査値を見ること、原因になりやすい高血圧・糖尿病を整えること、薬を安全に使うこと、脱水や感染時に早めに相談することが大切です。特に暑い時期や下痢・発熱がある時は、腎臓に負担がかかりやすいことがあります。
+        </p>
+      </div>
+      <div class="footer">1ページ目｜CKDは自覚症状が少ない段階から見つける</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：糸球体でろ過し、必要なものを戻す</h2>
+      <p>
+        腎臓の中には、糸球体という細い血管の集まりが多数あります。糸球体は血液をこし、老廃物や余分な水分を尿のもとへ移します。その後、尿細管で必要な水分や電解質を体へ戻し、不要なものを尿として出します。この精密な調整が弱くなると、体に老廃物や水分がたまりやすくなります。
+      </p>
+      <p>
+        eGFRは、血清クレアチニン、年齢、性別などから推算する腎臓のろ過能力の目安です。尿たんぱくや尿アルブミンは、腎臓のフィルターが傷んでいるサインになることがあります。eGFRと尿たんぱくを組み合わせることで、腎臓だけでなく心血管病のリスク評価にもつながります。
+      </p>
+      <div class="grid-2">
+        <div class="figure-card">
+          <svg viewBox="0 0 560 360" role="img" aria-labelledby="filter-title">
+            <title id="filter-title">糸球体と尿細管のろ過の図解</title>
+            <rect x="26" y="28" width="508" height="270" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <circle cx="165" cy="150" r="72" fill="#eef7ef" stroke="#5f8e71" stroke-width="7"/>
+            <path d="M115 148 C142 95 190 104 215 144 C190 186 141 198 115 148Z" fill="none" stroke="#3d6f9f" stroke-width="10" stroke-linecap="round"/>
+            <path d="M245 150 H344" stroke="#c79d37" stroke-width="10" stroke-linecap="round"/>
+            <path d="M330 132 L356 150 L330 168" fill="none" stroke="#c79d37" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M370 92 C460 92 460 204 380 204 C320 204 322 112 398 126" fill="none" stroke="#8f5b73" stroke-width="14" stroke-linecap="round"/>
+            <text x="165" y="252" text-anchor="middle" fill="#2e6048" font-size="20" font-weight="700">糸球体</text>
+            <text x="410" y="252" text-anchor="middle" fill="#8f5b73" font-size="20" font-weight="700">尿細管</text>
+            <text x="280" y="324" text-anchor="middle" fill="#5c6964" font-size="18">ろ過した後、必要な水分や成分を体へ戻します。</text>
+          </svg>
+          <p class="caption">フィルターと再吸収の両方が、体の水分・塩分バランスを支えます。</p>
+        </div>
+        <div class="clinical">
+          <strong>CKDで注意したい全身への影響</strong>
+          <p>
+            腎機能が低下すると、水分や塩分がたまり血圧が上がりやすくなる、貧血が進む、カリウムなどの電解質が乱れる、薬が体に残りやすくなる、といった変化が起こることがあります。進行した場合は、むくみ、息切れ、食欲低下、だるさなどが出ることもあります。
+          </p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>eGFR</strong>
+          <p>腎臓のろ過能力の目安です。数値が低いほど腎機能低下を考えます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>尿たんぱく</strong>
+          <p>腎臓のフィルターの傷みを示すサインになることがあります。</p>
+        </div>
+        <div class="mini-card">
+          <strong>血圧・血糖</strong>
+          <p>高血圧と糖尿病はCKDの進行に関係しやすく、継続管理が重要です。</p>
+        </div>
+      </div>
+      <div class="footer">2ページ目｜eGFRと尿たんぱくを組み合わせて見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイント：健診結果を「腎臓のメモ」として残す</h2>
+      <p>
+        腎臓の変化は、血圧や血糖と同じように、1回だけでなく経過を見ることが大切です。eGFRが以前より下がっている、尿たんぱくが続く、血圧が高い、糖尿病の治療中である、むくみや息切れが増えた、といった情報をまとめて相談すると、次の検査や治療方針を決めやすくなります。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>確認する項目</th>
+            <th>見る意味</th>
+            <th>相談時に持参・記録するもの</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>eGFR、血清クレアチニン</td>
+            <td>腎臓のろ過能力の目安。年齢だけでなく経時変化を見ます。</td>
+            <td>過去数年分の健診結果、採血結果</td>
+          </tr>
+          <tr>
+            <td>尿たんぱく、尿アルブミン</td>
+            <td>腎臓のフィルター障害や糖尿病性腎症の早期発見に関係します。</td>
+            <td>尿検査結果、糖尿病の通院記録</td>
+          </tr>
+          <tr>
+            <td>血圧、体重、むくみ</td>
+            <td>水分・塩分のたまりや心臓・腎臓の負担を考える手がかりです。</td>
+            <td>家庭血圧、体重表、靴下跡、息切れの有無</td>
+          </tr>
+          <tr>
+            <td>薬、サプリメント、痛み止め</td>
+            <td>腎機能により薬の量や選び方の確認が必要になることがあります。</td>
+            <td>お薬手帳、市販薬、漢方、サプリメント名</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">
+        <strong>早めに医療機関へ相談したいサイン</strong>
+        <ul>
+          <li>尿が急に少ない、強いむくみ、急な体重増加、息切れがある。</li>
+          <li>発熱、下痢、嘔吐、食事や水分がとれない状態が続く。</li>
+          <li>健診で尿たんぱく陽性やeGFR低下を指摘されたが、再確認していない。</li>
+          <li>痛み止め、市販薬、サプリメントを継続しており、腎機能への影響が心配。</li>
+        </ul>
+      </div>
+      <div class="figure-card">
+        <svg viewBox="0 0 650 300" role="img" aria-labelledby="chart-title">
+          <title id="chart-title">eGFRと尿たんぱくを経過で見る図解</title>
+          <rect x="34" y="28" width="582" height="214" rx="18" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <line x1="95" y1="208" x2="570" y2="208" stroke="#5c6964" stroke-width="4"/>
+          <line x1="95" y1="68" x2="95" y2="208" stroke="#5c6964" stroke-width="4"/>
+          <polyline points="110,92 210,112 310,130 410,158 520,178" fill="none" stroke="#8f5b73" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="110" cy="92" r="8" fill="#8f5b73"/>
+          <circle cx="210" cy="112" r="8" fill="#8f5b73"/>
+          <circle cx="310" cy="130" r="8" fill="#8f5b73"/>
+          <circle cx="410" cy="158" r="8" fill="#8f5b73"/>
+          <circle cx="520" cy="178" r="8" fill="#8f5b73"/>
+          <rect x="468" y="70" width="92" height="42" rx="8" fill="#fff0ed" stroke="#8a3f33" stroke-width="3"/>
+          <text x="514" y="98" text-anchor="middle" fill="#8a3f33" font-size="18" font-weight="700">相談</text>
+          <text x="95" y="54" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">eGFR</text>
+          <text x="332" y="266" text-anchor="middle" fill="#5c6964" font-size="18">1回の値だけでなく、下がり方と尿たんぱくを一緒に確認</text>
+        </svg>
+        <p class="caption">健診結果は保管し、前回との変化を見られるようにします。</p>
+      </div>
+      <div class="footer">3ページ目｜eGFR、尿たんぱく、血圧、薬をセットで相談する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできる予防：血管と腎臓を同時に守る</h2>
+      <p>
+        CKD対策は、腎臓だけを見るのではなく、血管を守る生活習慣病対策として考えます。血圧、血糖、脂質、体重、喫煙、食塩、薬の使い方を整えることが、腎臓、心臓、脳を一緒に守る基本になります。食事制限は腎機能や合併症によって変わるため、自己流で極端に制限せず、主治医や管理栄養士に確認します。
+      </p>
+      <div class="grid-2">
+        <div class="kidney-box">
+          <h3>食事と水分</h3>
+          <ul>
+            <li>食塩を控えめにし、汁物、漬物、加工食品、麺類の汁を見直す。</li>
+            <li>糖尿病や高血圧の治療中は、食事療法を継続して相談する。</li>
+            <li>たんぱく質やカリウム制限は、腎機能の段階で必要性が変わるため確認する。</li>
+            <li>脱水が心配な時期でも、心不全や腎不全がある人は水分量を自己判断で増減しない。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <h3>薬と受診</h3>
+          <ul>
+            <li>お薬手帳に、市販薬、痛み止め、漢方、サプリメントも記録する。</li>
+            <li>腎機能に応じて薬の量や種類の調整が必要になることがある。</li>
+            <li>発熱、下痢、嘔吐、食事不良の時は、薬をどうするか早めに相談する。</li>
+            <li>薬は自己判断で中止せず、主治医や薬剤師へ確認する。</li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>取り組み</th>
+            <th>腎臓に関係する理由</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>家庭血圧を測る</td>
+            <td>高血圧は腎臓の血管に負担をかけ、CKD進行に関係します。</td>
+            <td>朝・夜の記録を受診時に見せる。</td>
+          </tr>
+          <tr>
+            <td>血糖管理を続ける</td>
+            <td>糖尿病は尿アルブミンや腎機能低下と関係します。</td>
+            <td>低血糖症状や食事量低下も一緒に相談する。</td>
+          </tr>
+          <tr>
+            <td>軽い運動を続ける</td>
+            <td>血圧、血糖、筋力、体重管理に役立ちます。</td>
+            <td>息切れ、むくみ、強い疲労がある時は無理をしない。</td>
+          </tr>
+          <tr>
+            <td>禁煙・節酒を意識する</td>
+            <td>血管への負担を減らし、生活習慣病対策につながります。</td>
+            <td>一人で難しい場合は外来や地域支援につなぐ。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="figure-card">
+        <svg viewBox="0 0 670 320" role="img" aria-labelledby="network-title">
+          <title id="network-title">腎臓を守る生活要素の図解</title>
+          <rect x="28" y="30" width="614" height="242" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <circle cx="335" cy="152" r="54" fill="#f7eef3" stroke="#8f5b73" stroke-width="7"/>
+          <text x="335" y="145" text-anchor="middle" fill="#8f5b73" font-size="22" font-weight="700">腎臓</text>
+          <text x="335" y="174" text-anchor="middle" fill="#8f5b73" font-size="17">CKD予防</text>
+          <g fill="#eef7ef" stroke="#5f8e71" stroke-width="4">
+            <rect x="62" y="70" width="130" height="56" rx="12"/>
+            <rect x="478" y="70" width="130" height="56" rx="12"/>
+            <rect x="62" y="194" width="130" height="56" rx="12"/>
+            <rect x="478" y="194" width="130" height="56" rx="12"/>
+            <rect x="270" y="244" width="130" height="56" rx="12"/>
+          </g>
+          <g stroke="#2f7070" stroke-width="6" stroke-linecap="round">
+            <line x1="192" y1="98" x2="286" y2="130"/>
+            <line x1="478" y1="98" x2="384" y2="130"/>
+            <line x1="192" y1="222" x2="286" y2="176"/>
+            <line x1="478" y1="222" x2="384" y2="176"/>
+            <line x1="335" y1="244" x2="335" y2="206"/>
+          </g>
+          <text x="127" y="105" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">血圧</text>
+          <text x="543" y="105" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">血糖</text>
+          <text x="127" y="229" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">食塩</text>
+          <text x="543" y="229" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">薬</text>
+          <text x="335" y="279" text-anchor="middle" fill="#2e6048" font-size="18" font-weight="700">運動・禁煙</text>
+        </svg>
+      </div>
+      <div class="footer">4ページ目｜血圧・血糖・食塩・薬・運動を同時に整える</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：腎臓は「検査で早く気づく」臓器</h2>
+      <p>
+        腎臓は我慢強い臓器で、症状が出る前から検査値に変化が出ることがあります。だからこそ、健診結果を保管し、eGFR、尿たんぱく、血圧、血糖、薬を一緒に確認することが大切です。数値が少し悪いだけでも、経過を見て早めに相談することで、進行を遅らせる対策につながる場合があります。
+      </p>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>検査</strong>
+          <p>eGFR、クレアチニン、尿たんぱく、尿アルブミンを経過で見ます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>原因</strong>
+          <p>高血圧、糖尿病、薬、脱水、加齢、腎炎などを組み合わせて考えます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>相談</strong>
+          <p>健診結果とお薬手帳を持参し、主治医や薬剤師へ確認します。</p>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          腎臓の変化は、本人が気づきにくいことがあります。健診結果の小さな印を見過ごさず、早めに相談することが将来の安心につながります。薬や食事を自己判断で変える前に、主治医、薬剤師、管理栄養士、看護師などへ確認しましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-007.html">Vol.7 高血糖と認知症予防の巻</a>
+          <a href="./vol-011.html">Vol.11 足のむくみと心不全サインの巻</a>
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-002.html">Vol.2 食中毒と脱水予防の巻</a>
+          <a href="./index.html#topic-kidney">腎臓・CKD</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://kennet.mhlw.go.jp/information/information/dictionary/metabolic/ym-073.html">厚生労働省 e-ヘルスネット：CKD / 慢性腎臓病</a></li>
+          <li><a href="https://www.ncvc.go.jp/hospital/pub/knowledge/disease/nierenkrankheit/">国立循環器病研究センター：慢性腎臓病</a></li>
+          <li><a href="https://www.ncvc.go.jp/hospital/section/ld/hypertension/detail02-2/">国立循環器病研究センター 腎臓・高血圧内科：慢性腎臓病（CKD）</a></li>
+          <li><a href="https://jsn.or.jp/medic/guideline/">日本腎臓学会：診療ガイドライン</a></li>
+          <li><a href="https://jsn.or.jp/medic/newstopics/formember/ckd2024ckd2024.php">日本腎臓学会：CKD診療ガイド2024・患者さんとご家族のためのCKD療養ガイド2024</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.15「腎臓の働きと慢性腎臓病の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
