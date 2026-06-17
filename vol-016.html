@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.16</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #26302d;
+      --muted: #5b6964;
+      --green: #2f6048;
+      --leaf: #5f8e71;
+      --teal: #2f7070;
+      --blue: #3e6f9d;
+      --soft: #eef7ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d8e0d8;
+      --accent: #c88c42;
+      --alert: #8a3f33;
+      --skin: #a45b77;
+      --nerve: #6a6097;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--skin);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .skin-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .skin-box { border-left: 8px solid var(--skin); background: #fff0f5; }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { color: var(--green); }
+    table {
+      width: 100%;
+      margin: 14px 0;
+      border-collapse: collapse;
+      overflow-wrap: anywhere;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #eef6ea; color: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .flow .step {
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      font-weight: 700;
+    }
+    .arrow { color: var(--skin); font-size: 28px; font-weight: 700; text-align: center; }
+    .figure-card {
+      border: 1px solid var(--line);
+      background: #fbfff8;
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .caption { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+    .source-list a { overflow-wrap: anywhere; }
+    @media (max-width: 760px) {
+      body { font-size: 17px; }
+      .site-header { position: static; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; }
+      .grid-2, .grid-3, .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { padding: 0; }
+      .page { box-shadow: none; margin: 0; width: 100%; min-height: auto; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <div class="meta">Vol.16｜医学的解説版</div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-labelledby="nav-title">
+      <h2 id="nav-title">ページ内目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 帯状疱疹の全体像</a>
+        <a href="#page-2">2. 神経と皮膚の仕組み</a>
+        <a href="#page-3">3. 観察と受診の目安</a>
+        <a href="#page-4">4. 予防と生活の注意</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">Vol.16</div>
+      <h1 id="page-1">帯状疱疹と早めの受診の巻</h1>
+      <p class="lead">
+        帯状疱疹は、皮膚の赤みや水ぶくれだけでなく、神経の痛みを伴う病気です。高齢期では痛みが長引くことがあり、顔や目の周り、耳の症状では急いだ相談が必要になる場合があります。
+      </p>
+      <div class="grid-2">
+        <div>
+          <p>
+            帯状疱疹は、子どもの頃などにかかった水ぼうそうのウイルスが体の神経節に残り、加齢、疲労、病気、免疫を抑える治療などをきっかけに再び活動することで起こります。典型的には、体の左右どちらか一側に、ピリピリ、ズキズキする痛みや違和感が出て、その後に赤い発疹や水ぶくれが帯のように並びます。
+          </p>
+          <p>
+            大切なのは、皮膚症状だけを待ちすぎないことです。抗ウイルス薬は早い段階での開始が重要になることがあり、痛みの程度や部位、年齢、基礎疾患、腎機能によって薬の選び方や量の確認が必要です。強い痛みを我慢していると、食欲低下、睡眠障害、活動量低下にもつながります。
+          </p>
+        </div>
+        <div class="figure-card" aria-label="帯状疱疹の出方の図解">
+          <svg viewBox="0 0 560 380" role="img" aria-labelledby="dermatome-title">
+            <title id="dermatome-title">片側に帯状に出る発疹の図解</title>
+            <rect x="24" y="24" width="512" height="310" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <path d="M280 70 C230 78 202 130 202 190 C202 252 232 286 280 292 C328 286 358 252 358 190 C358 130 330 78 280 70Z" fill="#eef7ef" stroke="#5f8e71" stroke-width="6"/>
+            <path d="M214 160 C252 140 312 142 352 166" fill="none" stroke="#a45b77" stroke-width="22" stroke-linecap="round"/>
+            <g fill="#fff0f5" stroke="#8a3f33" stroke-width="3">
+              <circle cx="238" cy="153" r="10"/>
+              <circle cx="266" cy="148" r="9"/>
+              <circle cx="295" cy="151" r="11"/>
+              <circle cx="326" cy="159" r="10"/>
+              <circle cx="345" cy="171" r="8"/>
+            </g>
+            <line x1="280" y1="72" x2="280" y2="292" stroke="#d8e0d8" stroke-width="4" stroke-dasharray="8 8"/>
+            <text x="280" y="56" text-anchor="middle" fill="#2f6048" font-size="23" font-weight="700">左右どちらか一側に出やすい</text>
+            <text x="280" y="330" text-anchor="middle" fill="#5b6964" font-size="18">痛みや違和感が先に出ることがあります。</text>
+          </svg>
+          <p class="caption">「片側」「帯状」「痛みを伴う水ぶくれ」は、帯状疱疹を疑う手がかりです。</p>
+        </div>
+      </div>
+      <div class="skin-box">
+        <strong>今回の視点</strong>
+        <p>
+          帯状疱疹は、早期の受診、合併症の見逃し防止、痛みへの対応、接触で水ぼうそうを起こす可能性への配慮、ワクチン相談を分けて考えます。特に目の周り、耳、顔面、免疫が低下している人、腎機能が低い人では、治療方針を医療者と早めに確認します。
+        </p>
+      </div>
+      <div class="footer">1ページ目｜帯状疱疹は皮膚と神経の病気として見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：眠っていたウイルスが神経に沿って広がる</h2>
+      <p>
+        水痘・帯状疱疹ウイルスは、水ぼうそうの後に体から完全に消えるのではなく、神経節という場所に潜んでいます。加齢などでウイルスを抑える免疫の働きが弱まると、ウイルスが再び増え、神経を通って皮膚へ向かいます。そのため、皮膚症状と同時に神経痛のような痛み、しびれ、焼けるような違和感が出ます。
+      </p>
+      <p>
+        発疹が治った後も痛みが残る状態を帯状疱疹後神経痛と呼びます。すべての人に起こるわけではありませんが、高齢、発疹や痛みが強い、治療開始が遅れる、基礎疾患がある場合などでは注意が必要です。痛みは睡眠、食欲、気分、活動量を下げるため、我慢だけで過ごさず相談します。
+      </p>
+      <div class="grid-2">
+        <div class="figure-card">
+          <svg viewBox="0 0 560 350" role="img" aria-labelledby="reactivation-title">
+            <title id="reactivation-title">ウイルス再活性化の流れ</title>
+            <rect x="26" y="28" width="508" height="260" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <circle cx="130" cy="150" r="58" fill="#eef7ef" stroke="#5f8e71" stroke-width="6"/>
+            <circle cx="280" cy="150" r="58" fill="#fff0f5" stroke="#a45b77" stroke-width="6"/>
+            <circle cx="430" cy="150" r="58" fill="#f2f0ff" stroke="#6a6097" stroke-width="6"/>
+            <text x="130" y="143" text-anchor="middle" fill="#2f6048" font-size="20" font-weight="700">水ぼうそう後</text>
+            <text x="130" y="171" text-anchor="middle" fill="#2f6048" font-size="17">神経節に潜む</text>
+            <text x="280" y="143" text-anchor="middle" fill="#8a3f33" font-size="20" font-weight="700">免疫低下</text>
+            <text x="280" y="171" text-anchor="middle" fill="#8a3f33" font-size="17">再び活動</text>
+            <text x="430" y="143" text-anchor="middle" fill="#5a4e8a" font-size="20" font-weight="700">神経に沿う</text>
+            <text x="430" y="171" text-anchor="middle" fill="#5a4e8a" font-size="17">痛みと発疹</text>
+            <path d="M190 150 H220" stroke="#2f7070" stroke-width="8" stroke-linecap="round"/>
+            <path d="M340 150 H370" stroke="#2f7070" stroke-width="8" stroke-linecap="round"/>
+            <text x="280" y="250" text-anchor="middle" fill="#5b6964" font-size="18">皮膚の変化の前に痛みだけ出ることがあります。</text>
+          </svg>
+          <p class="caption">帯状疱疹は「皮膚に出る神経の病気」として理解すると、早期受診につながります。</p>
+        </div>
+        <div class="clinical">
+          <strong>人にうつる時の考え方</strong>
+          <p>
+            帯状疱疹そのものが空気感染で広がるというより、水ぶくれの中のウイルスが、水ぼうそうにかかったことがない人や免疫のない人に接触して水ぼうそうを起こす可能性があります。発疹は清潔なガーゼや衣類で覆い、水ぶくれが乾くまでは、妊婦、新生児、免疫が低下している人との接触に配慮します。
+          </p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>神経節</strong>
+          <p>神経細胞が集まる場所です。ウイルスが長く潜むことがあります。</p>
+        </div>
+        <div class="mini-card">
+          <strong>皮節</strong>
+          <p>一本の神経が担当する皮膚の範囲です。発疹が帯状に見える理由です。</p>
+        </div>
+        <div class="mini-card">
+          <strong>後神経痛</strong>
+          <p>皮膚が治った後も痛みが残る状態です。早めの痛み相談が大切です。</p>
+        </div>
+      </div>
+      <div class="footer">2ページ目｜ウイルス、神経、皮膚、痛みをつなげて理解する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイント：痛み、場所、広がり方を記録する</h2>
+      <p>
+        帯状疱疹では、発疹の見た目だけでなく、痛みがいつ始まったか、左右どちらか、どの範囲か、目・耳・顔面の症状があるか、発熱や頭痛があるかを確認します。痛み止めや抗ウイルス薬は、年齢、腎機能、飲み合わせで注意が必要になるため、お薬手帳と健診結果が役立ちます。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>見るポイント</th>
+            <th>考えること</th>
+            <th>相談時に伝える内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>片側の痛み、かゆみ、ピリピリ感</td>
+            <td>発疹の前に神経痛だけ出ることがあります。</td>
+            <td>始まった日、痛む範囲、夜眠れるか</td>
+          </tr>
+          <tr>
+            <td>赤み、水ぶくれ、かさぶた</td>
+            <td>水ぶくれがある時期は接触への配慮が必要です。</td>
+            <td>広がり方、写真ではなく部位メモ、発熱の有無</td>
+          </tr>
+          <tr>
+            <td>顔、目、耳の症状</td>
+            <td>視力、角膜、顔面神経、聴力に関わることがあります。</td>
+            <td>目の充血、見えにくさ、耳痛、めまい、顔の動き</td>
+          </tr>
+          <tr>
+            <td>腎機能、薬、基礎疾患</td>
+            <td>抗ウイルス薬や痛み止めの選択・量に関係します。</td>
+            <td>eGFR、透析、糖尿病、免疫抑制薬、お薬手帳</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">
+        <strong>早めに医療機関へ相談したいサイン</strong>
+        <ul>
+          <li>顔、目の周り、鼻の先、耳に発疹や強い痛みがある。</li>
+          <li>見えにくい、目が痛い、耳が聞こえにくい、めまい、顔が動かしにくい。</li>
+          <li>発疹が広範囲、両側に広がる、発熱、頭痛、嘔吐、ぼんやりがある。</li>
+          <li>免疫を抑える薬の使用中、がん治療中、腎機能低下、糖尿病などがある。</li>
+        </ul>
+      </div>
+      <div class="flow" aria-label="受診の流れ">
+        <div class="step">1. 痛みと発疹の開始日を記録</div>
+        <div class="arrow">→</div>
+        <div class="step">2. 部位、目・耳・顔面症状を確認</div>
+        <div class="arrow">→</div>
+        <div class="step">3. お薬手帳と腎機能結果を持って相談</div>
+      </div>
+      <div class="figure-card">
+        <svg viewBox="0 0 650 300" role="img" aria-labelledby="urgent-title">
+          <title id="urgent-title">顔と目と耳の注意サイン</title>
+          <rect x="34" y="28" width="582" height="218" rx="18" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <circle cx="325" cy="135" r="74" fill="#eef7ef" stroke="#5f8e71" stroke-width="6"/>
+          <circle cx="298" cy="122" r="10" fill="#2f6048"/>
+          <circle cx="352" cy="122" r="10" fill="#2f6048"/>
+          <path d="M302 168 C320 182 340 182 354 168" fill="none" stroke="#2f6048" stroke-width="6" stroke-linecap="round"/>
+          <path d="M252 116 C210 92 188 128 205 162" fill="none" stroke="#a45b77" stroke-width="12" stroke-linecap="round"/>
+          <path d="M398 116 C440 92 462 128 445 162" fill="none" stroke="#a45b77" stroke-width="12" stroke-linecap="round"/>
+          <g fill="#fff0f5" stroke="#8a3f33" stroke-width="3">
+            <circle cx="286" cy="98" r="9"/>
+            <circle cx="272" cy="118" r="8"/>
+            <circle cx="274" cy="142" r="7"/>
+            <circle cx="248" cy="96" r="8"/>
+          </g>
+          <text x="152" y="90" fill="#8a3f33" font-size="20" font-weight="700">目の周り</text>
+          <text x="452" y="90" fill="#8a3f33" font-size="20" font-weight="700">耳の痛み</text>
+          <text x="325" y="270" text-anchor="middle" fill="#5b6964" font-size="18">顔・目・耳の症状は早めの相談が必要です。</text>
+        </svg>
+      </div>
+      <div class="footer">3ページ目｜場所と合併症サインを見逃さない</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできること：予防接種、皮膚保護、痛みの相談</h2>
+      <p>
+        帯状疱疹の予防には、日頃の体調管理に加えてワクチンという選択肢があります。高齢者の帯状疱疹ワクチンは定期接種の対象が決められており、対象年齢、接種できるワクチン、自己負担、接種券の扱いは自治体によって確認が必要です。すでに接種したことがある人、帯状疱疹にかかったことがある人、免疫を抑える治療中の人は、主治医や自治体に確認します。
+      </p>
+      <div class="grid-2">
+        <div class="skin-box">
+          <h3>発疹がある時の生活</h3>
+          <ul>
+            <li>水ぶくれをつぶさず、清潔なガーゼや衣類で覆う。</li>
+            <li>強くこすらず、入浴や清拭は医療者の指示に合わせる。</li>
+            <li>妊婦、新生児、免疫が低下している人との接触に配慮する。</li>
+            <li>痛みで眠れない、食べられない時は早めに相談する。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <h3>薬とワクチン相談</h3>
+          <ul>
+            <li>抗ウイルス薬は自己判断で余った薬を使わない。</li>
+            <li>腎機能低下がある人は、薬の量や種類の確認が必要になることがある。</li>
+            <li>痛み止めは市販薬も含め、お薬手帳で飲み合わせを確認する。</li>
+            <li>ワクチンは生ワクチンと不活化ワクチンがあり、持病や治療内容で選択が変わる。</li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>場面</th>
+            <th>今日からの確認</th>
+            <th>注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>皮膚の違和感</td>
+            <td>左右どちらか、痛みの帯、触れると痛い範囲を確認</td>
+            <td>湿布や自己判断の塗り薬だけで様子を見すぎない</td>
+          </tr>
+          <tr>
+            <td>ワクチン</td>
+            <td>対象年齢、接種歴、自治体の案内、主治医の意見を確認</td>
+            <td>免疫状態により接種できない種類がある</td>
+          </tr>
+          <tr>
+            <td>痛み</td>
+            <td>痛みの強さ、睡眠、食欲、活動量への影響を記録</td>
+            <td>我慢しすぎると生活機能低下につながる</td>
+          </tr>
+          <tr>
+            <td>家族・支援者</td>
+            <td>発疹を覆う、手洗い、接触に注意する相手を確認</td>
+            <td>本人を責めず、早めの受診につなげる</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="figure-card">
+        <svg viewBox="0 0 680 320" role="img" aria-labelledby="prevention-title">
+          <title id="prevention-title">帯状疱疹対策の3本柱</title>
+          <rect x="30" y="32" width="620" height="236" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <g fill="#eef7ef" stroke="#5f8e71" stroke-width="4">
+            <rect x="70" y="86" width="150" height="112" rx="14"/>
+            <rect x="265" y="86" width="150" height="112" rx="14"/>
+            <rect x="460" y="86" width="150" height="112" rx="14"/>
+          </g>
+          <text x="145" y="128" text-anchor="middle" fill="#2f6048" font-size="22" font-weight="700">早期受診</text>
+          <text x="145" y="162" text-anchor="middle" fill="#5b6964" font-size="17">痛みと発疹</text>
+          <text x="340" y="128" text-anchor="middle" fill="#2f6048" font-size="22" font-weight="700">痛み対応</text>
+          <text x="340" y="162" text-anchor="middle" fill="#5b6964" font-size="17">睡眠と食欲</text>
+          <text x="535" y="128" text-anchor="middle" fill="#2f6048" font-size="22" font-weight="700">予防接種</text>
+          <text x="535" y="162" text-anchor="middle" fill="#5b6964" font-size="17">対象を確認</text>
+          <text x="340" y="248" text-anchor="middle" fill="#5b6964" font-size="18">皮膚・神経・生活機能を一緒に守ります。</text>
+        </svg>
+      </div>
+      <div class="footer">4ページ目｜早期受診、痛み対応、ワクチン相談を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：片側の痛みと水ぶくれは早めに相談</h2>
+      <p>
+        帯状疱疹は、皮膚の病気に見えて、神経の炎症と痛みを伴う病気です。片側のピリピリした痛み、帯状の赤みや水ぶくれ、顔・目・耳の症状、強い痛み、発熱や頭痛がある時は、早めの受診につなげます。薬の選択では腎機能や飲み合わせも関係するため、お薬手帳と健診結果が役立ちます。
+      </p>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>疑う</strong>
+          <p>片側の痛み、違和感、水ぶくれを「年のせい」「虫刺され」と決めつけない。</p>
+        </div>
+        <div class="mini-card">
+          <strong>伝える</strong>
+          <p>開始日、部位、痛み、目・耳・顔面症状、薬、腎機能をまとめる。</p>
+        </div>
+        <div class="mini-card">
+          <strong>予防する</strong>
+          <p>対象年齢や持病に合わせ、ワクチンについて主治医や自治体へ確認する。</p>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          「皮膚の赤みが少しだけ」でも、神経の痛みが強い時は体からの大事な合図です。早めに相談することで、治療、痛みの調整、生活上の注意を整理できます。無理に我慢せず、主治医、皮膚科、薬剤師、看護師へつなげましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-003.html">Vol.3 薬の整理とポリファーマシーの巻</a>
+          <a href="./vol-006.html">Vol.6 オーラルフレイルと誤嚥予防の巻</a>
+          <a href="./vol-013.html">Vol.13 咳と息切れ・肺炎予防の巻</a>
+          <a href="./vol-015.html">Vol.15 腎臓の働きと慢性腎臓病の巻</a>
+          <a href="./index.html#topic-shingles">皮膚・帯状疱疹</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/kekkaku-kansenshou/yobou-sesshu/vaccine/shingles/index.html">厚生労働省：帯状疱疹ワクチン</a></li>
+          <li><a href="https://www.mhlw.go.jp/content/10900000/001328116.pdf">厚生労働省：帯状疱疹ワクチンファクトシート 第2版（PDF）</a></li>
+          <li><a href="https://id-info.jihs.go.jp/immunization/basics/facts-sheets/index.html">国立健康危機管理研究機構：ワクチンファクトシート一覧</a></li>
+          <li><a href="https://www.dermatol.or.jp/medical/guideline/4742/">日本皮膚科学会：一般公開ガイドライン</a></li>
+          <li><a href="https://www.dermatol.or.jp/dermatol/wp-content/uploads/xoops/files/guideline/Taijouhoushin2025.pdf">日本皮膚科学会：帯状疱疹診療ガイドライン2025（PDF）</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.16「帯状疱疹と早めの受診の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
