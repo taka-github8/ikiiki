@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いきいき通信案 Vol.18</title>
+  <style>
+    @page { size: A4; margin: 14mm; }
+    :root {
+      --ink: #25302d;
+      --muted: #5c6964;
+      --green: #2f6048;
+      --leaf: #5f8e71;
+      --teal: #2f7070;
+      --soft: #eef7ef;
+      --cream: #fffdf7;
+      --sand: #f6f0df;
+      --line: #d8e0d8;
+      --accent: #c88b42;
+      --alert: #8a3f33;
+      --lipid: #b06a3c;
+      --vessel: #5c6796;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f4f7f2;
+      line-height: 1.78;
+      font-size: 19px;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 247, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { margin: 0; color: var(--green); font-size: 20px; line-height: 1.35; }
+    .brand a { color: inherit; text-decoration: none; }
+    .meta { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    main { max-width: 1060px; margin: 0 auto; padding: 20px; }
+    .page,
+    .page-nav {
+      width: min(100%, 210mm);
+      margin-inline: auto;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(44, 62, 54, 0.12);
+    }
+    .page-nav {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .page {
+      min-height: 297mm;
+      padding: clamp(24px, 5vw, 58px);
+      margin-bottom: 28px;
+      page-break-after: always;
+      border-top: 12px solid var(--lipid);
+    }
+    h1, h2, h3 { color: var(--green); line-height: 1.35; letter-spacing: 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(32px, 6vw, 46px); }
+    h2 {
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #d8e7d5;
+      font-size: clamp(25px, 4.2vw, 33px);
+    }
+    h3 { margin: 18px 0 8px; font-size: 22px; }
+    p { margin: 0 0 16px; }
+    ul { margin: 10px 0 0; padding-left: 1.35em; }
+    li { margin: 8px 0; }
+    a { color: var(--teal); }
+    .vol { margin-bottom: 12px; color: #6b6841; font-size: 21px; font-weight: 700; }
+    .lead {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 8px;
+      background: var(--soft);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .box, .clinical, .alert-box, .related, .figure-card, .lipid-box {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .box { background: var(--sand); }
+    .clinical { border-left: 8px solid var(--teal); background: #eef7f6; }
+    .alert-box { border-left: 8px solid var(--alert); background: #fff0ed; }
+    .lipid-box { border-left: 8px solid var(--lipid); background: #fff3ea; }
+    .term { font-weight: 700; color: var(--green); }
+    .small { color: var(--muted); font-size: 16px; }
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .page-nav h2, .related h3 {
+      margin: 0 0 12px;
+      padding: 0;
+      border: 0;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .page-links, .related-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .page-links a, .related-links a {
+      display: block;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+    }
+    .mini-card strong { color: var(--green); }
+    table {
+      width: 100%;
+      margin: 14px 0;
+      border-collapse: collapse;
+      overflow-wrap: anywhere;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #eef6ea; color: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .flow .step {
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfff8;
+      font-weight: 700;
+    }
+    .arrow { color: var(--lipid); font-size: 28px; font-weight: 700; text-align: center; }
+    .figure-card {
+      border: 1px solid var(--line);
+      background: #fbfff8;
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .caption { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+    .source-list a { overflow-wrap: anywhere; }
+    @media (max-width: 760px) {
+      body { font-size: 17px; }
+      .site-header { position: static; }
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .meta { white-space: normal; }
+      main { padding: 12px; }
+      .page { min-height: auto; padding: 24px 18px; }
+      .grid-2, .grid-3, .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 16px; }
+      .site-header, .page-nav { display: none; }
+      main { padding: 0; }
+      .page { box-shadow: none; margin: 0; width: 100%; min-height: auto; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand"><a href="./index.html">いきいき通信案</a></p>
+      <div class="meta">Vol.18｜医学的解説版</div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="page-nav" aria-labelledby="nav-title">
+      <h2 id="nav-title">ページ内目次</h2>
+      <div class="page-links">
+        <a href="#page-1">1. 脂質異常症の全体像</a>
+        <a href="#page-2">2. 血管で起きる仕組み</a>
+        <a href="#page-3">3. 健診値と相談目安</a>
+        <a href="#page-4">4. 食事・運動・薬の整え方</a>
+        <a href="#page-5">5. 振り返りと関連項目</a>
+      </div>
+    </nav>
+
+    <section class="page" aria-labelledby="page-1">
+      <div class="vol">Vol.18</div>
+      <h1 id="page-1">脂質異常症と動脈硬化の巻</h1>
+      <p class="lead">
+        脂質異常症は、LDLコレステロール、HDLコレステロール、中性脂肪などのバランスが崩れ、血管に負担をかけやすくなる状態です。症状がなくても、心筋梗塞、狭心症、脳梗塞などの予防につながる大切な健診項目です。
+      </p>
+      <div class="grid-2">
+        <div>
+          <p>
+            コレステロールや中性脂肪は、体に不要なものではありません。細胞膜、ホルモン、胆汁酸、エネルギーの貯蔵などに関わる大切な成分です。ただし、血液中に多すぎる、またはHDLコレステロールが少なすぎる状態が続くと、血管の壁に脂質がたまり、動脈硬化を進める一因になります。
+          </p>
+          <p>
+            高齢期では、脂質だけでなく、高血圧、糖尿病、慢性腎臓病、喫煙、肥満、家族歴、過去の心筋梗塞や脳梗塞の有無を合わせて考えます。つまり、健診の「LDLだけ」を見て一喜一憂するのではなく、その人の血管全体のリスクとして整理することが重要です。
+          </p>
+        </div>
+        <div class="figure-card" aria-label="脂質と血管の図解">
+          <svg viewBox="0 0 560 380" role="img" aria-labelledby="lipid-overview-title">
+            <title id="lipid-overview-title">脂質と血管の関係</title>
+            <rect x="24" y="28" width="512" height="292" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <path d="M72 160 C150 90 250 100 328 158 C396 208 458 198 510 150" fill="none" stroke="#5c6796" stroke-width="54" stroke-linecap="round"/>
+            <path d="M72 160 C150 90 250 100 328 158 C396 208 458 198 510 150" fill="none" stroke="#fffdf7" stroke-width="24" stroke-linecap="round"/>
+            <g fill="#b06a3c">
+              <circle cx="230" cy="130" r="16"/>
+              <circle cx="262" cy="137" r="12"/>
+              <circle cx="292" cy="148" r="14"/>
+              <circle cx="326" cy="162" r="12"/>
+              <circle cx="360" cy="174" r="13"/>
+            </g>
+            <path d="M214 124 C264 108 333 130 382 170" fill="none" stroke="#b06a3c" stroke-width="8" stroke-linecap="round"/>
+            <text x="280" y="58" text-anchor="middle" fill="#2f6048" font-size="23" font-weight="700">血管の壁に脂質がたまる</text>
+            <text x="280" y="286" text-anchor="middle" fill="#5c6964" font-size="18">自覚症状が少ないまま、動脈硬化が進むことがあります。</text>
+          </svg>
+          <p class="caption">脂質異常症は「血管の中の流れ」と「血管の壁」を見る病気です。</p>
+        </div>
+      </div>
+      <div class="lipid-box">
+        <strong>今回の視点</strong>
+        <p>
+          脂質異常症の管理は、ただ油を減らす話ではありません。LDL、HDL、中性脂肪の意味を知り、動脈硬化リスクを評価し、食事・運動・禁煙・薬を必要に応じて組み合わせることが大切です。薬を使うかどうか、どこまで下げるかは、主治医と個別に決めます。
+        </p>
+      </div>
+      <div class="footer">1ページ目｜脂質異常症は血管リスクとして考える</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-2">
+      <h2 id="page-2">体の仕組み：LDL、HDL、中性脂肪は役割が違う</h2>
+      <p>
+        LDLコレステロールは、肝臓から全身へコレステロールを運ぶ粒子に含まれる成分です。必要な働きもありますが、多すぎる状態が続くと血管の壁に入り込み、動脈硬化を進めやすくなります。HDLコレステロールは、余分なコレステロールを回収して肝臓へ戻す働きに関係します。中性脂肪はエネルギーの貯蔵に関わりますが、高い状態はメタボリックシンドローム、糖尿病、脂肪肝などと一緒に見ます。
+      </p>
+      <p>
+        動脈硬化では、血管の内側に傷みが起こり、脂質や炎症細胞が集まってプラークという盛り上がりができます。プラークが大きくなると血管が狭くなり、破れると血のかたまりができて血流をふさぐことがあります。心臓で起これば狭心症や心筋梗塞、脳で起これば脳梗塞につながる可能性があります。
+      </p>
+      <div class="grid-2">
+        <div class="figure-card">
+          <svg viewBox="0 0 560 360" role="img" aria-labelledby="ldl-hdl-title">
+            <title id="ldl-hdl-title">LDLとHDLの役割</title>
+            <rect x="26" y="28" width="508" height="270" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+            <rect x="70" y="90" width="170" height="118" rx="18" fill="#fff3ea" stroke="#b06a3c" stroke-width="5"/>
+            <rect x="320" y="90" width="170" height="118" rx="18" fill="#eef7ef" stroke="#5f8e71" stroke-width="5"/>
+            <text x="155" y="132" text-anchor="middle" fill="#8a4f2d" font-size="26" font-weight="700">LDL</text>
+            <text x="155" y="165" text-anchor="middle" fill="#8a4f2d" font-size="18">運ぶ</text>
+            <text x="405" y="132" text-anchor="middle" fill="#2f6048" font-size="26" font-weight="700">HDL</text>
+            <text x="405" y="165" text-anchor="middle" fill="#2f6048" font-size="18">回収する</text>
+            <path d="M238 150 H318" stroke="#2f7070" stroke-width="8" stroke-linecap="round"/>
+            <path d="M302 132 L328 150 L302 168" fill="none" stroke="#2f7070" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="280" y="256" text-anchor="middle" fill="#5c6964" font-size="18">どちらも体に必要ですが、量とバランスが重要です。</text>
+          </svg>
+          <p class="caption">LDLとHDLは単純な善悪ではなく、役割と量を見ます。</p>
+        </div>
+        <div class="clinical">
+          <strong>高齢期で注意すること</strong>
+          <p>
+            高齢期では、心筋梗塞や脳梗塞の予防と、薬の副作用、筋力低下、食事量低下、腎機能、他の薬との飲み合わせを同時に見ます。脂質の薬で筋肉痛、だるさ、食欲低下などが気になる場合も、自己判断で中止せず、主治医や薬剤師に相談してください。
+          </p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>LDL</strong>
+          <p>多すぎると血管壁へ入り込み、動脈硬化の進行に関係します。</p>
+        </div>
+        <div class="mini-card">
+          <strong>HDL</strong>
+          <p>余分なコレステロールを回収する働きに関係します。低すぎる時は注意します。</p>
+        </div>
+        <div class="mini-card">
+          <strong>中性脂肪</strong>
+          <p>食事、飲酒、糖質、肥満、糖尿病などと関係しやすい項目です。</p>
+        </div>
+      </div>
+      <div class="footer">2ページ目｜脂質の役割と血管壁の変化を理解する</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-3">
+      <h2 id="page-3">観察ポイント：健診結果を単独でなく、リスク全体で見る</h2>
+      <p>
+        健診では、LDLコレステロール、HDLコレステロール、中性脂肪、non-HDLコレステロールなどが示されます。大切なのは、数値だけで自己判断しないことです。年齢、性別、高血圧、糖尿病、慢性腎臓病、喫煙、家族歴、過去の心筋梗塞・狭心症・脳梗塞の有無によって、治療目標や薬の必要性は変わります。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>確認する項目</th>
+            <th>見たい意味</th>
+            <th>相談時に持参・記録するもの</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LDLコレステロール</td>
+            <td>動脈硬化リスク評価の中心になることが多い項目です。</td>
+            <td>過去の健診結果、治療歴、家族の心臓病歴</td>
+          </tr>
+          <tr>
+            <td>HDLコレステロール</td>
+            <td>低い場合は、運動不足、喫煙、肥満などとも合わせて見ます。</td>
+            <td>体重変化、活動量、喫煙、飲酒状況</td>
+          </tr>
+          <tr>
+            <td>中性脂肪</td>
+            <td>食事、飲酒、糖尿病、脂肪肝、肥満との関連を確認します。</td>
+            <td>採血が空腹時か、飲酒量、甘い飲料、間食</td>
+          </tr>
+          <tr>
+            <td>血圧、血糖、腎機能</td>
+            <td>脂質と合わさることで血管への負担が大きくなります。</td>
+            <td>家庭血圧、HbA1c、eGFR、尿たんぱく、お薬手帳</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">
+        <strong>早めに医療機関へ相談したいサイン</strong>
+        <ul>
+          <li>健診で脂質異常を指摘されたが、再検査や受診をしていない。</li>
+          <li>胸の圧迫感、労作時の息切れ、冷や汗、左肩やあごへの痛みがある。</li>
+          <li>片側の手足の動きにくさ、ろれつが回らない、急な視野異常がある。</li>
+          <li>若い頃からLDLが高い、家族に若年の心筋梗塞や狭心症がある。</li>
+        </ul>
+      </div>
+      <div class="figure-card">
+        <svg viewBox="0 0 650 300" role="img" aria-labelledby="risk-title">
+          <title id="risk-title">脂質と血管リスクを重ねて見る図解</title>
+          <rect x="34" y="28" width="582" height="214" rx="18" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <circle cx="158" cy="135" r="52" fill="#fff3ea" stroke="#b06a3c" stroke-width="5"/>
+          <circle cx="286" cy="135" r="52" fill="#fff1f1" stroke="#9a4f4f" stroke-width="5"/>
+          <circle cx="414" cy="135" r="52" fill="#eef7ef" stroke="#5f8e71" stroke-width="5"/>
+          <circle cx="542" cy="135" r="52" fill="#eef7f6" stroke="#2f7070" stroke-width="5"/>
+          <text x="158" y="130" text-anchor="middle" fill="#8a4f2d" font-size="20" font-weight="700">脂質</text>
+          <text x="158" y="158" text-anchor="middle" fill="#8a4f2d" font-size="16">LDLなど</text>
+          <text x="286" y="130" text-anchor="middle" fill="#8a3f33" font-size="20" font-weight="700">血圧</text>
+          <text x="286" y="158" text-anchor="middle" fill="#8a3f33" font-size="16">血管負担</text>
+          <text x="414" y="130" text-anchor="middle" fill="#2f6048" font-size="20" font-weight="700">血糖</text>
+          <text x="414" y="158" text-anchor="middle" fill="#2f6048" font-size="16">糖尿病</text>
+          <text x="542" y="130" text-anchor="middle" fill="#2f7070" font-size="20" font-weight="700">腎臓</text>
+          <text x="542" y="158" text-anchor="middle" fill="#2f7070" font-size="16">eGFR</text>
+          <text x="325" y="264" text-anchor="middle" fill="#5c6964" font-size="18">脂質は、血圧・血糖・腎機能と重ねて評価します。</text>
+        </svg>
+      </div>
+      <div class="footer">3ページ目｜脂質検査は動脈硬化リスク全体で見る</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-4">
+      <h2 id="page-4">生活でできること：食べない制限より、選び方を整える</h2>
+      <p>
+        脂質異常症の食事では、極端に油を抜くより、脂の種類、量、食べる頻度を整えることが大切です。肉の脂身、バター、クリーム、加工肉、菓子類に含まれる飽和脂肪酸を控えめにし、魚、大豆製品、野菜、海藻、きのこ、未精製に近い穀類などを組み合わせます。低栄養がある高齢者では、食事量を減らしすぎないことも重要です。
+      </p>
+      <div class="grid-2">
+        <div class="lipid-box">
+          <h3>食事の柱</h3>
+          <ul>
+            <li>肉の脂身、揚げ物、菓子類、加工肉の頻度を見直す。</li>
+            <li>魚、大豆製品、野菜、海藻、きのこを無理なく増やす。</li>
+            <li>中性脂肪が高い時は、甘い飲み物、間食、飲酒量も確認する。</li>
+            <li>高齢期の体重減少や低栄養がある場合は、管理栄養士へ相談する。</li>
+          </ul>
+        </div>
+        <div class="clinical">
+          <h3>運動と薬の柱</h3>
+          <ul>
+            <li>歩行や体操を、息切れや膝痛に合わせて少量から続ける。</li>
+            <li>禁煙は血管を守る重要な治療の一部と考える。</li>
+            <li>薬が出ている場合は、飲み忘れや副作用を記録して相談する。</li>
+            <li>筋肉痛、だるさ、尿の色の変化などが気になる時は早めに相談する。</li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>見直す場面</th>
+            <th>動脈硬化予防の視点</th>
+            <th>続ける工夫</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>肉・乳製品・菓子</td>
+            <td>飽和脂肪酸を摂りすぎないようにします。</td>
+            <td>脂身の少ない部位、量を小さく、毎日ではなく回数を調整。</td>
+          </tr>
+          <tr>
+            <td>魚・大豆・野菜</td>
+            <td>脂質、血糖、血圧、便通をまとめて支えます。</td>
+            <td>缶詰、冷凍野菜、豆腐、納豆など手に取りやすいものを使う。</td>
+          </tr>
+          <tr>
+            <td>飲酒・甘い飲料</td>
+            <td>中性脂肪や血糖に関係します。</td>
+            <td>量と回数を見える化し、休肝日や無糖飲料を選ぶ。</td>
+          </tr>
+          <tr>
+            <td>通院・服薬</td>
+            <td>リスクに応じた目標値と薬の必要性を確認します。</td>
+            <td>健診結果、お薬手帳、家庭血圧、体重表を持参する。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="figure-card">
+        <svg viewBox="0 0 680 320" role="img" aria-labelledby="plate-title">
+          <title id="plate-title">脂質異常症の食事選択</title>
+          <rect x="30" y="32" width="620" height="236" rx="20" fill="#fbfff8" stroke="#d8e0d8" stroke-width="4"/>
+          <circle cx="220" cy="150" r="84" fill="#fffdf7" stroke="#5f8e71" stroke-width="7"/>
+          <path d="M220 150 L220 66 A84 84 0 0 1 296 185 Z" fill="#eef7ef"/>
+          <path d="M220 150 L296 185 A84 84 0 0 1 160 215 Z" fill="#fff3ea"/>
+          <path d="M220 150 L160 215 A84 84 0 0 1 220 66 Z" fill="#eef7f6"/>
+          <rect x="410" y="80" width="150" height="48" rx="10" fill="#eef7ef" stroke="#5f8e71" stroke-width="4"/>
+          <rect x="410" y="146" width="150" height="48" rx="10" fill="#eef7f6" stroke="#2f7070" stroke-width="4"/>
+          <rect x="410" y="212" width="150" height="48" rx="10" fill="#fff3ea" stroke="#b06a3c" stroke-width="4"/>
+          <text x="485" y="111" text-anchor="middle" fill="#2f6048" font-size="18" font-weight="700">野菜・海藻</text>
+          <text x="485" y="177" text-anchor="middle" fill="#2f7070" font-size="18" font-weight="700">魚・大豆</text>
+          <text x="485" y="243" text-anchor="middle" fill="#8a4f2d" font-size="18" font-weight="700">主食は適量</text>
+          <text x="220" y="286" text-anchor="middle" fill="#5c6964" font-size="18">抜くより、選び方と頻度を整えます。</text>
+        </svg>
+      </div>
+      <div class="footer">4ページ目｜食事、運動、禁煙、薬を組み合わせる</div>
+    </section>
+
+    <section class="page" aria-labelledby="page-5">
+      <h2 id="page-5">振り返り：脂質は「血管の将来」を見る検査</h2>
+      <p>
+        脂質異常症は、痛みや苦しさがないまま進むことが多い病気です。だからこそ、健診結果をしまい込まず、LDL、HDL、中性脂肪、血圧、血糖、腎機能、喫煙、家族歴をまとめて相談することが大切です。薬が必要か、生活改善をどこから始めるかは、人によって違います。
+      </p>
+      <div class="grid-3">
+        <div class="mini-card">
+          <strong>知る</strong>
+          <p>LDL、HDL、中性脂肪の意味を確認し、過去の値と比べます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>重ねる</strong>
+          <p>血圧、血糖、腎機能、喫煙、心臓病・脳卒中の既往と合わせます。</p>
+        </div>
+        <div class="mini-card">
+          <strong>続ける</strong>
+          <p>食事、運動、禁煙、薬を、無理なく続く形に整えます。</p>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>最後にひとこと</strong>
+        <p>
+          コレステロールは「ただ悪いもの」ではありません。大切なのは、体に必要な脂質を、血管に負担をかけにくい範囲で保つことです。健診結果をきっかけに、主治医、薬剤師、管理栄養士、看護師と一緒に、できるところから整えていきましょう。
+        </p>
+      </div>
+      <div class="related" aria-labelledby="related-title">
+        <h3 id="related-title">関連項目</h3>
+        <div class="related-links">
+          <a href="./vol-017.html">Vol.17 家庭血圧で脳・心臓・腎臓を守るの巻</a>
+          <a href="./vol-007.html">Vol.7 高血糖と認知症予防の巻</a>
+          <a href="./vol-015.html">Vol.15 腎臓の働きと慢性腎臓病の巻</a>
+          <a href="./vol-011.html">Vol.11 足のむくみと心不全サインの巻</a>
+          <a href="./index.html#topic-lipids">脂質・動脈硬化</a>
+        </div>
+      </div>
+      <div class="box">
+        <strong>参考情報</strong>
+        <ul class="source-list">
+          <li><a href="https://kennet.mhlw.go.jp/information/information/metabolic/m-05-004.html">厚生労働省 e-ヘルスネット：脂質異常症</a></li>
+          <li><a href="https://kennet.mhlw.go.jp/information/information/food/e-02-012.html">厚生労働省 e-ヘルスネット：脂質異常症の食事</a></li>
+          <li><a href="https://www.ncvc.go.jp/hospital/pub/knowledge/disease/dyslipidemia/">国立循環器病研究センター：脂質異常症</a></li>
+          <li><a href="https://www.ncvc.go.jp/hospital/section/ld/endocrinology/tr06/">国立循環器病研究センター 糖尿病・脂質代謝内科：脂質異常症</a></li>
+          <li><a href="https://www.j-athero.org/jp/jas_gl2022/">日本動脈硬化学会：動脈硬化性疾患予防ガイドライン2022年版</a></li>
+        </ul>
+      </div>
+      <div class="footer">いきいき通信案 Vol.18「脂質異常症と動脈硬化の巻」医学的解説版</div>
+    </section>
+  </main>
+</body>
+</html>
